@@ -125,6 +125,7 @@ async fn main() -> anyhow::Result<()> {
         broadcast_tx,
         overlay_keys,
         admin_token: config.server.admin_token.clone(),
+        allow_anonymous_keyboard: config.server.allow_anonymous_keyboard,
     };
     let game_router = server::build_game_router(ws_state);
     let admin_router = server::build_admin_router(admin_state);

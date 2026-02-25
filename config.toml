@@ -16,6 +16,8 @@ ws_host = "127.0.0.1"
 ws_port = 9001
 admin_port = 9002
 admin_token = "test-token"
+# Allow anonymous users to send inputs to the emulator.
+allow_anonymous_keyboard = true
 
 [stream]
 jpeg_quality = 100

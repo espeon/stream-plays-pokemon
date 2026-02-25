@@ -28,6 +28,31 @@ const KEY_MAP: Record<string, number> = {
   a: 9,          // L
 };
 
+function getGamepadButtonId(buttonIndex: number, axes: readonly number[]): number | undefined {
+  switch (buttonIndex) {
+    case 0: return 0;  // A button (A/Cross on most controllers)
+    case 1: return 1;  // B button (B/Circle on most controllers)
+    case 8: return 2;  // Select
+    case 9: return 3;  // Start
+    case 4: return 8;  // L (Left bumper)
+    case 5: return 9;  // R (Right bumper)
+    case 12: return 6; // D-pad Up
+    case 13: return 7; // D-pad Down
+    case 14: return 5; // D-pad Left
+    case 15: return 4; // D-pad Right
+  }
+  
+  if (axes.length >= 2) {
+    const threshold = 0.5;
+    if (buttonIndex === 16 && axes[0] < -threshold) return 5;  // Hat left
+    if (buttonIndex === 16 && axes[0] > threshold) return 4;   // Hat right
+    if (buttonIndex === 16 && axes[1] < -threshold) return 6;  // Hat up
+    if (buttonIndex === 16 && axes[1] > threshold) return 7;   // Hat down
+  }
+  
+  return undefined;
+}
+
 export interface GameStream {
   state: GameState | null;
   party: PartyPokemon[];
@@ -59,6 +84,54 @@ export function useGameStream(): GameStream {
     let ws: WebSocket;
     let dead = false;
     const pressedKeys = new Set<string>();
+    const lastGamepadState: Map<number, boolean[]> = new Map();
+    let gamepadPollInterval: number | null = null;
+
+    function pollGamepads() {
+      const gamepads = navigator.getGamepads();
+      const currentWs = wsRef.current;
+      if (!currentWs || currentWs.readyState !== WebSocket.OPEN) {
+        return;
+      }
+
+      for (let i = 0; i < gamepads.length; i++) {
+        const gp = gamepads[i];
+        if (!gp) continue;
+
+        const currentButtonStates = gp.buttons.map(b => b.pressed);
+
+        for (let j = 0; j < gp.buttons.length; j++) {
+          const pressed = currentButtonStates[j];
+          const lastState = lastGamepadState.get(i);
+          const wasPressed = lastState?.[j] ?? false;
+
+          if (pressed && !wasPressed) {
+            const buttonId = getGamepadButtonId(j, gp.axes);
+            if (buttonId !== undefined) {
+              currentWs.send(new Uint8Array([0x06, buttonId]));
+            }
+          } else if (!pressed && wasPressed) {
+            const buttonId = getGamepadButtonId(j, gp.axes);
+            if (buttonId !== undefined) {
+              currentWs.send(new Uint8Array([0x07, buttonId]));
+            }
+          }
+        }
+
+        lastGamepadState.set(i, currentButtonStates);
+      }
+    }
+
+    function startGamepadPolling() {
+      gamepadPollInterval = window.setInterval(pollGamepads, 16);
+    }
+
+    function stopGamepadPolling() {
+      if (gamepadPollInterval !== null) {
+        clearInterval(gamepadPollInterval);
+        gamepadPollInterval = null;
+      }
+    }
 
     async function initAudio() {
       if (audioReadyRef.current) return;
@@ -81,6 +154,7 @@ export function useGameStream(): GameStream {
       ws.onopen = () => {
         if (dead) { ws.close(); return; }
         setConnected(true);
+        startGamepadPolling();
         // Init audio on first connection (counts as user gesture in most browsers
         // since the page load triggered by OBS is considered active)
         initAudio().catch(console.error);
@@ -88,6 +162,8 @@ export function useGameStream(): GameStream {
 
       ws.onclose = () => {
         pressedKeys.clear();
+        lastGamepadState.clear();
+        stopGamepadPolling();
         setConnected(false);
         if (!dead) setTimeout(connect, 1500);
       };
@@ -157,21 +233,18 @@ export function useGameStream(): GameStream {
       }
     }
 
-    if (overlayToken) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.addEventListener("keyup", handleKeyUp);
-    }
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
 
     connect();
 
     return () => {
       dead = true;
+      stopGamepadPolling();
       ws?.close();
       audioCtxRef.current?.close();
-      if (overlayToken) {
-        document.removeEventListener("keydown", handleKeyDown);
-        document.removeEventListener("keyup", handleKeyUp);
-      }
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 

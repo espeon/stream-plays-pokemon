@@ -33,6 +33,7 @@ pub struct ServerConfig {
     pub ws_port: u16,
     pub admin_port: u16,
     pub admin_token: String,
+    pub allow_anonymous_keyboard: bool,
 }
 
 #[derive(Debug, Deserialize)]
@@ -82,6 +83,7 @@ mod tests {
         ws_port = 9001
         admin_port = 9002
         admin_token = "test-token"
+        allow_anonymous_keyboard = false
 
         [stream]
         jpeg_quality = 85
@@ -148,6 +150,7 @@ mod tests {
             ws_port = 9001
             admin_port = 9002
             admin_token = "tok"
+            allow_anonymous_keyboard = true
             [stream]
             jpeg_quality = 85
             audio_buffer_ms = 100

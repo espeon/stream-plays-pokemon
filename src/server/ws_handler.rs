@@ -13,6 +13,7 @@ pub struct WsState {
     pub broadcast_tx: broadcast::Sender<BroadcastMessage>,
     pub overlay_keys: Arc<AtomicU16>,
     pub admin_token: String,
+    pub allow_anonymous_keyboard: bool,
 }
 
 pub async fn ws_handler(
@@ -24,8 +25,15 @@ pub async fn ws_handler(
         .get("token")
         .map(|t| t == &state.admin_token)
         .unwrap_or(false);
+    let allow_keyboard = is_overlay || state.allow_anonymous_keyboard;
     ws.on_upgrade(move |socket| {
-        handle_socket(socket, state.broadcast_tx, state.overlay_keys, is_overlay)
+        handle_socket(
+            socket,
+            state.broadcast_tx,
+            state.overlay_keys,
+            is_overlay,
+            allow_keyboard,
+        )
     })
 }
 
@@ -34,6 +42,7 @@ async fn handle_socket(
     broadcast_tx: broadcast::Sender<BroadcastMessage>,
     overlay_keys: Arc<AtomicU16>,
     is_overlay: bool,
+    allow_keyboard: bool,
 ) {
     let mut rx = broadcast_tx.subscribe();
 
@@ -55,7 +64,7 @@ async fn handle_socket(
             }
             msg = socket.recv() => {
                 match msg {
-                    Some(Ok(Message::Binary(data))) if is_overlay => {
+                    Some(Ok(Message::Binary(data))) if allow_keyboard => {
                         handle_overlay_input(&data, &overlay_keys);
                     }
                     None | Some(Err(_)) => break,
