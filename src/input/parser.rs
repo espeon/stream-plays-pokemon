@@ -1,6 +1,8 @@
+use tracing::info;
+
 use super::types::{GbaButton, ParsedInput};
 
-const MAX_COMPOUND_REPEAT: u8 = 16;
+const MAX_COMPOUND_REPEAT: u8 = 128;
 
 pub fn parse_chat_message(text: &str) -> Option<ParsedInput> {
     let text = text.trim().to_lowercase();
@@ -26,18 +28,29 @@ pub fn parse_chat_message(text: &str) -> Option<ParsedInput> {
 }
 
 fn parse_compound(text: &str) -> Option<ParsedInput> {
-    if text.len() < 2 {
+  if text.len() < 2 {
         return None;
     }
 
-    let last = text.chars().last()?;
-    let repeat = last.to_digit(10)? as u8;
-
-    if !(2..=MAX_COMPOUND_REPEAT).contains(&repeat) {
+    // get number at end
+    // can be up to MAX_COMPOUND_REPEAT which is 3 digits, but we'll just parse until we hit a non-digit
+    let mut repeat_str = String::new();
+    for c in text.chars().rev() {
+        if c.is_digit(10) {
+            repeat_str.insert(0, c);
+        } else {
+            break;
+        }
+    }
+    if repeat_str.is_empty() {
+        return None;
+    }
+    let repeat: u8 = repeat_str.parse().ok()?;
+    if repeat == 0 || repeat > MAX_COMPOUND_REPEAT {
         return None;
     }
 
-    let button_str = &text[..text.len() - 1];
+    let button_str = &text[..text.len() - repeat_str.len()];
     let button = match button_str {
         "a" => GbaButton::A,
         "b" => GbaButton::B,
