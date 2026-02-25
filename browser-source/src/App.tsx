@@ -56,13 +56,14 @@ export default function App() {
   }, [frameCallbackRef]);
 
   return (
+    <div className="relative flex items-center justify-center h-screen w-screen bg-background">
     <div
-      className="relative bg-zinc-950 text-white overflow-hidden select-none font-sans"
+      className="relative bg-background text-white overflow-hidden select-none font-sans"
       style={{ width: SCREEN_W, height: SCREEN_H }}
     >
       {/* Game viewport — top left */}
       <div
-        className="absolute top-4 left-4 rounded-xl bg-black rounded-br-xl overflow-hidden"
+        className="absolute top-4 left-4 rounded-xl bg-muted rounded-br-xl overflow-hidden"
         style={{ width: GBA_W, height: GBA_H }}
       >
         <canvas
@@ -73,7 +74,7 @@ export default function App() {
           style={{ imageRendering: "pixelated" }}
         />
         {!connected && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/80">
             <p className="text-white/50 text-sm tracking-widest uppercase">connecting…</p>
           </div>
         )}
@@ -92,12 +93,12 @@ export default function App() {
         style={{ width: RIGHT_W, height: SCREEN_H }}
       >
         {/* Map */}
-        <div className="flex-1 rounded-xl bg-zinc-900 border border-white/8 overflow-hidden">
+        <div className="flex-1 rounded-xl bg-muted border border-white/8 overflow-hidden">
           <MapPanel location={location} />
         </div>
 
         {/* Inputs + stats */}
-        <div className="flex-1 rounded-xl bg-zinc-900/60 border border-white/8 flex flex-col gap-2 p-4 overflow-hidden">
+        <div className="flex-1 rounded-xl bg-muted/60 border border-white/8 flex flex-col gap-2 p-4 overflow-hidden">
           <InputsPanel state={state} />
         </div>
       </div>
@@ -108,6 +109,7 @@ export default function App() {
         style={{ width: GBA_W + MARGIN, height: BOTTOM_H }}
       >
         <PartyPanel party={party} />
+      </div>
       </div>
     </div>
   );
@@ -197,7 +199,7 @@ function PokemonCard({ mon }: { mon: PartyPokemon }) {
 function PartyPanel({ party }: { party: PartyPokemon[] }) {
   if (party.length === 0) {
     return (
-      <div className="w-full h-full flex items-center justify-center rounded-xl bg-zinc-900/60 border border-white/8">
+      <div className="w-full h-full flex items-center justify-center rounded-xl bg-muted/60 border border-white/8">
         <span className="text-white/15 text-xs uppercase tracking-widest">party</span>
       </div>
     );
@@ -272,7 +274,7 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
         </div>
 
         {/* World map overlay — top left */}
-        <div className="absolute top-2 left-2 w-36 h-28 rounded bg-zinc-900/80 border border-white/10 overflow-hidden">
+        <div className="absolute top-2 left-2 w-36 h-28 rounded bg-muted/80 border border-white/10 overflow-hidden">
           <svg
             viewBox={`0 0 ${VW} ${VH}`}
             className="w-full h-full"

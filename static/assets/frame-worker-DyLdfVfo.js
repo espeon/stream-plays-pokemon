@@ -1,0 +1,1 @@
+(function(){let e=null,t=null,n=!1;self.onmessage=async r=>{let{type:i,data:a}=r.data;if(i===`init`){e=a,t=e.getContext(`2d`);return}if(i===`frame`){if(!t||!e||n)return;n=!0;let r=a;try{let n=await createImageBitmap(new Blob([r],{type:`image/jpeg`}));t.drawImage(n,0,0,e.width,e.height),n.close(),self.postMessage({type:`frameDone`,ts:performance.now()})}catch{}finally{n=!1}}}})();
