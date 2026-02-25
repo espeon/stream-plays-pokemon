@@ -18,4 +18,4 @@ precommit:
     cargo clippy -- -D warnings
 
 e2e:
-    ROM_PATH=./tests/fixtures/emerald.gba BIOS_PATH=./tests/fixtures/gba_bios.bin cargo test --features e2e
+    ROM_PATH=./emerald.gba BIOS_PATH=./gba_bios.bin cargo test --features e2e

@@ -27,6 +27,7 @@ Copy `config.toml` and edit to suit. All fields are required except `input.start
 ```bash
 cargo run --release
 ```
+Note that if you run it in debug mode, the emulation is quite slow as you're building *the emulator* in debug mode.
 
 The game WebSocket listens on `ws_host:ws_port`. Point the OBS browser source at:
 

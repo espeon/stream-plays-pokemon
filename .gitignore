@@ -2,5 +2,6 @@
 /saves
 *.bin
 *.gba
+*.sav
 /pokeemerald
 /static
