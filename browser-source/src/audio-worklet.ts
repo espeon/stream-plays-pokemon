@@ -21,7 +21,7 @@ class GbaAudioProcessor extends AudioWorkletProcessor {
     this._ratio = 0;
     // Don't start draining until we have this many GBA stereo samples buffered.
     // ~100ms at 32768 Hz keeps us ahead of WS jitter without adding much latency.
-    this._preFillTarget = 32768 * 0.15 * 2;
+    this._preFillTarget = 32768 * 0.05 * 2;
     this._preFilled = false;
 
     this.port.onmessage = (e) => {
