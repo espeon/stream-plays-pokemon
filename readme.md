@@ -20,7 +20,7 @@ just extract-maps   # (optional) extracts map PNGs from pokeemerald source
 
 ### configuration
 
-Copy `config.toml` and edit to suit. All fields are required except `input.start_throttle_secs`.
+Copy `config.toml` and edit to suit. All fields are required except `input.start_throttle_secs` and `emulator.auto_restore` (defaults to `false`).
 
 ### running
 

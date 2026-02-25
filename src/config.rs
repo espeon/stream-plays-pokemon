@@ -15,6 +15,8 @@ pub struct EmulatorConfig {
     pub rom_path: String,
     pub save_dir: String,
     pub target_fps: u32,
+    #[serde(default)]
+    pub auto_restore: bool,
 }
 
 #[derive(Debug, Deserialize)]

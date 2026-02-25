@@ -156,7 +156,6 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
     let bios = std::fs::read(&bios_path).map_err(AppError::Io)?.into_boxed_slice();
     let cartridge = GamepakBuilder::new()
         .file(std::path::Path::new(&rom_path))
-        .without_backup_to_file()
         .build()
         .map_err(|e| AppError::Emulator(e.to_string()))?;
 

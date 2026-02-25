@@ -3,6 +3,7 @@ bios_path = "./gba_bios.bin"
 rom_path = "./emerald.gba"
 save_dir = "./saves/"
 target_fps = 60
+auto_restore = false
 
 [input]
 default_mode = "anarchy"

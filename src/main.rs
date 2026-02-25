@@ -50,8 +50,8 @@ async fn main() -> anyhow::Result<()> {
     let save_dir = std::path::Path::new(&config.emulator.save_dir);
     std::fs::create_dir_all(save_dir).context("failed to create save_dir")?;
 
-    // Crash detection: if no clean shutdown marker, log the latest save for manual restore.
-    if !clean_shutdown_marker_exists(save_dir) {
+    let was_clean_shutdown = clean_shutdown_marker_exists(save_dir);
+    if !was_clean_shutdown {
         if let Some(latest) = find_latest_save(save_dir) {
             tracing::warn!(
                 "no clean shutdown marker found — possible crash. latest save: {}",
@@ -71,6 +71,13 @@ async fn main() -> anyhow::Result<()> {
         Arc::clone(&vote_engine),
         Arc::clone(&overlay_keys),
     )?;
+
+    if config.emulator.auto_restore {
+        if let Some(latest) = find_latest_save(save_dir) {
+            tracing::info!("auto-restoring save state: {}", latest.display());
+            let _ = emulator_handle.cmd_tx.try_send(emulator::EmulatorCommand::LoadState(latest));
+        }
+    }
 
     let start_time = Instant::now();
 
