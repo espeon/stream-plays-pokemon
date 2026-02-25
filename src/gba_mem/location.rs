@@ -12,13 +12,21 @@ pub struct PlayerLocation {
     pub y: u16,
 }
 
-/// Emerald RAM offsets for player location.
-/// Source: pokeemerald decomp / community memory maps.
-mod addr {
-    pub const PLAYER_X: u32 = 0x02025A08; // u16
-    pub const PLAYER_Y: u32 = 0x02025A0A; // u16
-    pub const MAP_BANK: u32 = 0x02025A0C; // u8
-    pub const MAP_NUM: u32 = 0x02025A0D;  // u8
+/// Address of the gSaveBlock1Ptr variable in IWRAM.
+/// Dereference this to get the base address of the SaveBlock1 struct in EWRAM.
+/// Source: BPEE community linker script (sav1 = 0x03005D8C).
+const SAVE_BLOCK_1_PTR: u32 = 0x03005D8C;
+
+/// Offsets within SaveBlock1 (from pokeemerald include/global.h struct SaveBlock1):
+///   +0x04: WarpData location { s8 mapGroup; s8 mapNum; s8 warpId; pad; s16 x; s16 y; }
+///   +0xA30: ObjectEvent objectEvents[16]  (struct ObjectEvent is 0x24 bytes)
+///     objectEvents[0] is the player (PLAYER_AVATAR_INDEX = 0)
+///     +0x10 within ObjectEvent: Coords16 currentCoords { s16 x; s16 y; }
+mod offset {
+    pub const MAP_BANK: u32 = 0x04; // location.mapGroup
+    pub const MAP_NUM: u32 = 0x05;  // location.mapNum
+    pub const PLAYER_X: u32 = 0xA30 + 0x10;      // objectEvents[0].currentCoords.x
+    pub const PLAYER_Y: u32 = 0xA30 + 0x10 + 0x02; // objectEvents[0].currentCoords.y
 }
 
 fn read_u16_le(gba: &mut GameBoyAdvance, addr: u32) -> u16 {
@@ -27,12 +35,21 @@ fn read_u16_le(gba: &mut GameBoyAdvance, addr: u32) -> u16 {
     lo | (hi << 8)
 }
 
+fn read_u32_le(gba: &mut GameBoyAdvance, addr: u32) -> u32 {
+    let b0 = gba.debug_read_8(addr) as u32;
+    let b1 = gba.debug_read_8(addr + 1) as u32;
+    let b2 = gba.debug_read_8(addr + 2) as u32;
+    let b3 = gba.debug_read_8(addr + 3) as u32;
+    b0 | (b1 << 8) | (b2 << 16) | (b3 << 24)
+}
+
 pub fn read_location(gba: &mut GameBoyAdvance) -> PlayerLocation {
+    let save1 = read_u32_le(gba, SAVE_BLOCK_1_PTR);
     PlayerLocation {
-        x: read_u16_le(gba, addr::PLAYER_X),
-        y: read_u16_le(gba, addr::PLAYER_Y),
-        map_bank: gba.debug_read_8(addr::MAP_BANK),
-        map_num: gba.debug_read_8(addr::MAP_NUM),
+        map_bank: gba.debug_read_8(save1 + offset::MAP_BANK),
+        map_num: gba.debug_read_8(save1 + offset::MAP_NUM),
+        x: read_u16_le(gba, save1 + offset::PLAYER_X),
+        y: read_u16_le(gba, save1 + offset::PLAYER_Y),
     }
 }
 
