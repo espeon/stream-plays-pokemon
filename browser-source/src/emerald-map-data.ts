@@ -716,3 +716,662 @@ export function tileCenterPx(tx: number, ty: number, tw: number, th: number): { 
     y: (ty + th / 2) * 8,
   };
 }
+
+export const EMERALD_MAP_TO_MAP_NAME: Record<number, string> = {
+  // Bank 0: TownsAndRoutes
+  0: "PetalburgCity",
+  1: "SlateportCity",
+  2: "MauvilleCity",
+  3: "RustboroCity",
+  4: "FortreeCity",
+  5: "LilycoveCity",
+  6: "MossdeepCity",
+  7: "SootopolisCity",
+  8: "EverGrandeCity",
+  9: "LittlerootTown",
+  10: "OldaleTown",
+  11: "DewfordTown",
+  12: "LavaridgeTown",
+  13: "FallarborTown",
+  14: "VerdanturfTown",
+  15: "PacifidlogTown",
+  16: "Route101",
+  17: "Route102",
+  18: "Route103",
+  19: "Route104",
+  20: "Route105",
+  21: "Route106",
+  22: "Route107",
+  23: "Route108",
+  24: "Route109",
+  25: "Route110",
+  26: "Route111",
+  27: "Route112",
+  28: "Route113",
+  29: "Route114",
+  30: "Route115",
+  31: "Route116",
+  32: "Route117",
+  33: "Route118",
+  34: "Route119",
+  35: "Route120",
+  36: "Route121",
+  37: "Route122",
+  38: "Route123",
+  39: "Route124",
+  40: "Route125",
+  41: "Route126",
+  42: "Route127",
+  43: "Route128",
+  44: "Route129",
+  45: "Route130",
+  46: "Route131",
+  47: "Route132",
+  48: "Route133",
+  49: "Route134",
+  50: "Underwater_Route124",
+  51: "Underwater_Route126",
+  52: "Underwater_Route127",
+  53: "Underwater_Route128",
+  54: "Underwater_Route129",
+  55: "Underwater_Route105",
+  56: "Underwater_Route125",
+
+  // Bank 1: IndoorLittleroot
+  1000: "LittlerootTown_BrendansHouse_1F",
+  1001: "LittlerootTown_BrendansHouse_2F",
+  1002: "LittlerootTown_MaysHouse_1F",
+  1003: "LittlerootTown_MaysHouse_2F",
+  1004: "LittlerootTown_ProfessorBirchsLab",
+
+  // Bank 2: IndoorOldale
+  2000: "OldaleTown_House1",
+  2001: "OldaleTown_House2",
+  2002: "OldaleTown_PokemonCenter_1F",
+  2003: "OldaleTown_PokemonCenter_2F",
+  2004: "OldaleTown_Mart",
+
+  // Bank 3: IndoorDewford
+  3000: "DewfordTown_House1",
+  3001: "DewfordTown_PokemonCenter_1F",
+  3002: "DewfordTown_PokemonCenter_2F",
+  3003: "DewfordTown_Gym",
+  3004: "DewfordTown_Hall",
+  3005: "DewfordTown_House2",
+
+  // Bank 4: IndoorLavaridge
+  4000: "LavaridgeTown_HerbShop",
+  4001: "LavaridgeTown_Gym_1F",
+  4002: "LavaridgeTown_Gym_B1F",
+  4003: "LavaridgeTown_House",
+  4004: "LavaridgeTown_Mart",
+  4005: "LavaridgeTown_PokemonCenter_1F",
+  4006: "LavaridgeTown_PokemonCenter_2F",
+
+  // Bank 5: IndoorFallarbor
+  5000: "FallarborTown_Mart",
+  5001: "FallarborTown_BattleTentLobby",
+  5002: "FallarborTown_BattleTentCorridor",
+  5003: "FallarborTown_BattleTentBattleRoom",
+  5004: "FallarborTown_PokemonCenter_1F",
+  5005: "FallarborTown_PokemonCenter_2F",
+  5006: "FallarborTown_CozmosHouse",
+  5007: "FallarborTown_MoveRelearnersHouse",
+
+  // Bank 6: IndoorVerdanturf
+  6000: "VerdanturfTown_BattleTentLobby",
+  6001: "VerdanturfTown_BattleTentCorridor",
+  6002: "VerdanturfTown_BattleTentBattleRoom",
+  6003: "VerdanturfTown_Mart",
+  6004: "VerdanturfTown_PokemonCenter_1F",
+  6005: "VerdanturfTown_PokemonCenter_2F",
+  6006: "VerdanturfTown_WandasHouse",
+  6007: "VerdanturfTown_FriendshipRatersHouse",
+  6008: "VerdanturfTown_House",
+
+  // Bank 7: IndoorPacifidlog
+  7000: "PacifidlogTown_PokemonCenter_1F",
+  7001: "PacifidlogTown_PokemonCenter_2F",
+  7002: "PacifidlogTown_House1",
+  7003: "PacifidlogTown_House2",
+  7004: "PacifidlogTown_House3",
+  7005: "PacifidlogTown_House4",
+  7006: "PacifidlogTown_House5",
+
+  // Bank 8: IndoorPetalburg
+  8000: "PetalburgCity_WallysHouse",
+  8001: "PetalburgCity_Gym",
+  8002: "PetalburgCity_House1",
+  8003: "PetalburgCity_House2",
+  8004: "PetalburgCity_PokemonCenter_1F",
+  8005: "PetalburgCity_PokemonCenter_2F",
+  8006: "PetalburgCity_Mart",
+
+  // Bank 9: IndoorSlateport
+  9000: "SlateportCity_SternsShipyard_1F",
+  9001: "SlateportCity_SternsShipyard_2F",
+  9002: "SlateportCity_BattleTentLobby",
+  9003: "SlateportCity_BattleTentCorridor",
+  9004: "SlateportCity_BattleTentBattleRoom",
+  9005: "SlateportCity_NameRatersHouse",
+  9006: "SlateportCity_PokemonFanClub",
+  9007: "SlateportCity_OceanicMuseum_1F",
+  9008: "SlateportCity_OceanicMuseum_2F",
+  9009: "SlateportCity_Harbor",
+  9010: "SlateportCity_House",
+  9011: "SlateportCity_PokemonCenter_1F",
+  9012: "SlateportCity_PokemonCenter_2F",
+  9013: "SlateportCity_Mart",
+
+  // Bank 10: IndoorMauville
+  10000: "MauvilleCity_Gym",
+  10001: "MauvilleCity_BikeShop",
+  10002: "MauvilleCity_House1",
+  10003: "MauvilleCity_GameCorner",
+  10004: "MauvilleCity_House2",
+  10005: "MauvilleCity_PokemonCenter_1F",
+  10006: "MauvilleCity_PokemonCenter_2F",
+  10007: "MauvilleCity_Mart",
+
+  // Bank 11: IndoorRustboro
+  11000: "RustboroCity_DevonCorp_1F",
+  11001: "RustboroCity_DevonCorp_2F",
+  11002: "RustboroCity_DevonCorp_3F",
+  11003: "RustboroCity_Gym",
+  11004: "RustboroCity_PokemonSchool",
+  11005: "RustboroCity_PokemonCenter_1F",
+  11006: "RustboroCity_PokemonCenter_2F",
+  11007: "RustboroCity_Mart",
+  11008: "RustboroCity_Flat1_1F",
+  11009: "RustboroCity_Flat1_2F",
+  11010: "RustboroCity_House1",
+  11011: "RustboroCity_CuttersHouse",
+  11012: "RustboroCity_House2",
+  11013: "RustboroCity_Flat2_1F",
+  11014: "RustboroCity_Flat2_2F",
+  11015: "RustboroCity_Flat2_3F",
+  11016: "RustboroCity_House3",
+
+  // Bank 12: IndoorFortree
+  12000: "FortreeCity_House1",
+  12001: "FortreeCity_Gym",
+  12002: "FortreeCity_PokemonCenter_1F",
+  12003: "FortreeCity_PokemonCenter_2F",
+  12004: "FortreeCity_Mart",
+  12005: "FortreeCity_House2",
+  12006: "FortreeCity_House3",
+  12007: "FortreeCity_House4",
+  12008: "FortreeCity_House5",
+  12009: "FortreeCity_DecorationShop",
+
+  // Bank 13: IndoorLilycove
+  13000: "LilycoveCity_CoveLilyMotel_1F",
+  13001: "LilycoveCity_CoveLilyMotel_2F",
+  13002: "LilycoveCity_LilycoveMuseum_1F",
+  13003: "LilycoveCity_LilycoveMuseum_2F",
+  13004: "LilycoveCity_ContestLobby",
+  13005: "LilycoveCity_ContestHall",
+  13006: "LilycoveCity_PokemonCenter_1F",
+  13007: "LilycoveCity_PokemonCenter_2F",
+  13008: "LilycoveCity_UnusedMart",
+  13009: "LilycoveCity_PokemonTrainerFanClub",
+  13010: "LilycoveCity_Harbor",
+  13011: "LilycoveCity_MoveDeletersHouse",
+  13012: "LilycoveCity_House1",
+  13013: "LilycoveCity_House2",
+  13014: "LilycoveCity_House3",
+  13015: "LilycoveCity_House4",
+  13016: "LilycoveCity_DepartmentStore_1F",
+  13017: "LilycoveCity_DepartmentStore_2F",
+  13018: "LilycoveCity_DepartmentStore_3F",
+  13019: "LilycoveCity_DepartmentStore_4F",
+  13020: "LilycoveCity_DepartmentStore_5F",
+  13021: "LilycoveCity_DepartmentStoreRooftop",
+  13022: "LilycoveCity_DepartmentStoreElevator",
+
+  // Bank 14: IndoorMossdeep
+  14000: "MossdeepCity_Gym",
+  14001: "MossdeepCity_House1",
+  14002: "MossdeepCity_House2",
+  14003: "MossdeepCity_PokemonCenter_1F",
+  14004: "MossdeepCity_PokemonCenter_2F",
+  14005: "MossdeepCity_Mart",
+  14006: "MossdeepCity_House3",
+  14007: "MossdeepCity_StevensHouse",
+  14008: "MossdeepCity_House4",
+  14009: "MossdeepCity_SpaceCenter_1F",
+  14010: "MossdeepCity_SpaceCenter_2F",
+  14011: "MossdeepCity_GameCorner_1F",
+  14012: "MossdeepCity_GameCorner_B1F",
+
+  // Bank 15: IndoorSootopolis
+  15000: "SootopolisCity_Gym_1F",
+  15001: "SootopolisCity_Gym_B1F",
+  15002: "SootopolisCity_PokemonCenter_1F",
+  15003: "SootopolisCity_PokemonCenter_2F",
+  15004: "SootopolisCity_Mart",
+  15005: "SootopolisCity_House1",
+  15006: "SootopolisCity_House2",
+  15007: "SootopolisCity_House3",
+  15008: "SootopolisCity_House4",
+  15009: "SootopolisCity_House5",
+  15010: "SootopolisCity_House6",
+  15011: "SootopolisCity_House7",
+  15012: "SootopolisCity_LotadAndSeedotHouse",
+  15013: "SootopolisCity_MysteryEventsHouse_1F",
+  15014: "SootopolisCity_MysteryEventsHouse_B1F",
+
+  // Bank 16: IndoorEverGrande
+  16000: "EverGrandeCity_SidneysRoom",
+  16001: "EverGrandeCity_PhoebesRoom",
+  16002: "EverGrandeCity_GlaciasRoom",
+  16003: "EverGrandeCity_DrakesRoom",
+  16004: "EverGrandeCity_ChampionsRoom",
+  16005: "EverGrandeCity_Hall1",
+  16006: "EverGrandeCity_Hall2",
+  16007: "EverGrandeCity_Hall3",
+  16008: "EverGrandeCity_Hall4",
+  16009: "EverGrandeCity_Hall5",
+  16010: "EverGrandeCity_PokemonLeague_1F",
+  16011: "EverGrandeCity_HallOfFame",
+  16012: "EverGrandeCity_PokemonCenter_1F",
+  16013: "EverGrandeCity_PokemonCenter_2F",
+  16014: "EverGrandeCity_PokemonLeague_2F",
+
+  // Bank 17: IndoorRoute104
+  17000: "Route104_MrBrineysHouse",
+  17001: "Route104_PrettyPetalFlowerShop",
+
+  // Bank 18: IndoorRoute111
+  18000: "Route111_WinstrateFamilysHouse",
+  18001: "Route111_OldLadysRestStop",
+
+  // Bank 19: IndoorRoute112
+  19000: "Route112_CableCarStation",
+  19001: "MtChimney_CableCarStation",
+
+  // Bank 20: IndoorRoute114
+  20000: "Route114_FossilManiacsHouse",
+  20001: "Route114_FossilManiacsTunnel",
+  20002: "Route114_LanettesHouse",
+
+  // Bank 21: IndoorRoute116
+  21000: "Route116_TunnelersRestHouse",
+
+  // Bank 22: IndoorRoute117
+  22000: "Route117_PokemonDayCare",
+
+  // Bank 23: IndoorRoute121
+  23000: "Route121_SafariZoneEntrance",
+
+  // Bank 24: Dungeons
+  24000: "MeteorFalls_1F_1R",
+  24001: "MeteorFalls_1F_2R",
+  24002: "MeteorFalls_B1F_1R",
+  24003: "MeteorFalls_B1F_2R",
+  24004: "RusturfTunnel",
+  24005: "Underwater_SootopolisCity",
+  24006: "DesertRuins",
+  24007: "GraniteCave_1F",
+  24008: "GraniteCave_B1F",
+  24009: "GraniteCave_B2F",
+  24010: "GraniteCave_StevensRoom",
+  24011: "PetalburgWoods",
+  24012: "MtChimney",
+  24013: "JaggedPass",
+  24014: "FieryPath",
+  24015: "MtPyre_1F",
+  24016: "MtPyre_2F",
+  24017: "MtPyre_3F",
+  24018: "MtPyre_4F",
+  24019: "MtPyre_5F",
+  24020: "MtPyre_6F",
+  24021: "MtPyre_Exterior",
+  24022: "MtPyre_Summit",
+  24023: "AquaHideout_1F",
+  24024: "AquaHideout_B1F",
+  24025: "AquaHideout_B2F",
+  24026: "Underwater_SeafloorCavern",
+  24027: "SeafloorCavern_Entrance",
+  24028: "SeafloorCavern_Room1",
+  24029: "SeafloorCavern_Room2",
+  24030: "SeafloorCavern_Room3",
+  24031: "SeafloorCavern_Room4",
+  24032: "SeafloorCavern_Room5",
+  24033: "SeafloorCavern_Room6",
+  24034: "SeafloorCavern_Room7",
+  24035: "SeafloorCavern_Room8",
+  24036: "SeafloorCavern_Room9",
+  24037: "CaveOfOrigin_Entrance",
+  24038: "CaveOfOrigin_1F",
+  24039: "CaveOfOrigin_UnusedRubySapphireMap1",
+  24040: "CaveOfOrigin_UnusedRubySapphireMap2",
+  24041: "CaveOfOrigin_UnusedRubySapphireMap3",
+  24042: "CaveOfOrigin_B1F",
+  24043: "VictoryRoad_1F",
+  24044: "VictoryRoad_B1F",
+  24045: "VictoryRoad_B2F",
+  24046: "ShoalCave_LowTideEntranceRoom",
+  24047: "ShoalCave_LowTideInnerRoom",
+  24048: "ShoalCave_LowTideStairsRoom",
+  24049: "ShoalCave_LowTideLowerRoom",
+  24050: "ShoalCave_HighTideEntranceRoom",
+  24051: "ShoalCave_HighTideInnerRoom",
+  24052: "NewMauville_Entrance",
+  24053: "NewMauville_Inside",
+  24054: "AbandonedShip_Deck",
+  24055: "AbandonedShip_Corridors_1F",
+  24056: "AbandonedShip_Rooms_1F",
+  24057: "AbandonedShip_Corridors_B1F",
+  24058: "AbandonedShip_Rooms_B1F",
+  24059: "AbandonedShip_Rooms2_B1F",
+  24060: "AbandonedShip_Underwater1",
+  24061: "AbandonedShip_Room_B1F",
+  24062: "AbandonedShip_Rooms2_1F",
+  24063: "AbandonedShip_CaptainsOffice",
+  24064: "AbandonedShip_Underwater2",
+  24065: "AbandonedShip_HiddenFloorCorridors",
+  24066: "AbandonedShip_HiddenFloorRooms",
+  24067: "IslandCave",
+  24068: "AncientTomb",
+  24069: "Underwater_Route134",
+  24070: "Underwater_SealedChamber",
+  24071: "SealedChamber_OuterRoom",
+  24072: "SealedChamber_InnerRoom",
+  24073: "ScorchedSlab",
+  24074: "AquaHideout_UnusedRubyMap1",
+  24075: "AquaHideout_UnusedRubyMap2",
+  24076: "AquaHideout_UnusedRubyMap3",
+  24077: "SkyPillar_Entrance",
+  24078: "SkyPillar_Outside",
+  24079: "SkyPillar_1F",
+  24080: "SkyPillar_2F",
+  24081: "SkyPillar_3F",
+  24082: "SkyPillar_4F",
+  24083: "ShoalCave_LowTideIceRoom",
+  24084: "SkyPillar_5F",
+  24085: "SkyPillar_Top",
+  24086: "MagmaHideout_1F",
+  24087: "MagmaHideout_2F_1R",
+  24088: "MagmaHideout_2F_2R",
+  24089: "MagmaHideout_3F_1R",
+  24090: "MagmaHideout_3F_2R",
+  24091: "MagmaHideout_4F",
+  24092: "MagmaHideout_3F_3R",
+  24093: "MagmaHideout_2F_3R",
+  24094: "MirageTower_1F",
+  24095: "MirageTower_2F",
+  24096: "MirageTower_3F",
+  24097: "MirageTower_4F",
+  24098: "DesertUnderpass",
+  24099: "ArtisanCave_B1F",
+  24100: "ArtisanCave_1F",
+  24101: "Underwater_MarineCave",
+  24102: "MarineCave_Entrance",
+  24103: "MarineCave_End",
+  24104: "TerraCave_Entrance",
+  24105: "TerraCave_End",
+  24106: "AlteringCave",
+  24107: "MeteorFalls_StevensCave",
+
+  // Bank 25: IndoorDynamic
+  25000: "SecretBase_RedCave1",
+  25001: "SecretBase_BrownCave1",
+  25002: "SecretBase_BlueCave1",
+  25003: "SecretBase_YellowCave1",
+  25004: "SecretBase_Tree1",
+  25005: "SecretBase_Shrub1",
+  25006: "SecretBase_RedCave2",
+  25007: "SecretBase_BrownCave2",
+  25008: "SecretBase_BlueCave2",
+  25009: "SecretBase_YellowCave2",
+  25010: "SecretBase_Tree2",
+  25011: "SecretBase_Shrub2",
+  25012: "SecretBase_RedCave3",
+  25013: "SecretBase_BrownCave3",
+  25014: "SecretBase_BlueCave3",
+  25015: "SecretBase_YellowCave3",
+  25016: "SecretBase_Tree3",
+  25017: "SecretBase_Shrub3",
+  25018: "SecretBase_RedCave4",
+  25019: "SecretBase_BrownCave4",
+  25020: "SecretBase_BlueCave4",
+  25021: "SecretBase_YellowCave4",
+  25022: "SecretBase_Tree4",
+  25023: "SecretBase_Shrub4",
+  25024: "BattleColosseum_2P",
+  25025: "TradeCenter",
+  25026: "RecordCorner",
+  25027: "BattleColosseum_4P",
+  25028: "ContestHall",
+  25029: "UnusedContestHall1",
+  25030: "UnusedContestHall2",
+  25031: "UnusedContestHall3",
+  25032: "UnusedContestHall4",
+  25033: "UnusedContestHall5",
+  25034: "UnusedContestHall6",
+  25035: "ContestHallBeauty",
+  25036: "ContestHallTough",
+  25037: "ContestHallCool",
+  25038: "ContestHallSmart",
+  25039: "ContestHallCute",
+  25040: "InsideOfTruck",
+  25041: "SSTidalCorridor",
+  25042: "SSTidalLowerDeck",
+  25043: "SSTidalRooms",
+  25044: "BattlePyramidSquare01",
+  25045: "BattlePyramidSquare02",
+  25046: "BattlePyramidSquare03",
+  25047: "BattlePyramidSquare04",
+  25048: "BattlePyramidSquare05",
+  25049: "BattlePyramidSquare06",
+  25050: "BattlePyramidSquare07",
+  25051: "BattlePyramidSquare08",
+  25052: "BattlePyramidSquare09",
+  25053: "BattlePyramidSquare10",
+  25054: "BattlePyramidSquare11",
+  25055: "BattlePyramidSquare12",
+  25056: "BattlePyramidSquare13",
+  25057: "BattlePyramidSquare14",
+  25058: "BattlePyramidSquare15",
+  25059: "BattlePyramidSquare16",
+  25060: "UnionRoom",
+
+  // Bank 26: SpecialArea
+  26000: "SafariZone_Northwest",
+  26001: "SafariZone_North",
+  26002: "SafariZone_Southwest",
+  26003: "SafariZone_South",
+  26004: "BattleFrontier_OutsideWest",
+  26005: "BattleFrontier_BattleTowerLobby",
+  26006: "BattleFrontier_BattleTowerElevator",
+  26007: "BattleFrontier_BattleTowerCorridor",
+  26008: "BattleFrontier_BattleTowerBattleRoom",
+  26009: "SouthernIsland_Exterior",
+  26010: "SouthernIsland_Interior",
+  26011: "SafariZone_RestHouse",
+  26012: "SafariZone_Northeast",
+  26013: "SafariZone_Southeast",
+  26014: "BattleFrontier_OutsideEast",
+  26015: "BattleFrontier_BattleTowerMultiPartnerRoom",
+  26016: "BattleFrontier_BattleTowerMultiCorridor",
+  26017: "BattleFrontier_BattleTowerMultiBattleRoom",
+  26018: "BattleFrontier_BattleDomeLobby",
+  26019: "BattleFrontier_BattleDomeCorridor",
+  26020: "BattleFrontier_BattleDomePreBattleRoom",
+  26021: "BattleFrontier_BattleDomeBattleRoom",
+  26022: "BattleFrontier_BattlePalaceLobby",
+  26023: "BattleFrontier_BattlePalaceCorridor",
+  26024: "BattleFrontier_BattlePalaceBattleRoom",
+  26025: "BattleFrontier_BattlePyramidLobby",
+  26026: "BattleFrontier_BattlePyramidFloor",
+  26027: "BattleFrontier_BattlePyramidTop",
+  26028: "BattleFrontier_BattleArenaLobby",
+  26029: "BattleFrontier_BattleArenaCorridor",
+  26030: "BattleFrontier_BattleArenaBattleRoom",
+  26031: "BattleFrontier_BattleFactoryLobby",
+  26032: "BattleFrontier_BattleFactoryPreBattleRoom",
+  26033: "BattleFrontier_BattleFactoryBattleRoom",
+  26034: "BattleFrontier_BattlePikeLobby",
+  26035: "BattleFrontier_BattlePikeCorridor",
+  26036: "BattleFrontier_BattlePikeThreePathRoom",
+  26037: "BattleFrontier_BattlePikeRoomNormal",
+  26038: "BattleFrontier_BattlePikeRoomFinal",
+  26039: "BattleFrontier_BattlePikeRoomWildMons",
+  26040: "BattleFrontier_RankingHall",
+  26041: "BattleFrontier_Lounge1",
+  26042: "BattleFrontier_ExchangeServiceCorner",
+  26043: "BattleFrontier_Lounge2",
+  26044: "BattleFrontier_Lounge3",
+  26045: "BattleFrontier_Lounge4",
+  26046: "BattleFrontier_ScottsHouse",
+  26047: "BattleFrontier_Lounge5",
+  26048: "BattleFrontier_Lounge6",
+  26049: "BattleFrontier_Lounge7",
+  26050: "BattleFrontier_ReceptionGate",
+  26051: "BattleFrontier_Lounge8",
+  26052: "BattleFrontier_Lounge9",
+  26053: "BattleFrontier_PokemonCenter_1F",
+  26054: "BattleFrontier_PokemonCenter_2F",
+  26055: "BattleFrontier_Mart",
+  26056: "FarawayIsland_Entrance",
+  26057: "FarawayIsland_Interior",
+  26058: "BirthIsland_Exterior",
+  26059: "BirthIsland_Harbor",
+  26060: "TrainerHill_Entrance",
+  26061: "TrainerHill_1F",
+  26062: "TrainerHill_2F",
+  26063: "TrainerHill_3F",
+  26064: "TrainerHill_4F",
+  26065: "TrainerHill_Roof",
+  26066: "NavelRock_Exterior",
+  26067: "NavelRock_Harbor",
+  26068: "NavelRock_Entrance",
+  26069: "NavelRock_B1F",
+  26070: "NavelRock_Fork",
+  26071: "NavelRock_Up1",
+  26072: "NavelRock_Up2",
+  26073: "NavelRock_Up3",
+  26074: "NavelRock_Up4",
+  26075: "NavelRock_Top",
+  26076: "NavelRock_Down01",
+  26077: "NavelRock_Down02",
+  26078: "NavelRock_Down03",
+  26079: "NavelRock_Down04",
+  26080: "NavelRock_Down05",
+  26081: "NavelRock_Down06",
+  26082: "NavelRock_Down07",
+  26083: "NavelRock_Down08",
+  26084: "NavelRock_Down09",
+  26085: "NavelRock_Down10",
+  26086: "NavelRock_Down11",
+  26087: "NavelRock_Bottom",
+  26088: "TrainerHill_Elevator",
+
+  // Bank 27: IndoorRoute104Prototype
+  27000: "Route104_Prototype",
+  27001: "Route104_PrototypePrettyPetalFlowerShop",
+
+  // Bank 28: IndoorRoute109
+  28000: "Route109_SeashoreHouse",
+
+  // Bank 29: IndoorRoute110
+  29000: "Route110_TrickHouseEntrance",
+  29001: "Route110_TrickHouseEnd",
+  29002: "Route110_TrickHouseCorridor",
+  29003: "Route110_TrickHousePuzzle1",
+  29004: "Route110_TrickHousePuzzle2",
+  29005: "Route110_TrickHousePuzzle3",
+  29006: "Route110_TrickHousePuzzle4",
+  29007: "Route110_TrickHousePuzzle5",
+  29008: "Route110_TrickHousePuzzle6",
+  29009: "Route110_TrickHousePuzzle7",
+  29010: "Route110_TrickHousePuzzle8",
+  29011: "Route110_SeasideCyclingRoadSouthEntrance",
+  29012: "Route110_SeasideCyclingRoadNorthEntrance",
+
+  // Bank 30: IndoorRoute113
+  30000: "Route113_GlassWorkshop",
+
+  // Bank 31: IndoorRoute123
+  31000: "Route123_BerryMastersHouse",
+
+  // Bank 32: IndoorRoute119
+  32000: "Route119_WeatherInstitute_1F",
+  32001: "Route119_WeatherInstitute_2F",
+  32002: "Route119_House",
+
+  // Bank 33: IndoorRoute124
+  33000: "Route124_DivingTreasureHuntersHouse",
+};
+
+/**
+ * Parses an Emerald map string into a structured object.
+ *
+ * @param {string} mapString - The raw map string (e.g., "MauvilleCity_House2")
+ * @returns {{mainArea: string, mapName?: string, floor?: number}}
+ */
+export function formatMapName(mapString: string) {
+  const parts = mapString.split('_');
+
+  // 1. Extract Main Area (always the first part)
+  const mainAreaRaw = parts.shift();
+  if (!mainAreaRaw) {
+    return { mainArea: "Unknown", mapName: undefined, floor: undefined };
+  }
+  const mainArea = splitCamelCase(mainAreaRaw);
+
+  let floor = undefined;
+  let mapName = undefined;
+
+  // 2. Check for Floor Information (usually the last part, e.g., "1F", "B1F")
+  if (parts.length > 0) {
+    const lastPart = parts[parts.length - 1];
+
+    // Match "1F", "2F" (Group 2) or "B1F" (Group 1)
+    const floorMatch = lastPart.match(/^B(\d+)F$|^(\d+)F$/);
+
+    if (floorMatch) {
+      if (floorMatch[1]) {
+        // It's a Basement (B#F)
+        floor = -parseInt(floorMatch[1], 10);
+      } else if (floorMatch[2]) {
+        // It's a Regular Floor (#F)
+        floor = parseInt(floorMatch[2], 10);
+      }
+      parts.pop(); // Remove the floor part from the array
+    }
+  }
+
+  // 3. Construct Map Name (remaining parts)
+  if (parts.length > 0) {
+    mapName = parts.map(splitCamelCase).join(' ');
+  }
+
+  return {
+    mainArea,
+    mapName,
+    floor
+  };
+}
+
+/**
+ * Helper to split CamelCase strings into readable sentences.
+ * Handles numbers attached to letters (e.g., Route101 -> Route 101).
+ */
+function splitCamelCase(str: string) {
+  // Insert space before Capital Letters preceded by lowercase/numbers
+  // And before numbers preceded by letters
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/([a-zA-Z])([0-9])/g, '$1 $2')
+    .replace(/([0-9])([a-zA-Z])/g, '$1 $2');
+}
+
+export function emeraldMapToObject(mapId: number) {
+  const mapString = EMERALD_MAP_TO_MAP_NAME[mapId];
+  if (!mapString) {
+    return { mainArea: "Unknown", mapName: "Unknown", floor: undefined };
+  }
+  return formatMapName(mapString);
+}
