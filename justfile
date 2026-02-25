@@ -7,6 +7,9 @@ setup:
 build-ui:
     cd browser-source && pnpm build --outDir ../static
 
+extract-names:
+    python3 mapextract/extract_map_names.py
+
 extract-maps:
     cd mapextract && .venv/bin/python extract_maps.py
     mkdir -p browser-source/public/maps
