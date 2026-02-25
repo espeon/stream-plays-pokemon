@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createAudioWorkletBlobUrl } from "./audio-worklet";
 import type { GameState, PartyPokemon, PlayerLocation } from "./types";
 
@@ -51,6 +51,8 @@ export interface GameStream {
   connected: boolean;
   isOverlay: boolean;
   frameCallbackRef: React.RefObject<((jpeg: ArrayBuffer) => void) | null>;
+  unmute: () => Promise<void>;
+  audioReady: boolean;
 }
 
 export function useGameStream(): GameStream {
@@ -58,6 +60,7 @@ export function useGameStream(): GameStream {
   const [party, setParty] = useState<PartyPokemon[]>([]);
   const [location, setLocation] = useState<PlayerLocation | null>(null);
   const [connected, setConnected] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
   const frameCallbackRef = useRef<((jpeg: ArrayBuffer) => void) | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
@@ -70,6 +73,20 @@ export function useGameStream(): GameStream {
   const wsUrl = overlayToken
     ? `${WS_BASE_URL}?token=${encodeURIComponent(overlayToken)}`
     : WS_BASE_URL;
+
+  const unmute = useCallback(async () => {
+    if (audioReadyRef.current) return;
+    audioReadyRef.current = true;
+    setAudioReady(true);
+    const ctx = new AudioContext();
+    audioCtxRef.current = ctx;
+    const blobUrl = createAudioWorkletBlobUrl();
+    await ctx.audioWorklet.addModule(blobUrl);
+    URL.revokeObjectURL(blobUrl);
+    const node = new AudioWorkletNode(ctx, "gba-audio-processor");
+    node.connect(ctx.destination);
+    workletNodeRef.current = node;
+  }, []);
 
   useEffect(() => {
     let ws: WebSocket;
@@ -150,19 +167,6 @@ export function useGameStream(): GameStream {
       }
     }
 
-    async function initAudio() {
-      if (audioReadyRef.current) return;
-      audioReadyRef.current = true;
-      const ctx = new AudioContext();
-      audioCtxRef.current = ctx;
-      const blobUrl = createAudioWorkletBlobUrl();
-      await ctx.audioWorklet.addModule(blobUrl);
-      URL.revokeObjectURL(blobUrl);
-      const node = new AudioWorkletNode(ctx, "gba-audio-processor");
-      node.connect(ctx.destination);
-      workletNodeRef.current = node;
-    }
-
     function connect() {
       ws = new WebSocket(wsUrl);
       wsRef.current = ws;
@@ -174,7 +178,7 @@ export function useGameStream(): GameStream {
         startGamepadPolling();
         // Init audio on first connection (counts as user gesture in most browsers
         // since the page load triggered by OBS is considered active)
-        initAudio().catch(console.error);
+        unmute().catch(console.error);
       };
 
       ws.onclose = () => {
@@ -266,5 +270,5 @@ export function useGameStream(): GameStream {
     };
   }, []);
 
-  return { state, party, location, connected, isOverlay: !!overlayToken, frameCallbackRef };
+  return { state, party, location, connected, isOverlay: !!overlayToken, frameCallbackRef, unmute, audioReady };
 }

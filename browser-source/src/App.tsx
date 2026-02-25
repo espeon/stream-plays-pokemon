@@ -27,7 +27,7 @@ function getOrCreateWorker(canvas: HTMLCanvasElement): Worker {
 }
 
 export default function App() {
-  const { state, party, location, connected, frameCallbackRef } = useGameStream();
+  const { state, party, location, connected, frameCallbackRef, unmute, audioReady } = useGameStream();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameTimesRef = useRef<number[]>([]);
   const [fps, setFps] = useState<number | null>(null);
@@ -78,9 +78,12 @@ export default function App() {
             <p className="text-white/50 text-sm tracking-widest uppercase">connecting…</p>
           </div>
         )}
-        {/* fps — unobtrusive top-left corner of game */}
+        {/* fps — unobtrusive top-left corner of game, clickable to unmute */}
         {fps !== null && (
-          <div className="absolute top-2 left-2 flex flex-col gap-px text-[10px] tabular-nums text-foreground pointer-events-none leading-none">
+          <div
+            className={`absolute top-2 left-2 flex flex-col gap-px text-[10px] tabular-nums leading-none cursor-pointer hover:bg-white/10 rounded px-1 ${audioReady ? 'text-foreground pointer-events-none' : 'text-muted-foreground'}`}
+            onClick={audioReady ? undefined : unmute}
+          >
             <span>{fps} fps</span>
             {state && <span>{state.emulator_fps.toFixed(1)} srv</span>}
           </div>
