@@ -4,7 +4,7 @@ pub mod frame;
 use std::{
     path::PathBuf,
     sync::{
-        atomic::{AtomicU32, Ordering},
+        atomic::{AtomicU16, AtomicU32, Ordering},
         mpsc, Arc,
     },
     thread,
@@ -28,7 +28,7 @@ use audio::{create_audio_pair, drain_chunk, AudioConsumer, SendAudioInterface};
 use frame::{encode_jpeg, to_rgb};
 
 const FRAME_DURATION: Duration = Duration::from_nanos(1_000_000_000 / 60);
-const KEYINPUT_ALL_RELEASED: u16 = 0b1111111111;
+pub const KEYINPUT_ALL_RELEASED: u16 = 0b1111111111;
 
 pub enum EmulatorCommand {
     SaveState,
@@ -42,6 +42,7 @@ pub struct EmulatorHandle {
     pub cmd_tx: mpsc::SyncSender<EmulatorCommand>,
     /// Current emulator fps * 10 (e.g. 600 = 60.0 fps), updated every second.
     pub fps_x10: Arc<AtomicU32>,
+    pub overlay_keys: Arc<AtomicU16>,
 }
 
 fn gba_button_to_key(button: GbaButton) -> Keys {
@@ -71,6 +72,7 @@ struct LoopArgs {
     cmd_rx: mpsc::Receiver<EmulatorCommand>,
     broadcast_tx: broadcast::Sender<BroadcastMessage>,
     fps_x10: Arc<AtomicU32>,
+    overlay_keys: Arc<AtomicU16>,
 }
 
 pub fn spawn_emulator(
@@ -79,6 +81,7 @@ pub fn spawn_emulator(
     jpeg_quality: u8,
     audio_buffer_ms: u64,
     vote_engine: Arc<Mutex<VoteEngine>>,
+    overlay_keys: Arc<AtomicU16>,
 ) -> Result<EmulatorHandle, AppError> {
     let (cmd_tx, cmd_rx) = mpsc::sync_channel::<EmulatorCommand>(8);
     let (audio_interface, audio_consumer) = create_audio_pair(audio_buffer_ms);
@@ -96,6 +99,7 @@ pub fn spawn_emulator(
         cmd_rx,
         broadcast_tx,
         fps_x10: Arc::clone(&fps_x10),
+        overlay_keys: Arc::clone(&overlay_keys),
     };
 
     thread::Builder::new()
@@ -107,7 +111,7 @@ pub fn spawn_emulator(
         })
         .map_err(AppError::Io)?;
 
-    Ok(EmulatorHandle { cmd_tx, fps_x10 })
+    Ok(EmulatorHandle { cmd_tx, fps_x10, overlay_keys })
 }
 
 fn spawn_encode_thread(
@@ -147,6 +151,7 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
         cmd_rx,
         broadcast_tx,
         fps_x10,
+        overlay_keys,
     } = args;
     let bios = std::fs::read(&bios_path).map_err(AppError::Io)?.into_boxed_slice();
     let cartridge = GamepakBuilder::new()
@@ -205,7 +210,7 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
         }
 
         let key_state = gba.get_key_state_mut();
-        *key_state = KEYINPUT_ALL_RELEASED;
+        *key_state = overlay_keys.load(Ordering::Relaxed);
         if let Some((button, _user)) = vote_engine.lock().pop_next_input() {
             let key = gba_button_to_key(button);
             key_state.set_bit(key as usize, false); // 0 = pressed

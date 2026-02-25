@@ -1,6 +1,6 @@
 #![allow(dead_code, unused_imports)]
 
-use std::{collections::HashMap, net::SocketAddr, sync::Arc, sync::atomic::Ordering, time::Instant};
+use std::{collections::HashMap, net::SocketAddr, sync::Arc, sync::atomic::{AtomicU16, Ordering}, time::Instant};
 
 use anyhow::Context;
 use parking_lot::{Mutex, RwLock};
@@ -17,6 +17,7 @@ use stream_plays_emerald::{
     vote::engine::VoteEngine,
 };
 use stream_plays_emerald::server::admin::AdminState;
+use stream_plays_emerald::server::ws_handler::WsState;
 use tokio::{net::TcpListener, signal, time};
 use tracing_subscriber::EnvFilter;
 
@@ -60,12 +61,15 @@ async fn main() -> anyhow::Result<()> {
     }
     remove_clean_shutdown_marker(save_dir).ok();
 
+    let overlay_keys = Arc::new(AtomicU16::new(emulator::KEYINPUT_ALL_RELEASED));
+
     let emulator_handle = emulator::spawn_emulator(
         &config.emulator,
         broadcast_tx.clone(),
         config.stream.jpeg_quality,
         config.stream.audio_buffer_ms,
         Arc::clone(&vote_engine),
+        Arc::clone(&overlay_keys),
     )?;
 
     let start_time = Instant::now();
@@ -117,7 +121,12 @@ async fn main() -> anyhow::Result<()> {
         });
     }
 
-    let game_router = server::build_game_router(broadcast_tx);
+    let ws_state = WsState {
+        broadcast_tx,
+        overlay_keys,
+        admin_token: config.server.admin_token.clone(),
+    };
+    let game_router = server::build_game_router(ws_state);
     let admin_router = server::build_admin_router(admin_state);
 
     let ws_addr: SocketAddr = format!("{}:{}", config.server.ws_host, config.server.ws_port)

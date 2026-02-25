@@ -2,21 +2,18 @@ pub mod admin;
 pub mod ws_handler;
 
 use axum::{routing::get, Router};
-use tokio::sync::broadcast;
 use tower_http::cors::{Any, CorsLayer};
 
-use crate::types::BroadcastMessage;
-
 use admin::AdminState;
-use ws_handler::ws_handler;
+use ws_handler::{ws_handler, WsState};
 
-pub fn build_game_router(broadcast_tx: broadcast::Sender<BroadcastMessage>) -> Router {
+pub fn build_game_router(ws_state: WsState) -> Router {
     let cors = CorsLayer::new().allow_origin(Any);
 
     Router::new()
         .route("/ws", get(ws_handler))
         .layer(cors)
-        .with_state(broadcast_tx)
+        .with_state(ws_state)
 }
 
 pub fn build_admin_router(admin_state: AdminState) -> Router {
