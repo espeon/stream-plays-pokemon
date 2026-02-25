@@ -18,7 +18,7 @@ export default function InputRow({ record, index }: { record: InputRecord; index
   const opacity = Math.max(0.2, 1 - index * 0.045);
   return (
     <div className="flex items-baseline gap-1.5" style={{ opacity }}>
-      <span className="text-white/80 truncate max-w-[160px] leading-none">{record.user}</span>
+      <span className="text-white/80 truncate max-w-40 leading-none">{record.user}</span>
       <span className="font-medium text-base text-foreground/60">{INPUT_LABELS[record.input]()}</span>
     </div>
   );

@@ -740,6 +740,7 @@ def render_map(map_grid: np.ndarray, primary_ts: Tileset, secondary_ts: Tileset,
                 metatile_img = render_metatile(metatile, primary_ts, secondary_ts, debug and (x < 2 and y < 2))
                 result.paste(metatile_img, (x * 16, y * 16))
             except Exception as e:
+                print(e)
                 # Skip invalid metatiles for now
                 pass
 
@@ -762,7 +763,7 @@ def main():
     output_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("output/maps")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"Loading tilesets and layouts...")
+    print("Loading tilesets and layouts...")
     path_map = build_tileset_path_map(base_dir)
     sprite_map = build_object_event_sprite_map(base_dir)
     print(f"Resolved {len(sprite_map)} object event sprite types")

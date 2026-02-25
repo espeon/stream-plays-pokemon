@@ -126,7 +126,7 @@ function InputsPanel({ state }: { state: GameState | null }) {
   return (
     <>
       {/* Mode + queue/vote */}
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div className="flex items-center gap-2 shrink-0">
         <div
           className={`px-2 py-0.5 text-sm rounded font-medium tracking-widest uppercase ${
             isAnarchy ? "bg-emerald-700/70 text-white" : "bg-violet-700/70 text-white"
@@ -148,7 +148,7 @@ function InputsPanel({ state }: { state: GameState | null }) {
       </div>
 
       {/* Stats */}
-      <div className="flex gap-4 text-[11px] tabular-nums text-white/35 flex-shrink-0">
+      <div className="flex gap-4 text-[11px] tabular-nums text-white/35 shrink-0">
         <span>{state.total_inputs.toLocaleString()} inputs</span>
         <span>{uptimeParts.join(":")}</span>
       </div>
@@ -177,16 +177,16 @@ function PokemonCard({ mon }: { mon: PartyPokemon }) {
     <div className={`flex flex-col gap-1.5 rounded-lg bg-zinc-800/70 border border-white/8 p-3 flex-1 min-w-0 ${fainted ? "opacity-40" : ""}`}>
       <div className="flex items-baseline gap-1.5 min-w-0">
         <span className="font-semibold text-sm truncate">{mon.nickname || `#${mon.species}`}</span>
-        <span className="text-white/40 text-xs tabular-nums flex-shrink-0">Lv{mon.level}</span>
+        <span className="text-white/40 text-xs tabular-nums shrink-0">Lv{mon.level}</span>
         {status && (
-          <span className="text-[10px] px-1 py-px rounded bg-yellow-800/60 text-yellow-300 flex-shrink-0">{status}</span>
+          <span className="text-[10px] px-1 py-px rounded bg-yellow-800/60 text-yellow-300 shrink-0">{status}</span>
         )}
       </div>
       <div className="flex items-center gap-2">
         <div className="flex-1 h-1.5 rounded-full bg-zinc-700 overflow-hidden">
           <div className={`h-full rounded-full ${hpColor}`} style={{ width: `${hpPct * 100}%` }} />
         </div>
-        <span className="text-[10px] tabular-nums text-white/40 flex-shrink-0">
+        <span className="text-[10px] tabular-nums text-white/40 shrink-0">
           {mon.current_hp}/{mon.max_hp}
         </span>
       </div>
@@ -250,7 +250,7 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="px-4 pt-3 pb-1.5 flex-shrink-0">
+      <div className="px-4 pt-3 pb-1.5 shrink-0">
         <span className="text-xs uppercase tracking-widest text-white/60">{activeName}</span>
       </div>
 
