@@ -223,6 +223,8 @@ function mapsecColor(id: number, active: boolean): string {
 }
 
 function MapPanel({ location }: { location: PlayerLocation | null }) {
+  const [imgError, setImgError] = useState(false);
+
   const entry = location ? lookupLocation(location.map_bank, location.map_num) : null;
 
   const activeMapsecId = entry
@@ -235,6 +237,14 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
     ? `Map ${location.map_bank}:${location.map_num}`
     : "—";
 
+  const mapId = location
+    ? ((location.map_bank << 8) | location.map_num).toString(16).padStart(4, "0").toUpperCase()
+    : null;
+
+  useEffect(() => {
+    setImgError(false);
+  }, [mapId]);
+
   const VW = REGION_MAP_TILE_W;
   const VH = REGION_MAP_TILE_H;
 
@@ -244,45 +254,59 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
         <span className="text-xs uppercase tracking-widest text-white/60">{activeName}</span>
       </div>
 
-      <div className="flex-1 flex items-center justify-center p-3 overflow-hidden">
-        <svg
-          viewBox={`0 0 ${VW} ${VH}`}
-          className="w-full h-full"
-          style={{ maxHeight: "100%" }}
-          preserveAspectRatio="xMidYMid meet"
-        >
-          {/* Ocean background */}
-          <rect x={0} y={0} width={VW} height={VH} fill="#1e3a5f" />
-
-          {Object.entries(MAPSEC).map(([idStr, sec]) => {
-            const id = Number(idStr);
-            const isActive = idStr === activeMapsecId;
-            return (
-              <rect
-                key={id}
-                x={sec.tx}
-                y={sec.ty}
-                width={sec.tw}
-                height={sec.th}
-                fill={mapsecColor(id, isActive)}
-                opacity={isActive ? 1 : 0.85}
-              />
-            );
-          })}
-
-          {/* White outline on active section */}
-          {entry && (
-            <rect
-              x={entry.tx}
-              y={entry.ty}
-              width={entry.tw}
-              height={entry.th}
-              fill="none"
-              stroke="white"
-              strokeWidth={0.15}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Current area map */}
+        <div className="w-full h-full flex items-center justify-center p-3">
+          {mapId && !imgError ? (
+            <img
+              src={`/maps/${mapId}.png`}
+              onError={() => setImgError(true)}
+              style={{ imageRendering: "pixelated", maxWidth: "100%", maxHeight: "100%" }}
+              alt={activeName}
             />
+          ) : (
+            <span className="text-white/15 text-xs uppercase tracking-widest">
+              {mapId ? "map unavailable" : "—"}
+            </span>
           )}
-        </svg>
+        </div>
+
+        {/* World map overlay — top left */}
+        <div className="absolute top-2 left-2 w-36 h-28 rounded bg-zinc-900/80 border border-white/10 overflow-hidden">
+          <svg
+            viewBox={`0 0 ${VW} ${VH}`}
+            className="w-full h-full"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <rect x={0} y={0} width={VW} height={VH} fill="#1e3a5f" />
+            {Object.entries(MAPSEC).map(([idStr, sec]) => {
+              const id = Number(idStr);
+              const isActive = idStr === activeMapsecId;
+              return (
+                <rect
+                  key={id}
+                  x={sec.tx}
+                  y={sec.ty}
+                  width={sec.tw}
+                  height={sec.th}
+                  fill={mapsecColor(id, isActive)}
+                  opacity={isActive ? 1 : 0.85}
+                />
+              );
+            })}
+            {entry && (
+              <rect
+                x={entry.tx}
+                y={entry.ty}
+                width={entry.tw}
+                height={entry.th}
+                fill="none"
+                stroke="white"
+                strokeWidth={0.15}
+              />
+            )}
+          </svg>
+        </div>
       </div>
     </div>
   );

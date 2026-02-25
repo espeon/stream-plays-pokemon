@@ -1,6 +1,11 @@
 build-ui:
     cd browser-source && pnpm build --outDir ../static
 
+extract-maps:
+    cd mapextract && .venv/bin/python extract_maps.py
+    mkdir -p browser-source/public/maps
+    python3 -c 'import glob,re,shutil; [shutil.copy(f,"browser-source/public/maps/"+re.search(r"map_([0-9A-Fa-f]+)_",f).group(1)+".png") for f in glob.glob("mapextract/output/maps/map_*.png")]'
+
 precommit:
     cargo check
     cargo test --bins
