@@ -10,10 +10,11 @@ pub enum Mode {
 
 #[derive(Debug, Clone)]
 pub enum BroadcastMessage {
-    Frame(Vec<u8>),   // 0x01 prefix: JPEG bytes
-    Audio(Vec<u8>),   // 0x02 prefix: s16le PCM
-    State(Vec<u8>),   // 0x03 prefix: JSON GameState
-    Party(Vec<u8>),   // 0x04 prefix: JSON Vec<PartyPokemon>
+    Frame(Vec<u8>),    // 0x01 prefix: JPEG bytes
+    Audio(Vec<u8>),    // 0x02 prefix: s16le PCM
+    State(Vec<u8>),    // 0x03 prefix: JSON GameState
+    Party(Vec<u8>),    // 0x04 prefix: JSON Vec<PartyPokemon>
+    Location(Vec<u8>), // 0x05 prefix: JSON PlayerLocation
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

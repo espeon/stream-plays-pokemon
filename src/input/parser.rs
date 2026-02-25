@@ -1,6 +1,6 @@
 use super::types::{GbaButton, ParsedInput};
 
-const MAX_COMPOUND_REPEAT: u8 = 9;
+const MAX_COMPOUND_REPEAT: u8 = 16;
 
 pub fn parse_chat_message(text: &str) -> Option<ParsedInput> {
     let text = text.trim().to_lowercase();

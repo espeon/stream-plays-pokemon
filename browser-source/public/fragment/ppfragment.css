@@ -1,0 +1,146 @@
+@font-face {
+  font-family: 'PPFragment-Glare';
+  src: url('/fragment/PPFragment-GlareRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Glare';
+  src: url('/fragment/PPFragment-GlareRegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Glare';
+  src: url('/fragment/PPFragment-GlareLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Glare';
+  src: url('/fragment/PPFragment-GlareLightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Glare';
+  src: url('/fragment/PPFragment-GlareExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Glare';
+  src: url('/fragment/PPFragment-GlareExtraBoldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Sans';
+  src: url('/fragment/PPFragment-SansRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Sans';
+  src: url('/fragment/PPFragment-SansRegularitalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Sans';
+  src: url('/fragment/PPFragment-SansLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Sans';
+  src: url('/fragment/PPFragment-SansLightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Sans';
+  src: url('/fragment/PPFragment-SansExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Sans';
+  src: url('/fragment/PPFragment-SansExtraBoldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Serif';
+  src: url('/fragment/PPFragment-SerifRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Serif';
+  src: url('/fragment/PPFragment-SerifRegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Serif';
+  src: url('/fragment/PPFragment-SerifLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Serif';
+  src: url('/fragment/PPFragment-SerifLightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Serif';
+  src: url('/fragment/PPFragment-SerifExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Serif';
+  src: url('/fragment/PPFragment-SerifExtraBoldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPFragment-Text';
+  src: url('/fragment/PPFragment-TextRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPFragment-Text';
+  src: url('/fragment/PPFragment-TextRegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+:root {
+  --font-pp-glare: 'PPFragment-Glare', serif;
+  --font-pp-sans: 'PPFragment-Sans', sans-serif;
+  --font-pp-serif: 'PPFragment-Serif', serif;
+  --font-pp-text: 'PPFragment-Text', serif;
+}

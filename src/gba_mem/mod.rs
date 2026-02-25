@@ -1,5 +1,6 @@
 pub mod charmap;
 pub mod decrypt;
+pub mod location;
 pub mod party;
 
 /// Identifies a Gen III Pokémon game by its ROM header game code.

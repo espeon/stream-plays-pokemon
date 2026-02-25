@@ -27,3 +27,10 @@ export interface PartyPokemon {
   status: number;
   moves: [number, number, number, number];
 }
+
+export interface PlayerLocation {
+  map_bank: number;
+  map_num: number;
+  x: number;
+  y: number;
+}

@@ -19,7 +19,7 @@ use tokio::sync::broadcast;
 
 use crate::config::EmulatorConfig;
 use crate::error::AppError;
-use crate::gba_mem::{party::read_party, Gen3Game};
+use crate::gba_mem::{location::read_location, party::read_party, Gen3Game};
 use crate::input::types::GbaButton;
 use crate::types::BroadcastMessage;
 use crate::vote::engine::VoteEngine;
@@ -235,6 +235,14 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
                 if let Ok(json) = serde_json::to_vec(&party) {
                     let _ = broadcast_tx.send(BroadcastMessage::Party(json));
                 }
+            }
+        }
+
+        // Broadcast player location at ~2 Hz
+        if frame_count.is_multiple_of(30) && gen3_game.is_some() {
+            let loc = read_location(&mut gba);
+            if let Ok(json) = serde_json::to_vec(&loc) {
+                let _ = broadcast_tx.send(BroadcastMessage::Location(json));
             }
         }
 

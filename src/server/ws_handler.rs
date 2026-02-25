@@ -39,6 +39,7 @@ fn frame_message(msg: &BroadcastMessage) -> Message {
         BroadcastMessage::Audio(data) => prefix_bytes(0x02, data),
         BroadcastMessage::State(data) => prefix_bytes(0x03, data),
         BroadcastMessage::Party(data) => prefix_bytes(0x04, data),
+        BroadcastMessage::Location(data) => prefix_bytes(0x05, data),
     };
     Message::Binary(bytes.into())
 }
@@ -97,6 +98,18 @@ mod tests {
         if let Message::Binary(b) = framed {
             assert_eq!(b.len(), 1);
             assert_eq!(b[0], 0x01);
+        } else {
+            panic!("expected Binary message");
+        }
+    }
+
+    #[test]
+    fn test_frame_message_prefixes_location() {
+        let msg = BroadcastMessage::Location(b"{\"map_bank\":0}".to_vec());
+        let framed = frame_message(&msg);
+        if let Message::Binary(b) = framed {
+            assert_eq!(b[0], 0x05);
+            assert_eq!(&b[1..], b"{\"map_bank\":0}");
         } else {
             panic!("expected Binary message");
         }

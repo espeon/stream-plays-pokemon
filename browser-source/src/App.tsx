@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useGameStream } from "./useGameStream";
-import type { GameState, PartyPokemon } from "./types";
+import type { GameState, PartyPokemon, PlayerLocation } from "./types";
 import FrameWorker from "./frame-worker?worker";
 import InputRow from "./components/input";
+import { lookupLocation, MAPSEC, REGION_MAP_TILE_W, REGION_MAP_TILE_H } from "./emerald-map-data";
 
 const SCALE = 5;
 const GBA_W = 240 * SCALE; // 1200
@@ -26,7 +27,7 @@ function getOrCreateWorker(canvas: HTMLCanvasElement): Worker {
 }
 
 export default function App() {
-  const { state, party, connected, frameCallbackRef } = useGameStream();
+  const { state, party, location, connected, frameCallbackRef } = useGameStream();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameTimesRef = useRef<number[]>([]);
   const [fps, setFps] = useState<number | null>(null);
@@ -91,8 +92,8 @@ export default function App() {
         style={{ width: RIGHT_W, height: SCREEN_H }}
       >
         {/* Map */}
-        <div className="flex-1 rounded-xl bg-zinc-900 border border-white/8 flex items-center justify-center">
-          <span className="text-white/20 text-xs uppercase tracking-widest">map</span>
+        <div className="flex-1 rounded-xl bg-zinc-900 border border-white/8 overflow-hidden">
+          <MapPanel location={location} />
         </div>
 
         {/* Inputs + stats */}
@@ -207,6 +208,82 @@ function PartyPanel({ party }: { party: PartyPokemon[] }) {
       {party.map((mon, i) => (
         <PokemonCard key={i} mon={mon} />
       ))}
+    </div>
+  );
+}
+
+function mapsecColor(id: number, active: boolean): string {
+  if (active) return "#f97316";
+  if (id <= 6)  return "#d4d4aa";  // towns
+  if (id <= 15) return "#e8e8c0";  // cities
+  if ((id >= 22 && id <= 24) || (id >= 39 && id <= 49)) return "#4a8fb5"; // sea routes
+  if (id >= 50 && id <= 54) return "#2d6080"; // underwater
+  if (id >= 16 && id <= 49) return "#4a7c50"; // land routes
+  return "#6b6b6b"; // dungeons / special
+}
+
+function MapPanel({ location }: { location: PlayerLocation | null }) {
+  const entry = location ? lookupLocation(location.map_bank, location.map_num) : null;
+
+  const activeMapsecId = entry
+    ? (Object.entries(MAPSEC).find(([, v]) => v === entry)?.[0] ?? null)
+    : null;
+
+  const activeName = entry
+    ? entry.name
+    : location
+    ? `Map ${location.map_bank}:${location.map_num}`
+    : "—";
+
+  const VW = REGION_MAP_TILE_W;
+  const VH = REGION_MAP_TILE_H;
+
+  return (
+    <div className="w-full h-full flex flex-col">
+      <div className="px-4 pt-3 pb-1.5 flex-shrink-0">
+        <span className="text-xs uppercase tracking-widest text-white/60">{activeName}</span>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center p-3 overflow-hidden">
+        <svg
+          viewBox={`0 0 ${VW} ${VH}`}
+          className="w-full h-full"
+          style={{ maxHeight: "100%" }}
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {/* Ocean background */}
+          <rect x={0} y={0} width={VW} height={VH} fill="#1e3a5f" />
+
+          {Object.entries(MAPSEC).map(([idStr, sec]) => {
+            const id = Number(idStr);
+            const isActive = idStr === activeMapsecId;
+            return (
+              <rect
+                key={id}
+                x={sec.tx}
+                y={sec.ty}
+                width={sec.tw}
+                height={sec.th}
+                fill={mapsecColor(id, isActive)}
+                opacity={isActive ? 1 : 0.85}
+              />
+            );
+          })}
+
+          {/* White outline on active section */}
+          {entry && (
+            <rect
+              x={entry.tx}
+              y={entry.ty}
+              width={entry.tw}
+              height={entry.th}
+              fill="none"
+              stroke="white"
+              strokeWidth={0.15}
+            />
+          )}
+        </svg>
+      </div>
     </div>
   );
 }
