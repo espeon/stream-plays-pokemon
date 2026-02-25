@@ -28,7 +28,7 @@ const KEY_MAP: Record<string, number> = {
   a: 9,          // L
 };
 
-function getGamepadButtonId(buttonIndex: number, axes: readonly number[]): number | undefined {
+function getGamepadButtonId(buttonIndex: number): number | undefined {
   switch (buttonIndex) {
     case 0: return 0;  // A button (A/Cross on most controllers)
     case 1: return 1;  // B button (B/Circle on most controllers)
@@ -41,15 +41,6 @@ function getGamepadButtonId(buttonIndex: number, axes: readonly number[]): numbe
     case 14: return 5; // D-pad Left
     case 15: return 4; // D-pad Right
   }
-  
-  if (axes.length >= 2) {
-    const threshold = 0.5;
-    if (buttonIndex === 16 && axes[0] < -threshold) return 5;  // Hat left
-    if (buttonIndex === 16 && axes[0] > threshold) return 4;   // Hat right
-    if (buttonIndex === 16 && axes[1] < -threshold) return 6;  // Hat up
-    if (buttonIndex === 16 && axes[1] > threshold) return 7;   // Hat down
-  }
-  
   return undefined;
 }
 
@@ -85,7 +76,9 @@ export function useGameStream(): GameStream {
     let dead = false;
     const pressedKeys = new Set<string>();
     const lastGamepadState: Map<number, boolean[]> = new Map();
+    const lastJoystickDirection: Map<number, number | null> = new Map();
     let gamepadPollInterval: number | null = null;
+    const JOYSTICK_THRESHOLD = 0.5;
 
     function pollGamepads() {
       const gamepads = navigator.getGamepads();
@@ -106,15 +99,39 @@ export function useGameStream(): GameStream {
           const wasPressed = lastState?.[j] ?? false;
 
           if (pressed && !wasPressed) {
-            const buttonId = getGamepadButtonId(j, gp.axes);
+            const buttonId = getGamepadButtonId(j);
             if (buttonId !== undefined) {
               currentWs.send(new Uint8Array([0x06, buttonId]));
             }
           } else if (!pressed && wasPressed) {
-            const buttonId = getGamepadButtonId(j, gp.axes);
+            const buttonId = getGamepadButtonId(j);
             if (buttonId !== undefined) {
               currentWs.send(new Uint8Array([0x07, buttonId]));
             }
+          }
+        }
+
+        if (gp.axes.length >= 2) {
+          const horizontal = gp.axes[0];
+          const vertical = gp.axes[1];
+          let newDirection: number | null = null;
+
+          if (Math.abs(horizontal) > JOYSTICK_THRESHOLD) {
+            newDirection = horizontal < 0 ? 5 : 4;
+          } else if (Math.abs(vertical) > JOYSTICK_THRESHOLD) {
+            newDirection = vertical < 0 ? 6 : 7;
+          }
+
+          const lastDirection = lastJoystickDirection.get(i) ?? null;
+
+          if (newDirection !== lastDirection) {
+            if (lastDirection !== null) {
+              currentWs.send(new Uint8Array([0x07, lastDirection]));
+            }
+            if (newDirection !== null) {
+              currentWs.send(new Uint8Array([0x06, newDirection]));
+            }
+            lastJoystickDirection.set(i, newDirection);
           }
         }
 
@@ -163,6 +180,7 @@ export function useGameStream(): GameStream {
       ws.onclose = () => {
         pressedKeys.clear();
         lastGamepadState.clear();
+        lastJoystickDirection.clear();
         stopGamepadPolling();
         setConnected(false);
         if (!dead) setTimeout(connect, 1500);
