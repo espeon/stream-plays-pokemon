@@ -72,15 +72,3 @@ flowchart TD
     Browser -->|WHIP| Streamplace["Streamplace"]
     Browser -->|button down/up 0x06/0x07| WSHandler
 ```
-
-**WebSocket message framing** (binary, 1-byte prefix):
-
-| prefix | content |
-|--------|---------|
-| `0x01` | JPEG frame (240×160) |
-| `0x02` | PCM audio (s16le stereo 32768 Hz) |
-| `0x03` | JSON `GameState` (~4 Hz) |
-| `0x04` | JSON party data (~1 Hz) |
-| `0x05` | JSON player location (~2 Hz) |
-| `0x06` | ← button down (overlay → server) |
-| `0x07` | ← button up (overlay → server) |
