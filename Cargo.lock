@@ -125,6 +125,7 @@ dependencies = [
 [[package]]
 name = "arm7tdmi"
 version = "0.1.0"
+source = "git+https://github.com/espeon/rustboyadvance-ng.git#95bd87dc6e5b8a49e87e99e5053ab384f8f6e1c9"
 dependencies = [
  "ansi_term",
  "bit",
@@ -2151,6 +2152,7 @@ dependencies = [
 [[package]]
 name = "rustboyadvance-core"
 version = "0.1.0"
+source = "git+https://github.com/espeon/rustboyadvance-ng.git#95bd87dc6e5b8a49e87e99e5053ab384f8f6e1c9"
 dependencies = [
  "ansi_term",
  "arm7tdmi",
@@ -2192,6 +2194,7 @@ dependencies = [
 [[package]]
 name = "rustboyadvance-utils"
 version = "0.1.0"
+source = "git+https://github.com/espeon/rustboyadvance-ng.git#95bd87dc6e5b8a49e87e99e5053ab384f8f6e1c9"
 dependencies = [
  "goblin",
  "instant",

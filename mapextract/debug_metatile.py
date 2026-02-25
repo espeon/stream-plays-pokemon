@@ -68,6 +68,6 @@ for line in lines[3:19]:
     r, g, b = map(int, line.split())
     palette.append((r, g, b))
 
-print(f"\n=== Palette 8 ===")
+print("\n=== Palette 8 ===")
 for i, color in enumerate(palette[:10]):
     print(f"  {i:2d}: {color}")

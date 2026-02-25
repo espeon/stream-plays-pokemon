@@ -1,0 +1,4 @@
+[tools]
+rust = "latest"
+uv = "latest"
+node = "latest"

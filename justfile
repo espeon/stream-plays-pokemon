@@ -1,3 +1,9 @@
+setup:
+    python3 -m venv .venv
+    .venv/bin/pip install -r requirements.txt
+    git clone --depth 1 --branch master https://github.com/pret/pokeemerald
+    cd browser-source && pnpm install
+
 build-ui:
     cd browser-source && pnpm build --outDir ../static
 
