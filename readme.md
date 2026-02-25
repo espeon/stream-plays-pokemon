@@ -62,13 +62,13 @@ just e2e            # end-to-end tests (requires ROM + BIOS in tests/fixtures/)
 ### architecture
 
 ```mermaid
-flowchart TD
+flowchart LR
     Chat["Streamplace chat"] -->|WS| ChatClient["chat client"]
-    ChatClient --> VoteEngine["VoteEngine\n(parking_lot Mutex)"]
-    VoteEngine -->|pop_next_input each frame| EmulatorThread["emulator thread\n(60fps, std::thread)"]
+    ChatClient --> VoteEngine["VoteEngine"]
+    VoteEngine -->|pop_next_input each frame| EmulatorThread["emulator thread"]
     EmulatorThread --> EncodeThread["JPEG encode thread"]
-    EncodeThread -->|broadcast::Sender cap=2| WSHandler["WS handler\n(axum / tokio)"]
-    WSHandler -->|frames + audio + state| Browser["OBS browser source\n(React)"]
+    EncodeThread -->|broadcast::Sender cap=2| WSHandler["WS handler"]
+    WSHandler -->|frames + audio + state| Browser["OBS browser source"]
     Browser -->|WHIP| Streamplace["Streamplace"]
     Browser -->|button down/up 0x06/0x07| WSHandler
 ```
