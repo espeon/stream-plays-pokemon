@@ -62,7 +62,7 @@ just e2e            # end-to-end tests (requires ROM + BIOS in tests/fixtures/)
 ### architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
     Chat["Streamplace chat"] -->|WS| ChatClient["chat client"]
     ChatClient --> VoteEngine["VoteEngine"]
     VoteEngine -->|pop_next_input each frame| EmulatorThread["emulator thread"]
