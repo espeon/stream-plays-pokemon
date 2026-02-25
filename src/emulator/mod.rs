@@ -19,6 +19,7 @@ use tokio::sync::broadcast;
 
 use crate::config::EmulatorConfig;
 use crate::error::AppError;
+use crate::gba_mem::{party::read_party, Gen3Game};
 use crate::input::types::GbaButton;
 use crate::types::BroadcastMessage;
 use crate::vote::engine::VoteEngine;
@@ -157,6 +158,13 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
     let mut gba = GameBoyAdvance::new(bios, cartridge, audio_interface);
     gba.skip_bios();
 
+    let gen3_game = Gen3Game::detect(&gba.get_game_code());
+    if let Some(game) = gen3_game {
+        tracing::info!("detected Gen III game: {:?}", game);
+    } else {
+        tracing::warn!("game code '{}' not recognized as a Gen III game — party data will not be broadcast", gba.get_game_code());
+    }
+
     let frame_skip = (60 / target_fps.max(1)).max(1);
     let mut frame_count: u64 = 0;
     let mut paused = false;
@@ -218,6 +226,16 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
         if frame_count.is_multiple_of(frame_skip as u64) {
             let raw: Vec<u32> = gba.get_frame_buffer().to_vec();
             let _ = encode_tx.try_send(raw);
+        }
+
+        // Broadcast party data at ~1 Hz
+        if frame_count.is_multiple_of(60) {
+            if let Some(game) = gen3_game {
+                let party = read_party(&mut gba, game);
+                if let Ok(json) = serde_json::to_vec(&party) {
+                    let _ = broadcast_tx.send(BroadcastMessage::Party(json));
+                }
+            }
         }
 
         while let Some(chunk) = drain_chunk(&mut audio_consumer) {

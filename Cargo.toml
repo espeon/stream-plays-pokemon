@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rustboyadvance-ng = { git = "https://github.com/michelhe/rustboyadvance-ng", package = "rustboyadvance-core" }
+rustboyadvance-ng = { path = "../rustboyadvance-ng/core", package = "rustboyadvance-core" }
 
 tokio = { version = "1", features = ["full"] }
 axum = { version = "0.8", features = ["ws", "macros"] }

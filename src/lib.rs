@@ -4,6 +4,7 @@ pub mod chat;
 pub mod config;
 pub mod emulator;
 pub mod error;
+pub mod gba_mem;
 pub mod input;
 pub mod save;
 pub mod server;

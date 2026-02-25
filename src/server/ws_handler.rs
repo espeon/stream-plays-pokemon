@@ -38,6 +38,7 @@ fn frame_message(msg: &BroadcastMessage) -> Message {
         BroadcastMessage::Frame(data) => prefix_bytes(0x01, data),
         BroadcastMessage::Audio(data) => prefix_bytes(0x02, data),
         BroadcastMessage::State(data) => prefix_bytes(0x03, data),
+        BroadcastMessage::Party(data) => prefix_bytes(0x04, data),
     };
     Message::Binary(bytes.into())
 }
