@@ -82,7 +82,7 @@ code {
 }
 
 @theme inline {
-  --font-sans: "PPFragment-Sans";
+  --font-sans: "Instrument Sans";
   --font-text: "PPFragment-Text";
   --font-serif: "PPFragment-Serif";
   --color-background: var(--background);

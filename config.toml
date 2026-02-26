@@ -22,7 +22,7 @@ allow_anonymous_keyboard = true
 
 [stream]
 jpeg_quality = 100
-audio_buffer_ms = 100
+audio_buffer_ms = 1
 
 [chat]
 streamplace_ws_url = "wss://stream.place/api/websocket/nat.vg"

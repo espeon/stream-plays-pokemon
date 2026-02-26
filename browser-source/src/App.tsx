@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useGameStream } from "./useGameStream";
-import type { GameState, PartyPokemon, PlayerLocation } from "./types";
+import type { GameState, PlayerLocation } from "./types";
 import FrameWorker from "./frame-worker?worker";
 import InputRow from "./components/input";
-import { lookupLocation, MAPSEC, REGION_MAP_TILE_W, REGION_MAP_TILE_H } from "./emerald-map-data";
+import { PartyPanel } from "./components/pokemon-card";
+import { lookupLocation, MAPSEC, REGION_MAP_TILE_W, REGION_MAP_TILE_H, emeraldMapToObject } from "./emerald-map-data";
 
 const SCALE = 5;
 const GBA_W = 240 * SCALE; // 1200
@@ -161,62 +162,6 @@ function InputsPanel({ state }: { state: GameState | null }) {
   );
 }
 
-function statusLabel(status: number): string {
-  if (status === 0) return "";
-  if ((status & 0x07) > 0) return "SLP";
-  if (status & 0x08) return "PSN";
-  if (status & 0x10) return "BRN";
-  if (status & 0x20) return "FRZ";
-  if (status & 0x40) return "PAR";
-  if (status & 0x80) return "PSN"; // bad poison
-  return "";
-}
-
-function PokemonCard({ mon }: { mon: PartyPokemon }) {
-  const hpPct = mon.max_hp > 0 ? mon.current_hp / mon.max_hp : 0;
-  const fainted = mon.current_hp === 0;
-  const hpColor = hpPct > 0.5 ? "bg-emerald-500" : hpPct > 0.2 ? "bg-yellow-400" : "bg-red-500";
-  const status = statusLabel(mon.status);
-
-  return (
-    <div className={`flex flex-col gap-1.5 rounded-lg bg-zinc-800/70 border border-white/8 p-3 flex-1 min-w-0 ${fainted ? "opacity-40" : ""}`}>
-      <div className="flex items-baseline gap-1.5 min-w-0">
-        <span className="font-semibold text-sm truncate">{mon.nickname || `#${mon.species}`}</span>
-        <span className="text-white/40 text-xs tabular-nums shrink-0">Lv{mon.level}</span>
-        {status && (
-          <span className="text-[10px] px-1 py-px rounded bg-yellow-800/60 text-yellow-300 shrink-0">{status}</span>
-        )}
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="flex-1 h-1.5 rounded-full bg-zinc-700 overflow-hidden">
-          <div className={`h-full rounded-full ${hpColor}`} style={{ width: `${hpPct * 100}%` }} />
-        </div>
-        <span className="text-[10px] tabular-nums text-white/40 shrink-0">
-          {mon.current_hp}/{mon.max_hp}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function PartyPanel({ party }: { party: PartyPokemon[] }) {
-  if (party.length === 0) {
-    return (
-      <div className="w-full h-full flex items-center justify-center rounded-xl bg-muted/60 border border-white/8">
-        <span className="text-white/15 text-xs uppercase tracking-widest">party</span>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full flex gap-3 items-stretch">
-      {party.map((mon, i) => (
-        <PokemonCard key={i} mon={mon} />
-      ))}
-    </div>
-  );
-}
-
 function mapsecColor(id: number, active: boolean): string {
   if (active) return "#f97316";
   if (id <= 6)  return "#d4d4aa";  // towns
@@ -231,6 +176,7 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
   const [imgError, setImgError] = useState(false);
 
   const entry = location ? lookupLocation(location.map_bank, location.map_num) : null;
+  const entryObj = location ? emeraldMapToObject(location.map_bank, location.map_num) : null;
 
   const activeMapsecId = entry
     ? (Object.entries(MAPSEC).find(([, v]) => v === entry)?.[0] ?? null)
@@ -254,19 +200,21 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
   const VH = REGION_MAP_TILE_H;
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="px-4 pt-3 pb-1.5 shrink-0">
-        <span className="text-xs uppercase tracking-widest text-white/60">{activeName}</span>
+    <div className="w-full h-full flex flex-col relative">
+      <div className="px-4 pt-3 pb-0 shrink-0 z-100 bg-linear-to-b from-muted via-muted/90 to-transparent">
+        <div className="text-xl uppercase font-text font-medium tracking-widest text-foreground">{entryObj?.mainArea}</div>
+        <div className="text-base uppercase tracking-widest text-muted-foreground">{entryObj?.mapName} {entryObj?.floor ? `(${entryObj.floor < 0 ? `B${entryObj.floor}`:entryObj.floor}F)` : ""}<span className="text-muted">a</span></div>
       </div>
 
       <div className="flex-1 relative overflow-hidden">
         {/* Current area map */}
-        <div className="w-full h-full flex items-center justify-center p-3">
+        <div className="absolute w-full h-full flex items-center justify-center p-3 ml-18 pr-18">
           {mapId && !imgError ? (
             <img
               src={`/maps/${mapId}.png`}
               onError={() => setImgError(true)}
-              style={{ imageRendering: "pixelated", maxWidth: "100%", maxHeight: "100%" }}
+              style={{ imageRendering: "pixelated", minHeight: "100%", maxWidth: "130%", maxHeight: "100%", objectFit: "contain" }}
+              className="rounded-xl"
               alt={activeName}
             />
           ) : (
@@ -275,9 +223,8 @@ function MapPanel({ location }: { location: PlayerLocation | null }) {
             </span>
           )}
         </div>
-
         {/* World map overlay — top left */}
-        <div className="absolute top-2 left-2 w-36 h-28 rounded bg-muted/80 border border-white/10 overflow-hidden">
+        <div className="absolute top-2 left-2 h-32 rounded opacity-80 overflow-hidden border bg-muted/80">
           <svg
             viewBox={`0 0 ${VW} ${VH}`}
             className="w-full h-full"
