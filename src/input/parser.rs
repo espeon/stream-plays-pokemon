@@ -123,9 +123,9 @@ mod tests {
     }
 
     #[test]
-    fn test_compound_repeat_cap_at_9() {
-        assert_eq!(parse_chat_message("right9"), Some(ParsedInput::Compound(GbaButton::Right, 9)));
-        assert_eq!(parse_chat_message("right10"), None);
+    fn test_compound_repeat_cap() {
+        assert_eq!(parse_chat_message(&format!("right{}", MAX_COMPOUND_REPEAT)), Some(ParsedInput::Compound(GbaButton::Right, 9)));
+        assert_eq!(parse_chat_message(&format!("right{}", MAX_COMPOUND_REPEAT + 1)), None);
     }
 
     #[test]
