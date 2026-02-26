@@ -18,15 +18,13 @@ pub struct PlayerLocation {
 const SAVE_BLOCK_1_PTR: u32 = 0x03005D8C;
 
 /// Offsets within SaveBlock1 (from pokeemerald include/global.h struct SaveBlock1):
-///   +0x04: WarpData location { s8 mapGroup; s8 mapNum; s8 warpId; pad; s16 x; s16 y; }
-///   +0xA30: ObjectEvent objectEvents[16]  (struct ObjectEvent is 0x24 bytes)
-///     objectEvents[0] is the player (PLAYER_AVATAR_INDEX = 0)
-///     +0x10 within ObjectEvent: Coords16 currentCoords { s16 x; s16 y; }
+///   +0x00: Coords16 pos { s16 x; s16 y; }  — live player tile position
+///   +0x04: WarpData location { s8 mapGroup; s8 mapNum; ... }
 mod offset {
+    pub const PLAYER_X: u32 = 0x00; // pos.x
+    pub const PLAYER_Y: u32 = 0x02; // pos.y
     pub const MAP_BANK: u32 = 0x04; // location.mapGroup
-    pub const MAP_NUM: u32 = 0x05;  // location.mapNum
-    pub const PLAYER_X: u32 = 0xA30 + 0x10;      // objectEvents[0].currentCoords.x
-    pub const PLAYER_Y: u32 = 0xA30 + 0x10 + 0x02; // objectEvents[0].currentCoords.y
+    pub const MAP_NUM:  u32 = 0x05; // location.mapNum
 }
 
 fn read_u16_le(gba: &mut GameBoyAdvance, addr: u32) -> u16 {
