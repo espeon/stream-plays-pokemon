@@ -12,7 +12,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 BASE = ROOT / "pokeemerald" / "data" / "maps"
-SECTIONS_FILE = ROOT / "pokeemerald" / "src" / "data" / "region_map" / "region_map_sections.json"
+LAYOUTS_FILE = ROOT / "pokeemerald" / "data" / "layouts" / "layouts.json"
+SECTIONS_FILE = (
+    ROOT / "pokeemerald" / "src" / "data" / "region_map" / "region_map_sections.json"
+)
 OUT = ROOT / "browser-source" / "src" / "emerald-map-data.ts"
 
 MAPSEC_TABLE = """\
@@ -97,6 +100,16 @@ MAPSEC_TABLE = """\
   209: { name: "Desert Underpass", tx: 2, ty: 0, tw: 1, th: 1 },
   212: { name: "Trainer Hill",   tx: 8,  ty: 4,  tw: 1, th: 1 },"""
 
+
+def load_layouts():
+    """Load layout dimensions from layouts.json. Returns {layout_id: (width, height)}."""
+    with open(LAYOUTS_FILE) as f:
+        data = json.load(f)
+    return {
+        layout["id"]: (layout["width"], layout["height"]) for layout in data["layouts"]
+    }
+
+
 def main() -> None:
     if not SECTIONS_FILE.exists():
         print("error: pokeemerald not found. run `just setup` first.", file=sys.stderr)
@@ -106,16 +119,21 @@ def main() -> None:
         sections_data = json.load(f)
 
     mapsec_id = {s["id"]: i for i, s in enumerate(sections_data["map_sections"])}
+    layouts = load_layouts()
 
     with open(BASE / "map_groups.json") as f:
         groups = json.load(f)
 
-    blocks = []
+    mapsec_blocks = []
+    name_blocks = []
+    dims_blocks = []
     total = 0
     for group_idx, group_name in enumerate(groups["group_order"]):
         group_maps = groups[group_name]
         group_label = group_name.removeprefix("gMapGroup_")
-        entries = []
+        mapsec_entries = []
+        name_entries = []
+        dims_entries = []
         for map_idx, map_dir in enumerate(group_maps):
             map_json_path = BASE / map_dir / "map.json"
             try:
@@ -123,22 +141,41 @@ def main() -> None:
                     m = json.load(f)
             except Exception:
                 continue
+            key = group_idx * 1000 + map_idx
+
+            # MAPSEC mapping
             mapsec_name = m.get("region_map_section", "MAPSEC_DYNAMIC")
             idx = mapsec_id.get(mapsec_name)
-            if idx is None:
-                continue
-            key = group_idx * 1000 + map_idx
-            entries.append(f"  {key}: {idx},  // {map_dir}")
-        if entries:
-            blocks.append(f"  // Bank {group_idx}: {group_label}\n" + "\n".join(entries))
-            total += len(entries)
+            if idx is not None:
+                mapsec_entries.append(f"  {key}: {idx},  // {map_dir}")
 
-    mapping_body = "\n\n".join(blocks)
+            # Map name mapping
+            name_entries.append(f'  {key}: "{map_dir}",')
+
+            # Map dimensions (resolve layout -> width/height)
+            layout_id = m.get("layout")
+            if layout_id and layout_id in layouts:
+                w, h = layouts[layout_id]
+                dims_entries.append(f"  {key}: {{ w: {w}, h: {h} }},")
+
+        bank_comment = f"  // Bank {group_idx}: {group_label}"
+        if mapsec_entries:
+            mapsec_blocks.append(bank_comment + "\n" + "\n".join(mapsec_entries))
+            total += len(mapsec_entries)
+        if name_entries:
+            name_blocks.append(bank_comment + "\n" + "\n".join(name_entries))
+        if dims_entries:
+            dims_blocks.append(bank_comment + "\n" + "\n".join(dims_entries))
+
+    mapsec_body = "\n\n".join(mapsec_blocks)
+    name_body = "\n\n".join(name_blocks)
+    dims_body = "\n\n".join(dims_blocks)
 
     ts = f"""// Pokémon Emerald map data for the region map display.
 // Sources:
 //   - pokeemerald decomp: src/data/region_map/region_map_sections.json
 //   - pokeemerald decomp: data/maps/map_groups.json
+//   - pokeemerald decomp: data/layouts/layouts.json
 //
 // Map image: 224×120 pixels (28×15 tiles at 8px/tile).
 // The world map PNG from the decomp is at graphics/pokenav/region_map/map.png.
@@ -172,7 +209,7 @@ export const MAPSEC: Record<number, MapsecEntry> = {{
 // Generated from pokeemerald data/maps/map_groups.json + each map's region_map_section field.
 // Maps with MAPSEC_DYNAMIC or MAPSEC_SECRET_BASE are omitted (lookupLocation returns null).
 export const EMERALD_MAP_TO_MAPSEC: Record<number, number> = {{
-{mapping_body}
+{mapsec_body}
 }};
 
 /** Look up the MAPSEC entry for a given (map_bank, map_num) pair. */
@@ -190,10 +227,107 @@ export function tileCenterPx(tx: number, ty: number, tw: number, th: number): {{
     y: (ty + th / 2) * 8,
   }};
 }}
+
+// (map_bank * 1000 + map_num) → map name string for all Emerald maps.
+export const EMERALD_MAP_TO_MAP_NAME: Record<number, string> = {{
+{name_body}
+}};
+
+// (map_bank * 1000 + map_num) → map dimensions in metatiles (16px each).
+// Resolved from each map's layout in layouts.json.
+export const EMERALD_MAP_DIMENSIONS: Record<number, {{ w: number; h: number }}> = {{
+{dims_body}
+}};
+
+/** Look up map dimensions (in metatiles) for a given (map_bank, map_num) pair. */
+export function lookupMapDimensions(bank: number, num: number): {{ w: number; h: number }} | null {{
+  return EMERALD_MAP_DIMENSIONS[bank * 1000 + num] ?? null;
+}}
+
+/**
+ * Parses an Emerald map string into a structured object.
+ *
+ * @param {{string}} mapString - The raw map string (e.g., "MauvilleCity_House2")
+ * @returns {{{{mainArea: string, mapName?: string, floor?: number}}}}
+ */
+export function formatMapName(mapString: string) {{
+  const parts = mapString.split("_");
+
+  // 1. Extract Main Area (always the first part)
+  const mainAreaRaw = parts.shift();
+  if (!mainAreaRaw) {{
+    return {{ mainArea: "Unknown", mapName: undefined, floor: undefined }};
+  }}
+  const mainArea = splitCamelCase(mainAreaRaw);
+
+  let floor = undefined;
+  let mapName = undefined;
+
+  // 2. Check for Floor Information (usually the last part, e.g., "1F", "B1F")
+  if (parts.length > 0) {{
+    const lastPart = parts[parts.length - 1];
+
+    // Match "1F", "2F" (Group 2) or "B1F" (Group 1)
+    const floorMatch = lastPart.match(/^B(\\d+)F$|^(\\d+)F$/);
+
+    if (floorMatch) {{
+      if (floorMatch[1]) {{
+        // It's a Basement (B#F)
+        floor = -parseInt(floorMatch[1], 10);
+      }} else if (floorMatch[2]) {{
+        // It's a Regular Floor (#F)
+        floor = parseInt(floorMatch[2], 10);
+      }}
+      parts.pop(); // Remove the floor part from the array
+    }}
+  }}
+
+  // 3. Construct Map Name (remaining parts)
+  if (parts.length > 0) {{
+    mapName = parts.map(splitCamelCase).join(" ");
+  }}
+
+  return {{
+    mainArea,
+    mapName,
+    floor,
+  }};
+}}
+
+/**
+ * Helper to split CamelCase strings into readable sentences.
+ * Handles numbers attached to letters (e.g., Route101 -> Route 101).
+ */
+function splitCamelCase(str: string) {{
+  // Insert space before Capital Letters preceded by lowercase/numbers
+  // And before numbers preceded by letters
+  return str
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/([a-zA-Z])([0-9])/g, "$1 $2")
+    .replace(/([0-9])([a-zA-Z])/g, "$1 $2")
+    .replace("Mays", "May's")
+    .replace("Brendans", "Brendan's")
+    .replace("Birchs", "Birch's")
+    .replace("Lanettes", "Lanette's")
+    .replace("Familys", "Family's")
+    .replace("Ladys", "Lady's")
+    .replace("Hunters", "Hunter's")
+    .replace("Masters", "Master's")
+    .replace("Pokemon", "Pokémon");
+}}
+
+export function emeraldMapToObject(bank: number, map: number) {{
+  const mapId = bank * 1000 + map;
+  const mapString = EMERALD_MAP_TO_MAP_NAME[mapId];
+  if (!mapString) {{
+    return {{ mainArea: "Unknown", mapName: "Unknown", floor: undefined }};
+  }}
+  return formatMapName(mapString);
+}}
 """
 
     OUT.write_text(ts)
-    print(f"wrote {OUT} ({total} map entries)")
+    print(f"wrote {OUT} ({total} mapsec entries)")
 
 
 if __name__ == "__main__":

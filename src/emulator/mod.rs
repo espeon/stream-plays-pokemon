@@ -111,7 +111,11 @@ pub fn spawn_emulator(
         })
         .map_err(AppError::Io)?;
 
-    Ok(EmulatorHandle { cmd_tx, fps_x10, overlay_keys })
+    Ok(EmulatorHandle {
+        cmd_tx,
+        fps_x10,
+        overlay_keys,
+    })
 }
 
 fn spawn_encode_thread(
@@ -127,7 +131,12 @@ fn spawn_encode_thread(
                 Err(_) => break,
             };
             let rgb = to_rgb(&raw);
-            match encode_jpeg(&rgb, frame::DISPLAY_WIDTH, frame::DISPLAY_HEIGHT, jpeg_quality) {
+            match encode_jpeg(
+                &rgb,
+                frame::DISPLAY_WIDTH,
+                frame::DISPLAY_HEIGHT,
+                jpeg_quality,
+            ) {
                 Ok(jpeg) => {
                     let _ = broadcast_tx.send(BroadcastMessage::Frame(jpeg));
                 }
@@ -153,7 +162,9 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
         fps_x10,
         overlay_keys,
     } = args;
-    let bios = std::fs::read(&bios_path).map_err(AppError::Io)?.into_boxed_slice();
+    let bios = std::fs::read(&bios_path)
+        .map_err(AppError::Io)?
+        .into_boxed_slice();
     let cartridge = GamepakBuilder::new()
         .file(std::path::Path::new(&rom_path))
         .build()
@@ -166,7 +177,10 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
     if let Some(game) = gen3_game {
         tracing::info!("detected Gen III game: {:?}", game);
     } else {
-        tracing::warn!("game code '{}' not recognized as a Gen III game — party data will not be broadcast", gba.get_game_code());
+        tracing::warn!(
+            "game code '{}' not recognized as a Gen III game — party data will not be broadcast",
+            gba.get_game_code()
+        );
     }
 
     let frame_skip = (60 / target_fps.max(1)).max(1);
@@ -242,8 +256,8 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
             }
         }
 
-        // Broadcast player location at ~2 Hz
-        if frame_count.is_multiple_of(30) && gen3_game.is_some() {
+        // Broadcast player location at ~6 Hz
+        if frame_count.is_multiple_of(10) && gen3_game.is_some() {
             let loc = read_location(&mut gba);
             if let Ok(json) = serde_json::to_vec(&loc) {
                 let _ = broadcast_tx.send(BroadcastMessage::Location(json));
@@ -277,4 +291,3 @@ fn save_state(gba: &GameBoyAdvance, save_dir: &std::path::Path) -> Result<(), Ap
     tracing::info!("saved state to {}", path.display());
     Ok(())
 }
-
