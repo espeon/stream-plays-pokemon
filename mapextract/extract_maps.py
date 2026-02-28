@@ -16,140 +16,6 @@ from PIL import Image
 import numpy as np
 
 
-# Movement types that indicate a stationary object — render its sprite.
-# Excludes WANDER_*, WALK_* (non-in-place), JOG/RUN, COPY_PLAYER_*, INVISIBLE.
-STANDER_MOVEMENT_TYPES: frozenset = frozenset({
-    'MOVEMENT_TYPE_FACE_DOWN', 'MOVEMENT_TYPE_FACE_UP',
-    'MOVEMENT_TYPE_FACE_LEFT', 'MOVEMENT_TYPE_FACE_RIGHT',
-    'MOVEMENT_TYPE_LOOK_AROUND',
-    'MOVEMENT_TYPE_FACE_DOWN_AND_LEFT', 'MOVEMENT_TYPE_FACE_DOWN_AND_RIGHT',
-    'MOVEMENT_TYPE_FACE_UP_AND_LEFT', 'MOVEMENT_TYPE_FACE_UP_AND_RIGHT',
-    'MOVEMENT_TYPE_FACE_LEFT_AND_RIGHT', 'MOVEMENT_TYPE_FACE_DOWN_AND_UP',
-    'MOVEMENT_TYPE_FACE_DOWN_UP_AND_RIGHT', 'MOVEMENT_TYPE_FACE_UP_LEFT_AND_RIGHT',
-    'MOVEMENT_TYPE_FACE_DOWN_LEFT_AND_RIGHT',
-    'MOVEMENT_TYPE_ROTATE_CLOCKWISE', 'MOVEMENT_TYPE_ROTATE_COUNTERCLOCKWISE',
-    'MOVEMENT_TYPE_WALK_IN_PLACE_DOWN', 'MOVEMENT_TYPE_WALK_IN_PLACE_UP',
-    'MOVEMENT_TYPE_WALK_IN_PLACE_LEFT', 'MOVEMENT_TYPE_WALK_IN_PLACE_RIGHT',
-    'MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_LEFT', 'MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_RIGHT',
-    'MOVEMENT_TYPE_JOG_IN_PLACE_LEFT', 'MOVEMENT_TYPE_JOG_IN_PLACE_RIGHT',
-    'MOVEMENT_TYPE_TREE_DISGUISE', 'MOVEMENT_TYPE_MOUNTAIN_DISGUISE',
-    'MOVEMENT_TYPE_BERRY_TREE_GROWTH',
-    'MOVEMENT_TYPE_BURIED',
-})
-
-
-def build_object_event_sprite_map(base_dir: Path) -> Dict[str, Tuple[Path, int, int]]:
-    """Build mapping from OBJ_EVENT_GFX_{NAME} suffix → (png_path, width, height).
-
-    Resolves the three-step chain:
-      pointers.h:      OBJ_EVENT_GFX_{X}        → gObjectEventGraphicsInfo_{Y}
-      graphics_info.h: gObjectEventGraphicsInfo_{Y} → (width, height)
-      graphics.h:      gObjectEventPic_{Y}         → file path  (PicName ≈ InfoName)
-    """
-    obj_dir = base_dir / "src" / "data" / "object_events"
-
-    # Step 1: GFX name → GraphicsInfo name
-    gfx_to_info: Dict[str, str] = {}
-    ptr_pattern = re.compile(r'\[OBJ_EVENT_GFX_(\w+)\]\s*=\s*&gObjectEventGraphicsInfo_(\w+)')
-    pointers_h = obj_dir / "object_event_graphics_info_pointers.h"
-    if pointers_h.exists():
-        for m in ptr_pattern.finditer(pointers_h.read_text()):
-            gfx_to_info[m.group(1)] = m.group(2)
-
-    # Step 2: GraphicsInfo name → (width, height)
-    info_dims: Dict[str, Tuple[int, int]] = {}
-    info_pattern = re.compile(
-        r'gObjectEventGraphicsInfo_(\w+)\s*=\s*\{[^}]*?\.width\s*=\s*(\d+)[^}]*?\.height\s*=\s*(\d+)',
-        re.DOTALL
-    )
-    info_h = obj_dir / "object_event_graphics_info.h"
-    if info_h.exists():
-        for m in info_pattern.finditer(info_h.read_text()):
-            info_dims[m.group(1)] = (int(m.group(2)), int(m.group(3)))
-
-    # Step 3: Pic name → PNG path  (gObjectEventPic_{Name} → path)
-    pic_paths: Dict[str, Path] = {}
-    pic_pattern = re.compile(r'gObjectEventPic_(\w+)\s*\[\]\s*=\s*INCBIN_U\d+\("([^"]+)"\)')
-    gfx_h = obj_dir / "object_event_graphics.h"
-    if gfx_h.exists():
-        for m in pic_pattern.finditer(gfx_h.read_text()):
-            raw = m.group(2).replace(".4bpp.lz", ".png").replace(".4bpp", ".png")
-            pic_paths[m.group(1)] = base_dir / raw
-
-    # Chain everything together
-    result: Dict[str, Tuple[Path, int, int]] = {}
-    for gfx_name, info_name in gfx_to_info.items():
-        dims = info_dims.get(info_name)
-        if dims is None:
-            continue
-        w, h = dims
-        # Try InfoName as the pic name directly; some sprites use a different pic
-        # (e.g. BrendanNormal → gObjectEventPic_BrendanNormal)
-        png = pic_paths.get(info_name)
-        if png is None or not png.exists():
-            continue
-        result[gfx_name] = (png, w, h)
-    return result
-
-
-def render_sprite_frame(png_path: Path, width: int, height: int) -> Optional[Image.Image]:
-    """Extract frame 0 from a sprite sheet as an RGBA image (color index 0 = transparent)."""
-    try:
-        sheet = Image.open(png_path)
-    except Exception:
-        return None
-
-    frame = sheet.crop((0, 0, width, height))
-    palette = sheet.getpalette()  # flat [R, G, B, R, G, B, ...]
-
-    result = Image.new('RGBA', (width, height), (0, 0, 0, 0))
-    for y in range(height):
-        for x in range(width):
-            idx = frame.getpixel((x, y))
-            if idx == 0:
-                continue
-            r, g, b = palette[idx * 3], palette[idx * 3 + 1], palette[idx * 3 + 2]
-            result.putpixel((x, y), (r, g, b, 255))
-    return result
-
-
-def composite_object_events(
-    map_img: Image.Image,
-    map_json_path: Path,
-    sprite_map: Dict[str, Tuple[Path, int, int]],
-) -> Image.Image:
-    """Overlay stationary object events onto a rendered map image."""
-    try:
-        with open(map_json_path) as f:
-            map_data = json.load(f)
-    except Exception:
-        return map_img
-
-    for event in map_data.get('object_events', []):
-        movement_type = event.get('movement_type', '')
-        if movement_type == 'MOVEMENT_TYPE_INVISIBLE':
-            continue
-        if movement_type not in STANDER_MOVEMENT_TYPES:
-            continue
-
-        gfx_name = event.get('graphics_id', '').removeprefix('OBJ_EVENT_GFX_')
-        entry = sprite_map.get(gfx_name)
-        if entry is None:
-            continue
-
-        png_path, w, h = entry
-        sprite = render_sprite_frame(png_path, w, h)
-        if sprite is None:
-            continue
-
-        x, y = int(event['x']), int(event['y'])
-        # Align sprite feet to the bottom of metatile (x, y)
-        paste_x = x * 16
-        paste_y = (y + 1) * 16 - h
-        map_img.paste(sprite, (paste_x, paste_y), mask=sprite)
-
-    return map_img
-
 
 def build_tileset_path_map(base_dir: Path) -> Dict[str, Path]:
     """Build a map from gTileset_* names (as used in layouts.json) to tiles.png paths.
@@ -765,8 +631,6 @@ def main():
 
     print("Loading tilesets and layouts...")
     path_map = build_tileset_path_map(base_dir)
-    sprite_map = build_object_event_sprite_map(base_dir)
-    print(f"Resolved {len(sprite_map)} object event sprite types")
     layouts = load_layouts(layouts_json)
     maps, map_layouts = load_maps(map_groups_json, base_dir)
 
@@ -818,10 +682,6 @@ def main():
 
             # Render map tiles
             map_img = render_map(map_grid, primary_ts, secondary_ts, is_debug)
-
-            # Overlay stationary object events (rocks, trees, items, stander NPCs)
-            map_json_path = base_dir / "data" / "maps" / map_obj.name / "map.json"
-            map_img = composite_object_events(map_img, map_json_path, sprite_map)
 
             # Save to PNG
             output_filename = f"map_{map_obj.id:04X}_{map_obj.name}.png"
