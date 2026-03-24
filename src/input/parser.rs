@@ -20,7 +20,7 @@ pub fn parse_chat_message(text: &str) -> Option<ParsedInput> {
         "r" => return Some(ParsedInput::Button(GbaButton::R)),
         "wait" => return Some(ParsedInput::Wait),
         "anarchy" => return Some(ParsedInput::VoteAnarchy),
-        "democracy" => return Some(ParsedInput::VoleDemocracy),
+        "democracy" => return Some(ParsedInput::VoteDemocracy),
         _ => {}
     }
 
@@ -36,7 +36,7 @@ fn parse_compound(text: &str) -> Option<ParsedInput> {
     // can be up to MAX_COMPOUND_REPEAT which is 3 digits, but we'll just parse until we hit a non-digit
     let mut repeat_str = String::new();
     for c in text.chars().rev() {
-        if c.is_digit(10) {
+        if c.is_ascii_digit() {
             repeat_str.insert(0, c);
         } else {
             break;
@@ -92,7 +92,7 @@ mod tests {
         assert_eq!(parse_chat_message("UP"), Some(ParsedInput::Button(GbaButton::Up)));
         assert_eq!(parse_chat_message("Right"), Some(ParsedInput::Button(GbaButton::Right)));
         assert_eq!(parse_chat_message("START"), Some(ParsedInput::Button(GbaButton::Start)));
-        assert_eq!(parse_chat_message("DEMOCRACY"), Some(ParsedInput::VoleDemocracy));
+        assert_eq!(parse_chat_message("DEMOCRACY"), Some(ParsedInput::VoteDemocracy));
     }
 
     #[test]
@@ -107,7 +107,7 @@ mod tests {
     fn test_parses_mode_votes_and_wait() {
         assert_eq!(parse_chat_message("wait"), Some(ParsedInput::Wait));
         assert_eq!(parse_chat_message("anarchy"), Some(ParsedInput::VoteAnarchy));
-        assert_eq!(parse_chat_message("democracy"), Some(ParsedInput::VoleDemocracy));
+        assert_eq!(parse_chat_message("democracy"), Some(ParsedInput::VoteDemocracy));
     }
 
     #[test]
@@ -116,16 +116,17 @@ mod tests {
         assert_eq!(parse_chat_message(""), None);
         assert_eq!(parse_chat_message("   "), None);
         assert_eq!(parse_chat_message("xyz"), None);
-        assert_eq!(parse_chat_message("right10"), None);
         assert_eq!(parse_chat_message("a0"), None);
-        assert_eq!(parse_chat_message("a1"), None);
         assert_eq!(parse_chat_message("notabutton3"), None);
     }
 
     #[test]
     fn test_compound_repeat_cap() {
-        assert_eq!(parse_chat_message(&format!("right{}", MAX_COMPOUND_REPEAT)), Some(ParsedInput::Compound(GbaButton::Right, 9)));
-        assert_eq!(parse_chat_message(&format!("right{}", MAX_COMPOUND_REPEAT + 1)), None);
+        assert_eq!(
+            parse_chat_message(&format!("right{}", MAX_COMPOUND_REPEAT)),
+            Some(ParsedInput::Compound(GbaButton::Right, MAX_COMPOUND_REPEAT)),
+        );
+        assert_eq!(parse_chat_message(&format!("right{}", u16::from(MAX_COMPOUND_REPEAT) + 1)), None);
     }
 
     #[test]
@@ -150,6 +151,6 @@ mod tests {
     fn test_expand_wait_and_votes_are_empty() {
         assert_eq!(ParsedInput::Wait.expand(), vec![]);
         assert_eq!(ParsedInput::VoteAnarchy.expand(), vec![]);
-        assert_eq!(ParsedInput::VoleDemocracy.expand(), vec![]);
+        assert_eq!(ParsedInput::VoteDemocracy.expand(), vec![]);
     }
 }

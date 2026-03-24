@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use super::{
     charmap::decode_string,
     decrypt::{attacks_slot, decrypt_block, get_substructure, growth_slot, read_u16},
+    read_u16_le, read_u32_le, read_u8,
     Gen3Game,
 };
 
@@ -38,23 +39,9 @@ impl PartyPokemon {
     }
 }
 
-fn read_u32_le(gba: &mut GameBoyAdvance, addr: u32) -> u32 {
-    let b0 = gba.debug_read_8(addr) as u32;
-    let b1 = gba.debug_read_8(addr + 1) as u32;
-    let b2 = gba.debug_read_8(addr + 2) as u32;
-    let b3 = gba.debug_read_8(addr + 3) as u32;
-    b0 | (b1 << 8) | (b2 << 16) | (b3 << 24)
-}
-
-fn read_u16_le(gba: &mut GameBoyAdvance, addr: u32) -> u16 {
-    let lo = gba.debug_read_8(addr) as u16;
-    let hi = gba.debug_read_8(addr + 1) as u16;
-    lo | (hi << 8)
-}
-
 fn read_bytes(gba: &mut GameBoyAdvance, addr: u32, buf: &mut [u8]) {
     for (i, byte) in buf.iter_mut().enumerate() {
-        *byte = gba.debug_read_8(addr + i as u32);
+        *byte = read_u8(gba, addr + i as u32);
     }
 }
 

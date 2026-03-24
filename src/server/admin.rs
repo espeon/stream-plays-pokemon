@@ -100,6 +100,7 @@ mod tests {
             uptime_seconds: 0,
             total_inputs: 0,
             emulator_fps: 0.0,
+            button_counts: HashMap::new(),
         };
         let (cmd_tx, _cmd_rx) = std::sync::mpsc::sync_channel(8);
         AdminState {

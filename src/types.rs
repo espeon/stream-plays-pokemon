@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     Anarchy,
@@ -15,6 +15,7 @@ pub enum BroadcastMessage {
     State(Vec<u8>),    // 0x03 prefix: JSON GameState
     Party(Vec<u8>),    // 0x04 prefix: JSON Vec<PartyPokemon>
     Location(Vec<u8>), // 0x05 prefix: JSON PlayerLocation
+    Badges(Vec<u8>),   // 0x06 prefix: JSON BadgeState
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -35,4 +36,5 @@ pub struct GameState {
     pub uptime_seconds: u64,
     pub total_inputs: u64,
     pub emulator_fps: f64,
+    pub button_counts: HashMap<String, u64>,
 }

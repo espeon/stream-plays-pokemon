@@ -1,7 +1,37 @@
+pub mod badges;
 pub mod charmap;
 pub mod decrypt;
 pub mod location;
 pub mod party;
+
+use rustboyadvance_ng::prelude::GameBoyAdvance;
+
+/// Pointer to SaveBlock1 in IWRAM; dereference to get the EWRAM base address.
+/// Source: BPEE community linker script (sav1 = 0x03005D8C).
+pub const SAVE_BLOCK_1_PTR: u32 = 0x03005D8C;
+
+pub fn read_u8(gba: &mut GameBoyAdvance, addr: u32) -> u8 {
+    gba.debug_read_8(addr)
+}
+
+pub fn read_u16_le(gba: &mut GameBoyAdvance, addr: u32) -> u16 {
+    let lo = gba.debug_read_8(addr) as u16;
+    let hi = gba.debug_read_8(addr + 1) as u16;
+    lo | (hi << 8)
+}
+
+pub fn read_u32_le(gba: &mut GameBoyAdvance, addr: u32) -> u32 {
+    let b0 = gba.debug_read_8(addr) as u32;
+    let b1 = gba.debug_read_8(addr + 1) as u32;
+    let b2 = gba.debug_read_8(addr + 2) as u32;
+    let b3 = gba.debug_read_8(addr + 3) as u32;
+    b0 | (b1 << 8) | (b2 << 16) | (b3 << 24)
+}
+
+/// Dereference SAVE_BLOCK_1_PTR to get the base address of SaveBlock1 in EWRAM.
+pub fn save1_base(gba: &mut GameBoyAdvance) -> u32 {
+    read_u32_le(gba, SAVE_BLOCK_1_PTR)
+}
 
 /// Identifies a Gen III Pokémon game by its ROM header game code.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

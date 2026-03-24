@@ -19,7 +19,7 @@ use tokio::sync::broadcast;
 
 use crate::config::EmulatorConfig;
 use crate::error::AppError;
-use crate::gba_mem::{location::read_location, party::read_party, Gen3Game};
+use crate::gba_mem::{badges::read_badges, location::read_location, party::read_party, Gen3Game};
 use crate::input::types::GbaButton;
 use crate::types::BroadcastMessage;
 use crate::vote::engine::VoteEngine;
@@ -125,11 +125,7 @@ fn spawn_encode_thread(
     let (frame_tx, frame_rx) = mpsc::sync_channel::<Vec<u32>>(1);
     thread::Builder::new()
         .name("jpeg-encode".into())
-        .spawn(move || loop {
-            let raw = match frame_rx.recv() {
-                Ok(buf) => buf,
-                Err(_) => break,
-            };
+        .spawn(move || while let Ok(raw) = frame_rx.recv() {
             let rgb = to_rgb(&raw);
             match encode_jpeg(
                 &rgb,
@@ -246,12 +242,18 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
             let _ = encode_tx.try_send(raw);
         }
 
-        // Broadcast party data at ~1 Hz
+        // Broadcast party data and badges at ~1 Hz
         if frame_count.is_multiple_of(60) {
             if let Some(game) = gen3_game {
                 let party = read_party(&mut gba, game);
                 if let Ok(json) = serde_json::to_vec(&party) {
                     let _ = broadcast_tx.send(BroadcastMessage::Party(json));
+                }
+            }
+            if gen3_game.is_some() {
+                let badge_state = read_badges(&mut gba);
+                if let Ok(json) = serde_json::to_vec(&badge_state) {
+                    let _ = broadcast_tx.send(BroadcastMessage::Badges(json));
                 }
             }
         }

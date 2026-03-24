@@ -1,6 +1,8 @@
 use rustboyadvance_ng::prelude::GameBoyAdvance;
 use serde::{Deserialize, Serialize};
 
+use super::{read_u16_le, read_u8, save1_base};
+
 /// Player location read from GBA memory.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PlayerLocation {
@@ -12,11 +14,6 @@ pub struct PlayerLocation {
     pub y: u16,
 }
 
-/// Address of the gSaveBlock1Ptr variable in IWRAM.
-/// Dereference this to get the base address of the SaveBlock1 struct in EWRAM.
-/// Source: BPEE community linker script (sav1 = 0x03005D8C).
-const SAVE_BLOCK_1_PTR: u32 = 0x03005D8C;
-
 /// Offsets within SaveBlock1 (from pokeemerald include/global.h struct SaveBlock1):
 ///   +0x00: Coords16 pos { s16 x; s16 y; }  — live player tile position
 ///   +0x04: WarpData location { s8 mapGroup; s8 mapNum; ... }
@@ -27,25 +24,11 @@ mod offset {
     pub const MAP_NUM:  u32 = 0x05; // location.mapNum
 }
 
-fn read_u16_le(gba: &mut GameBoyAdvance, addr: u32) -> u16 {
-    let lo = gba.debug_read_8(addr) as u16;
-    let hi = gba.debug_read_8(addr + 1) as u16;
-    lo | (hi << 8)
-}
-
-fn read_u32_le(gba: &mut GameBoyAdvance, addr: u32) -> u32 {
-    let b0 = gba.debug_read_8(addr) as u32;
-    let b1 = gba.debug_read_8(addr + 1) as u32;
-    let b2 = gba.debug_read_8(addr + 2) as u32;
-    let b3 = gba.debug_read_8(addr + 3) as u32;
-    b0 | (b1 << 8) | (b2 << 16) | (b3 << 24)
-}
-
 pub fn read_location(gba: &mut GameBoyAdvance) -> PlayerLocation {
-    let save1 = read_u32_le(gba, SAVE_BLOCK_1_PTR);
+    let save1 = save1_base(gba);
     PlayerLocation {
-        map_bank: gba.debug_read_8(save1 + offset::MAP_BANK),
-        map_num: gba.debug_read_8(save1 + offset::MAP_NUM),
+        map_bank: read_u8(gba, save1 + offset::MAP_BANK),
+        map_num: read_u8(gba, save1 + offset::MAP_NUM),
         x: read_u16_le(gba, save1 + offset::PLAYER_X),
         y: read_u16_le(gba, save1 + offset::PLAYER_Y),
     }

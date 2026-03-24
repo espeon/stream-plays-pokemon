@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useGameStream } from "./useGameStream";
-import type { GameState } from "./types";
+import type { BadgeState, GameState } from "./types";
 import FrameWorker from "./frame-worker?worker";
 import InputRow from "./components/input";
 import { PartyPanel } from "./components/pokemon-card";
@@ -32,6 +32,7 @@ export default function App() {
     state,
     party,
     location,
+    badges,
     connected,
     frameCallbackRef,
     unmute,
@@ -113,7 +114,7 @@ export default function App() {
 
           {/* Inputs + stats */}
           <div className="flex-1 rounded-xl bg-muted/60 border border-white/8 flex flex-col gap-2 p-4 overflow-hidden">
-            <InputsPanel state={state} />
+            <InputsPanel state={state} badges={badges} />
           </div>
         </div>
 
@@ -129,7 +130,30 @@ export default function App() {
   );
 }
 
-function InputsPanel({ state }: { state: GameState | null }) {
+const BADGE_NAMES = ["Stone", "Knuckle", "Dynamo", "Heat", "Balance", "Feather", "Mind", "Rain"];
+
+function BadgePips({ badges }: { badges: BadgeState | null }) {
+  return (
+    <div className="flex gap-1 items-center">
+      {BADGE_NAMES.map((name, i) => {
+        const earned = badges !== null && ((badges.badges >> i) & 1) === 1;
+        return (
+          <div
+            key={name}
+            title={name}
+            className={`w-2.5 h-2.5 rounded-full border ${
+              earned
+                ? "bg-amber-400 border-amber-300"
+                : "bg-transparent border-white/20"
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function InputsPanel({ state, badges }: { state: GameState | null; badges: BadgeState | null }) {
   if (!state) return null;
   const isAnarchy = state.mode === "anarchy";
 
@@ -141,7 +165,7 @@ function InputsPanel({ state }: { state: GameState | null }) {
 
   return (
     <>
-      {/* Mode + queue/vote */}
+      {/* Mode + queue/vote + badges */}
       <div className="flex items-center gap-2 shrink-0">
         <div
           className={`px-2 py-0.5 text-sm rounded font-medium tracking-widest uppercase ${
@@ -158,6 +182,8 @@ function InputsPanel({ state }: { state: GameState | null }) {
           </span>
         )}
         {!isAnarchy && <VoteTally state={state} />}
+        <div className="flex-1" />
+        <BadgePips badges={badges} />
       </div>
 
       {/* Recent inputs feed */}
@@ -167,12 +193,41 @@ function InputsPanel({ state }: { state: GameState | null }) {
         ))}
       </div>
 
-      {/* Stats */}
-      <div className="flex gap-4 text-[11px] tabular-nums text-white/35 shrink-0">
-        <span>{state.total_inputs.toLocaleString()} inputs</span>
-        <span>{uptimeParts.join(":")}</span>
+      {/* Stats + heatmap */}
+      <div className="flex flex-col gap-1.5 shrink-0">
+        <ButtonHeatmap counts={state.button_counts} />
+        <div className="flex gap-4 text-[11px] tabular-nums text-white/35">
+          <span>{state.total_inputs.toLocaleString()} inputs</span>
+          <span>{uptimeParts.join(":")}</span>
+        </div>
       </div>
     </>
+  );
+}
+
+function ButtonHeatmap({ counts }: { counts: Record<string, number> }) {
+  const entries = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+  if (entries.length === 0) return null;
+  const max = entries[0][1];
+  return (
+    <div className="flex flex-col gap-px">
+      {entries.map(([btn, count]) => (
+        <div key={btn} className="flex items-center gap-1.5">
+          <span className="text-[10px] uppercase text-white/30 w-8 text-right shrink-0">{btn}</span>
+          <div className="flex-1 h-1 rounded-full bg-white/8 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-emerald-500/60"
+              style={{ width: `${(count / max) * 100}%` }}
+            />
+          </div>
+          <span className="text-[10px] tabular-nums text-white/20 w-10 shrink-0">
+            {count.toLocaleString()}
+          </span>
+        </div>
+      ))}
+    </div>
   );
 }
 

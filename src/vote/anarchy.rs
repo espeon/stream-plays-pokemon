@@ -40,7 +40,7 @@ impl AnarchyQueue {
         }
 
         // Start button global throttle
-        if buttons.iter().any(|b| *b == GbaButton::Start) {
+        if buttons.contains(&GbaButton::Start) {
             if let Some(last) = self.last_start {
                 if now.duration_since(last) < self.start_throttle {
                     return;
@@ -65,6 +65,10 @@ impl AnarchyQueue {
 
     pub fn len(&self) -> usize {
         self.queue.len()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.queue.is_empty()
     }
 }
 

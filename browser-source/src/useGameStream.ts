@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createAudioWorkletBlobUrl } from "./audio-worklet";
-import type { GameState, PartyPokemon, PlayerLocation } from "./types";
+import type { BadgeState, GameState, PartyPokemon, PlayerLocation } from "./types";
 
 // if we're on the Vite dev server, proxy to the backend dev server
 const HOST_LOCATION = window.location.host.endsWith(":5173") ? "localhost:9001" : window.location.host; // e.g. "localhost:8080"
@@ -13,6 +13,7 @@ const TAG_AUDIO = 0x02;
 const TAG_STATE = 0x03;
 const TAG_PARTY = 0x04;
 const TAG_LOCATION = 0x05;
+const TAG_BADGES = 0x06;
 
 // button_id matches GBA KEYINPUT bit positions (0=pressed, 1=released)
 const KEY_MAP: Record<string, number> = {
@@ -48,6 +49,7 @@ export interface GameStream {
   state: GameState | null;
   party: PartyPokemon[];
   location: PlayerLocation | null;
+  badges: BadgeState | null;
   connected: boolean;
   isOverlay: boolean;
   frameCallbackRef: React.RefObject<((jpeg: ArrayBuffer) => void) | null>;
@@ -59,6 +61,7 @@ export function useGameStream(): GameStream {
   const [state, setState] = useState<GameState | null>(null);
   const [party, setParty] = useState<PartyPokemon[]>([]);
   const [location, setLocation] = useState<PlayerLocation | null>(null);
+  const [badges, setBadges] = useState<BadgeState | null>(null);
   const [connected, setConnected] = useState(false);
   const [audioReady, setAudioReady] = useState(false);
   const frameCallbackRef = useRef<((jpeg: ArrayBuffer) => void) | null>(null);
@@ -228,6 +231,13 @@ export function useGameStream(): GameStream {
           } catch {
             // malformed location — ignore
           }
+        } else if (tag === TAG_BADGES) {
+          try {
+            const text = new TextDecoder().decode(payload);
+            setBadges(JSON.parse(text) as BadgeState);
+          } catch {
+            // malformed badges — ignore
+          }
         }
       };
     }
@@ -270,5 +280,5 @@ export function useGameStream(): GameStream {
     };
   }, []);
 
-  return { state, party, location, connected, isOverlay: !!overlayToken, frameCallbackRef, unmute, audioReady };
+  return { state, party, location, badges, connected, isOverlay: !!overlayToken, frameCallbackRef, unmute, audioReady };
 }

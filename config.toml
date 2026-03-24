@@ -7,7 +7,7 @@ auto_restore = false
 
 [input]
 default_mode = "anarchy"
-democracy_window_secs = 10
+democracy_window_secs = 5
 rate_limit_ms = 200
 mode_switch_threshold = 0.75
 mode_switch_cooldown_secs = 300

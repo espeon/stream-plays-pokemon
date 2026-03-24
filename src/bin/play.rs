@@ -133,7 +133,7 @@ fn handle_input_connection(stream: TcpStream, input_tx: Arc<Mutex<SyncSender<Gba
                 }
             }
             Some(ParsedInput::Wait) => {}
-            Some(ParsedInput::VoteAnarchy | ParsedInput::VoleDemocracy) => {}
+            Some(ParsedInput::VoteAnarchy | ParsedInput::VoteDemocracy) => {}
             None => eprintln!("[play] unknown input: {line:?}"),
         }
     }
@@ -236,11 +236,7 @@ fn spawn_encode_thread() -> SyncSender<Vec<u32>> {
         .name("jpeg-encode".into())
         .spawn(move || {
             let mut stdout = std::io::stdout().lock();
-            loop {
-                let raw = match frame_rx.recv() {
-                    Ok(buf) => buf,
-                    Err(_) => break, // sender dropped — emulator exited
-                };
+            while let Ok(raw) = frame_rx.recv() {
                 let rgb = to_rgb(&raw);
                 let jpeg = match encode_jpeg(&rgb, DISPLAY_WIDTH, DISPLAY_HEIGHT, 85) {
                     Ok(j) => j,

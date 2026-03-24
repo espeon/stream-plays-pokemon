@@ -107,6 +107,7 @@ fn frame_message(msg: &BroadcastMessage) -> Message {
         BroadcastMessage::State(data) => prefix_bytes(0x03, data),
         BroadcastMessage::Party(data) => prefix_bytes(0x04, data),
         BroadcastMessage::Location(data) => prefix_bytes(0x05, data),
+        BroadcastMessage::Badges(data) => prefix_bytes(0x06, data),
     };
     Message::Binary(bytes.into())
 }
@@ -177,6 +178,18 @@ mod tests {
         if let Message::Binary(b) = framed {
             assert_eq!(b[0], 0x05);
             assert_eq!(&b[1..], b"{\"map_bank\":0}");
+        } else {
+            panic!("expected Binary message");
+        }
+    }
+
+    #[test]
+    fn test_frame_message_prefixes_badges() {
+        let msg = BroadcastMessage::Badges(b"{\"badges\":3}".to_vec());
+        let framed = frame_message(&msg);
+        if let Message::Binary(b) = framed {
+            assert_eq!(b[0], 0x06);
+            assert_eq!(&b[1..], b"{\"badges\":3}");
         } else {
             panic!("expected Binary message");
         }

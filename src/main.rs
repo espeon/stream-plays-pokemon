@@ -45,6 +45,7 @@ async fn main() -> anyhow::Result<()> {
         uptime_seconds: 0,
         total_inputs: 0,
         emulator_fps: 0.0,
+        button_counts: HashMap::new(),
     }));
 
     let save_dir = std::path::Path::new(&config.emulator.save_dir);
@@ -101,9 +102,14 @@ async fn main() -> anyhow::Result<()> {
                 let mut state = game_state.read().clone();
                 let engine = vote_engine.lock();
                 state.emulator_fps = fps_x10.load(Ordering::Relaxed) as f64 / 10.0;
+                state.mode = engine.mode;
                 state.queue_depth = engine.queue_depth();
                 state.recent_inputs = engine.recent_inputs();
                 state.total_inputs = engine.total_inputs;
+                state.votes = engine.vote_counts();
+                state.vote_time_remaining_ms = engine.vote_time_remaining_ms();
+                state.mode_votes = engine.mode_vote_counts();
+                state.button_counts = engine.button_counts_str();
                 state.uptime_seconds = start_time.elapsed().as_secs();
                 drop(engine);
                 if let Ok(json) = serde_json::to_vec(&state) {

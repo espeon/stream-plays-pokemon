@@ -38,7 +38,7 @@ pub enum ParsedInput {
     Compound(GbaButton, u8),
     Wait,
     VoteAnarchy,
-    VoleDemocracy,
+    VoteDemocracy,
 }
 
 impl ParsedInput {
@@ -47,7 +47,7 @@ impl ParsedInput {
             ParsedInput::Button(btn) => vec![*btn],
             ParsedInput::Compound(btn, count) => vec![*btn; *count as usize],
             ParsedInput::Wait => vec![],
-            ParsedInput::VoteAnarchy | ParsedInput::VoleDemocracy => vec![],
+            ParsedInput::VoteAnarchy | ParsedInput::VoteDemocracy => vec![],
         }
     }
 }

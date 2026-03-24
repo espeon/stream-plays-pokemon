@@ -16,6 +16,12 @@ export interface GameState {
   uptime_seconds: number;
   total_inputs: number;
   emulator_fps: number;
+  button_counts: Record<string, number>;
+}
+
+export interface BadgeState {
+  /** Bitmask: bit 0 = Stone Badge, bit 7 = Rain Badge */
+  badges: number;
 }
 
 export interface PartyPokemon {
