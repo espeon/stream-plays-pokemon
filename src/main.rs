@@ -1,9 +1,16 @@
 #![allow(dead_code, unused_imports)]
 
-use std::{collections::HashMap, net::SocketAddr, sync::Arc, sync::atomic::{AtomicU16, Ordering}, time::Instant};
+use std::{
+    collections::HashMap,
+    net::SocketAddr,
+    sync::atomic::{AtomicU16, Ordering},
+    sync::Arc,
+    time::Instant,
+};
 
 use anyhow::Context;
 use parking_lot::{Mutex, RwLock};
+use stream_plays_emerald::server::ws_handler::WsState;
 use stream_plays_emerald::{
     chat::client::run_chat_client,
     config::Config,
@@ -16,8 +23,7 @@ use stream_plays_emerald::{
     types::{BroadcastMessage, GameState, Mode},
     vote::engine::VoteEngine,
 };
-use stream_plays_emerald::server::admin::AdminState;
-use stream_plays_emerald::server::ws_handler::WsState;
+use stream_plays_emerald::{server::admin::AdminState, ViewerCountTracker};
 use tokio::{net::TcpListener, signal, time};
 use tracing_subscriber::EnvFilter;
 
@@ -34,6 +40,8 @@ async fn main() -> anyhow::Result<()> {
     let (broadcast_tx, _) = tokio::sync::broadcast::channel(2);
 
     let vote_engine = Arc::new(Mutex::new(VoteEngine::new(&config.input)));
+
+    let viewer_count_tracker = Arc::new(Mutex::new(ViewerCountTracker::new()));
 
     let game_state = Arc::new(RwLock::new(GameState {
         mode: Mode::Anarchy,
@@ -71,12 +79,15 @@ async fn main() -> anyhow::Result<()> {
         config.stream.audio_buffer_ms,
         Arc::clone(&vote_engine),
         Arc::clone(&overlay_keys),
+        Arc::clone(&viewer_count_tracker),
     )?;
 
     if config.emulator.auto_restore {
         if let Some(latest) = find_latest_save(save_dir) {
             tracing::info!("auto-restoring save state: {}", latest.display());
-            let _ = emulator_handle.cmd_tx.try_send(emulator::EmulatorCommand::LoadState(latest));
+            let _ = emulator_handle
+                .cmd_tx
+                .try_send(emulator::EmulatorCommand::LoadState(latest));
         }
     }
 
@@ -130,7 +141,7 @@ async fn main() -> anyhow::Result<()> {
         let ws_url = config.chat.streamplace_ws_url.clone();
         let engine = Arc::clone(&vote_engine);
         tokio::spawn(async move {
-            run_chat_client(ws_url, engine).await;
+            run_chat_client(ws_url, engine, viewer_count_tracker).await;
         });
     }
 

@@ -17,12 +17,12 @@ use rustboyadvance_ng::keypad::Keys;
 use rustboyadvance_ng::prelude::{GameBoyAdvance, GamepakBuilder};
 use tokio::sync::broadcast;
 
-use crate::config::EmulatorConfig;
 use crate::error::AppError;
 use crate::gba_mem::{badges::read_badges, location::read_location, party::read_party, Gen3Game};
 use crate::input::types::GbaButton;
 use crate::types::BroadcastMessage;
 use crate::vote::engine::VoteEngine;
+use crate::{config::EmulatorConfig, ViewerCountTracker};
 
 use audio::{create_audio_pair, drain_chunk, AudioConsumer, SendAudioInterface};
 use frame::{encode_jpeg, to_rgb};
@@ -82,6 +82,7 @@ pub fn spawn_emulator(
     audio_buffer_ms: u64,
     vote_engine: Arc<Mutex<VoteEngine>>,
     overlay_keys: Arc<AtomicU16>,
+    count_tracker: Arc<Mutex<ViewerCountTracker>>,
 ) -> Result<EmulatorHandle, AppError> {
     let (cmd_tx, cmd_rx) = mpsc::sync_channel::<EmulatorCommand>(8);
     let (audio_interface, audio_consumer) = create_audio_pair(audio_buffer_ms);
@@ -105,7 +106,7 @@ pub fn spawn_emulator(
     thread::Builder::new()
         .name("emulator".into())
         .spawn(move || {
-            if let Err(e) = run_emulator_loop(args) {
+            if let Err(e) = run_emulator_loop(args, count_tracker) {
                 tracing::error!("emulator thread exited with error: {e}");
             }
         })
@@ -125,25 +126,30 @@ fn spawn_encode_thread(
     let (frame_tx, frame_rx) = mpsc::sync_channel::<Vec<u32>>(1);
     thread::Builder::new()
         .name("jpeg-encode".into())
-        .spawn(move || while let Ok(raw) = frame_rx.recv() {
-            let rgb = to_rgb(&raw);
-            match encode_jpeg(
-                &rgb,
-                frame::DISPLAY_WIDTH,
-                frame::DISPLAY_HEIGHT,
-                jpeg_quality,
-            ) {
-                Ok(jpeg) => {
-                    let _ = broadcast_tx.send(BroadcastMessage::Frame(jpeg));
+        .spawn(move || {
+            while let Ok(raw) = frame_rx.recv() {
+                let rgb = to_rgb(&raw);
+                match encode_jpeg(
+                    &rgb,
+                    frame::DISPLAY_WIDTH,
+                    frame::DISPLAY_HEIGHT,
+                    jpeg_quality,
+                ) {
+                    Ok(jpeg) => {
+                        let _ = broadcast_tx.send(BroadcastMessage::Frame(jpeg));
+                    }
+                    Err(e) => tracing::warn!("jpeg encode error: {e}"),
                 }
-                Err(e) => tracing::warn!("jpeg encode error: {e}"),
             }
         })
         .expect("failed to spawn jpeg-encode thread");
     frame_tx
 }
 
-fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
+fn run_emulator_loop(
+    args: LoopArgs,
+    count_tracker: Arc<Mutex<ViewerCountTracker>>,
+) -> Result<(), AppError> {
     let LoopArgs {
         bios_path,
         rom_path,
@@ -213,7 +219,8 @@ fn run_emulator_loop(args: LoopArgs) -> Result<(), AppError> {
             }
         }
 
-        if paused {
+        // if no viewers, we should probably pause
+        if paused || count_tracker.lock().count == 0 {
             thread::sleep(Duration::from_millis(16));
             continue;
         }

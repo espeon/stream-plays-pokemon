@@ -9,12 +9,12 @@ Usage: python extract_maps.py [output_dir]
 import json
 import re
 import struct
-from pathlib import Path
-from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
-from PIL import Image
-import numpy as np
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
 
+import numpy as np
+from PIL import Image
 
 
 def build_tileset_path_map(base_dir: Path) -> Dict[str, Path]:
@@ -41,7 +41,11 @@ def build_tileset_path_map(base_dir: Path) -> Dict[str, Path]:
             continue
         for match in tiles_pattern.finditer(src.read_text()):
             tiles_name, raw_path = match.group(1), match.group(2)
-            if tiles_name.endswith("Compressed") or "Unknown" in tiles_name or "unknown" in tiles_name:
+            if (
+                tiles_name.endswith("Compressed")
+                or "Unknown" in tiles_name
+                or "unknown" in tiles_name
+            ):
                 continue
             if "unused_tiles" in raw_path or "unknown_tiles" in raw_path:
                 continue
@@ -51,8 +55,7 @@ def build_tileset_path_map(base_dir: Path) -> Dict[str, Path]:
     # Step 2: gTileset_{name} → gTilesetTiles_{tilesName} from headers.h
     headers_h = base_dir / "src" / "data" / "tilesets" / "headers.h"
     header_pattern = re.compile(
-        r'gTileset_(\w+)\s*=\s*\{[^}]*?\.tiles\s*=\s*gTilesetTiles_(\w+)',
-        re.DOTALL
+        r"gTileset_(\w+)\s*=\s*\{[^}]*?\.tiles\s*=\s*gTilesetTiles_(\w+)", re.DOTALL
     )
     result: Dict[str, Path] = {}
     if headers_h.exists():
@@ -72,15 +75,17 @@ def build_tileset_path_map(base_dir: Path) -> Dict[str, Path]:
 @dataclass
 class TileReference:
     """A reference to a tile within a metatile"""
-    tile_index: int      # Index of 8x8 tile in tileset
-    palette: int         # Palette index (0-15)
-    hflip: bool         # Horizontal flip
-    vflip: bool         # Vertical flip
+
+    tile_index: int  # Index of 8x8 tile in tileset
+    palette: int  # Palette index (0-15)
+    hflip: bool  # Horizontal flip
+    vflip: bool  # Vertical flip
 
 
 @dataclass
 class Metatile:
     """A 16x16 metatile composed of 8 tiles (2 layers of 2x2)"""
+
     bottom_layer: Tuple[TileReference, TileReference, TileReference, TileReference]
     top_layer: Tuple[TileReference, TileReference, TileReference, TileReference]
 
@@ -88,16 +93,18 @@ class Metatile:
 @dataclass
 class Tileset:
     """A tileset containing tiles, palettes, and metatiles"""
+
     name: str
-    tiles_png: Image.Image      # 4bpp tile graphics
+    tiles_png: Image.Image  # 4bpp tile graphics
     palettes: List[List[Tuple[int, int, int]]]  # 16 colors per palette
     metatiles: List[Metatile]  # Metatile definitions
-    attributes: List[int]        # Metatile attributes (layer type, behavior)
+    attributes: List[int]  # Metatile attributes (layer type, behavior)
 
 
 @dataclass
 class Layout:
     """A map layout with dimensions and tilesets"""
+
     id: str
     name: str
     width: int
@@ -111,6 +118,7 @@ class Layout:
 @dataclass
 class Map:
     """A complete map with numeric ID, layout, and events"""
+
     id: int
     group_num: int
     map_num: int
@@ -121,16 +129,16 @@ class Map:
 
 def read_jasc_palette(filepath: Path) -> List[Tuple[int, int, int]]:
     """Parse JASC-PAL format palette file"""
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         lines = [line.strip() for line in f.readlines()]
 
-    if not lines[0].startswith('JASC-PAL'):
+    if not lines[0].startswith("JASC-PAL"):
         raise ValueError(f"Invalid JASC-PAL header in {filepath}")
 
     num_colors = int(lines[2])
     colors = []
 
-    for line in lines[3:3 + num_colors]:
+    for line in lines[3 : 3 + num_colors]:
         r, g, b = map(int, line.split())
         colors.append((r, g, b))
 
@@ -162,7 +170,9 @@ def read_palette_set(tileset_dir: Path) -> List[List[Tuple[int, int, int]]]:
     palette_files.sort(key=lambda p: int(p.stem))
 
     if len(palette_files) != 16:
-        print(f"Warning: Expected 16 palettes, found {len(palette_files)} in {palettes_dir}")
+        print(
+            f"Warning: Expected 16 palettes, found {len(palette_files)} in {palettes_dir}"
+        )
 
     palette_set = []
     for pal_file in palette_files:
@@ -177,7 +187,7 @@ def decode_4bpp_tile(data: bytes, offset: int) -> np.ndarray:
     # 4bpp = 4 bits per pixel = 2 pixels per byte
     # Each tile is 8x8 = 64 pixels = 32 bytes
 
-    tile_data = data[offset:offset + 32]
+    tile_data = data[offset : offset + 32]
     pixels = np.zeros((8, 8), dtype=np.uint8)
 
     for row in range(8):
@@ -199,7 +209,7 @@ def extract_tiles_from_png(png_path: Path) -> Tuple[Image.Image, np.ndarray]:
     """Extract 8x8 tiles from a tileset PNG"""
     img = Image.open(png_path)
 
-    if img.mode != 'P':
+    if img.mode != "P":
         raise ValueError(f"Tileset PNG must be palette mode (P), got {img.mode}")
 
     # Convert to numpy array for easier processing
@@ -218,12 +228,14 @@ def decode_metatile_value(value: int) -> TileReference:
     - Bit 11:     Vertical flip
     - Bits 12-15: Palette index (4 bits, 0-15)
     """
-    tile_index = value & 0x03FF       # Bits 0-9
-    hflip      = (value >> 10) & 1    # Bit 10
-    vflip      = (value >> 11) & 1    # Bit 11
-    palette    = (value >> 12) & 0x0F # Bits 12-15
+    tile_index = value & 0x03FF  # Bits 0-9
+    hflip = (value >> 10) & 1  # Bit 10
+    vflip = (value >> 11) & 1  # Bit 11
+    palette = (value >> 12) & 0x0F  # Bits 12-15
 
-    return TileReference(tile_index=tile_index, palette=palette, hflip=bool(hflip), vflip=bool(vflip))
+    return TileReference(
+        tile_index=tile_index, palette=palette, hflip=bool(hflip), vflip=bool(vflip)
+    )
 
 
 def read_metatiles(metatile_path: Path, debug: bool = False) -> List[Metatile]:
@@ -232,7 +244,7 @@ def read_metatiles(metatile_path: Path, debug: bool = False) -> List[Metatile]:
     Each metatile is NUM_TILES_PER_METATILE (8) × 2 bytes = 16 bytes.
     Layout: 4 bottom-layer tiles then 4 top-layer tiles, each in TL/TR/BL/BR order.
     """
-    with open(metatile_path, 'rb') as f:
+    with open(metatile_path, "rb") as f:
         data = f.read()
 
     metatiles = []
@@ -241,21 +253,25 @@ def read_metatiles(metatile_path: Path, debug: bool = False) -> List[Metatile]:
     for i in range(num_metatiles):
         offset = i * 16
         tiles = [
-            decode_metatile_value(struct.unpack('<H', data[offset + j*2:offset + j*2 + 2])[0])
+            decode_metatile_value(
+                struct.unpack("<H", data[offset + j * 2 : offset + j * 2 + 2])[0]
+            )
             for j in range(8)
         ]
 
         # tiles[0-3]: bottom layer TL, TR, BL, BR
         # tiles[4-7]: top layer TL, TR, BL, BR
         bottom = (tiles[0], tiles[1], tiles[2], tiles[3])
-        top    = (tiles[4], tiles[5], tiles[6], tiles[7])
+        top = (tiles[4], tiles[5], tiles[6], tiles[7])
 
         if debug and i < 5:
             print(f"    DEBUG: Metatile {i}:")
             for j, t in enumerate(tiles):
                 layer = "bot" if j < 4 else "top"
-                pos   = ["TL","TR","BL","BR"][j % 4]
-                print(f"      [{layer} {pos}] tile={t.tile_index}, pal={t.palette}, hflip={t.hflip}, vflip={t.vflip}")
+                pos = ["TL", "TR", "BL", "BR"][j % 4]
+                print(
+                    f"      [{layer} {pos}] tile={t.tile_index}, pal={t.palette}, hflip={t.hflip}, vflip={t.vflip}"
+                )
 
         metatiles.append(Metatile(bottom_layer=bottom, top_layer=top))
 
@@ -264,21 +280,26 @@ def read_metatiles(metatile_path: Path, debug: bool = False) -> List[Metatile]:
 
 def read_metatile_attributes(attr_path: Path) -> List[int]:
     """Parse metatile_attributes.bin file"""
-    with open(attr_path, 'rb') as f:
+    with open(attr_path, "rb") as f:
         data = f.read()
 
     attributes = []
     num_attrs = len(data) // 2
 
     for i in range(num_attrs):
-        attr = struct.unpack('<H', data[i*2:(i+1)*2])[0]
+        attr = struct.unpack("<H", data[i * 2 : (i + 1) * 2])[0]
         attributes.append(attr)
 
     return attributes
 
 
-def load_tileset(tileset_name: str, tileset_type: str, base_dir: Path,
-                 path_map: Dict[str, Path], debug: bool = False) -> Tileset:
+def load_tileset(
+    tileset_name: str,
+    tileset_type: str,
+    base_dir: Path,
+    path_map: Dict[str, Path],
+    debug: bool = False,
+) -> Tileset:
     """Load a complete tileset, resolving paths from the graphics.h path map."""
     name = tileset_name.removeprefix("gTileset_")
 
@@ -306,7 +327,9 @@ def load_tileset(tileset_name: str, tileset_type: str, base_dir: Path,
     tiles_img, _ = extract_tiles_from_png(tiles_png)
     if debug:
         w, h = tiles_img.size
-        print(f"  DEBUG: Tiles PNG: {w}x{h} = {(w//8)*(h//8)} tiles ({w//8}x{h//8})")
+        print(
+            f"  DEBUG: Tiles PNG: {w}x{h} = {(w // 8) * (h // 8)} tiles ({w // 8}x{h // 8})"
+        )
 
     palettes = read_palette_set(tiles_dir)
     if debug:
@@ -323,27 +346,26 @@ def load_tileset(tileset_name: str, tileset_type: str, base_dir: Path,
         tiles_png=tiles_img,
         palettes=palettes,
         metatiles=metatiles,
-        attributes=attributes
+        attributes=attributes,
     )
-
 
 
 def load_layouts(layouts_json: Path) -> Dict[str, Layout]:
     """Load all layouts from layouts.json"""
-    with open(layouts_json, 'r') as f:
+    with open(layouts_json, "r") as f:
         data = json.load(f)
 
     layouts = {}
-    for layout_data in data['layouts']:
+    for layout_data in data["layouts"]:
         layout = Layout(
-            id=layout_data['id'],
-            name=layout_data['name'],
-            width=layout_data['width'],
-            height=layout_data['height'],
-            primary_tileset=layout_data['primary_tileset'],
-            secondary_tileset=layout_data['secondary_tileset'],
-            border_path=layout_data.get('border_filepath', ''),
-            blockdata_path=layout_data['blockdata_filepath']
+            id=layout_data["id"],
+            name=layout_data["name"],
+            width=layout_data["width"],
+            height=layout_data["height"],
+            primary_tileset=layout_data["primary_tileset"],
+            secondary_tileset=layout_data["secondary_tileset"],
+            border_path=layout_data.get("border_filepath", ""),
+            blockdata_path=layout_data["blockdata_filepath"],
         )
         layouts[layout.id] = layout
 
@@ -352,14 +374,14 @@ def load_layouts(layouts_json: Path) -> Dict[str, Layout]:
 
 def load_maps(map_groups_json: Path, base_dir: Path):
     """Load all maps from map_groups.json"""
-    with open(map_groups_json, 'r') as f:
+    with open(map_groups_json, "r") as f:
         data = json.load(f)
 
     maps = []
     map_layouts = {}
 
     # Iterate through groups in order
-    for group_idx, group_name in enumerate(data['group_order']):
+    for group_idx, group_name in enumerate(data["group_order"]):
         group_maps = data[group_name]
 
         for map_idx, map_name in enumerate(group_maps):
@@ -367,7 +389,7 @@ def load_maps(map_groups_json: Path, base_dir: Path):
             map_dir = base_dir / "data" / "maps" / map_name
             map_json_path = map_dir / "map.json"
 
-            with open(map_json_path, 'r') as f:
+            with open(map_json_path, "r") as f:
                 map_data = json.load(f)
 
             # Numeric ID: (map_num | (group_num << 8))
@@ -377,29 +399,33 @@ def load_maps(map_groups_json: Path, base_dir: Path):
                 id=map_id,
                 group_num=group_idx,
                 map_num=map_idx,
-                name=map_data['name'],
-                layout_id=map_data['layout'],
-                layout=None  # Will be filled in later
+                name=map_data["name"],
+                layout_id=map_data["layout"],
+                layout=None,  # Will be filled in later
             )
             maps.append(map_obj)
-            map_layouts[map_data['layout']] = map_obj
+            map_layouts[map_data["layout"]] = map_obj
 
     return maps, map_layouts
 
 
 def read_map_grid(blockdata_path: Path, width: int, height: int) -> np.ndarray:
     """Read map.bin file and decode to metatile ID grid"""
-    with open(blockdata_path, 'rb') as f:
+    with open(blockdata_path, "rb") as f:
         data = f.read()
 
     grid = np.zeros((height, width), dtype=np.uint16)
 
     expected_size = width * height * 2
     if len(data) < expected_size:
-        print(f"Warning: map.bin size {len(data)} < expected {expected_size}, padding with empty metatiles")
-        data = data + b'\x00' * (expected_size - len(data))
+        print(
+            f"Warning: map.bin size {len(data)} < expected {expected_size}, padding with empty metatiles"
+        )
+        data = data + b"\x00" * (expected_size - len(data))
     elif len(data) > expected_size:
-        print(f"Warning: map.bin size {len(data)} > expected {expected_size}, truncating")
+        print(
+            f"Warning: map.bin size {len(data)} > expected {expected_size}, truncating"
+        )
 
     for y in range(height):
         for x in range(width):
@@ -407,7 +433,7 @@ def read_map_grid(blockdata_path: Path, width: int, height: int) -> np.ndarray:
             if offset + 2 > len(data):
                 metatile_id = 0  # Empty metatile
             else:
-                value = struct.unpack('<H', data[offset:offset+2])[0]
+                value = struct.unpack("<H", data[offset : offset + 2])[0]
 
                 # Decode per global.fieldmap.h:
                 # Bits 0-9: Metatile ID
@@ -420,7 +446,11 @@ def read_map_grid(blockdata_path: Path, width: int, height: int) -> np.ndarray:
     return grid
 
 
-def render_tile(tile_ref: TileReference, tiles_png: Image.Image, palettes: List[List[Tuple[int, int, int]]]) -> Image.Image:
+def render_tile(
+    tile_ref: TileReference,
+    tiles_png: Image.Image,
+    palettes: List[List[Tuple[int, int, int]]],
+) -> Image.Image:
     """Render a single 8x8 tile with palette and flips applied"""
     # Get tile from tileset PNG
     # The PNG is a strip of 8x8 tiles
@@ -438,9 +468,14 @@ def render_tile(tile_ref: TileReference, tiles_png: Image.Image, palettes: List[
     tile_row = tile_idx // tiles_across
     tile_col = tile_idx % tiles_across
 
-    if tile_row >= tiles_down or tile_row < 0 or tile_col >= tiles_across or tile_col < 0:
+    if (
+        tile_row >= tiles_down
+        or tile_row < 0
+        or tile_col >= tiles_across
+        or tile_col < 0
+    ):
         # Tile index out of range, return empty tile
-        return Image.new('RGBA', (8, 8), (0, 0, 0, 0))
+        return Image.new("RGBA", (8, 8), (0, 0, 0, 0))
 
     # Extract tile from PNG
     tile_x = tile_col * 8
@@ -450,10 +485,10 @@ def render_tile(tile_ref: TileReference, tiles_png: Image.Image, palettes: List[
     # Convert to RGB using palette
     if palette_idx >= len(palettes):
         # Invalid palette, return magenta tile
-        return Image.new('RGBA', (8, 8), (255, 0, 255, 0))
+        return Image.new("RGBA", (8, 8), (255, 0, 255, 0))
 
     palette = palettes[palette_idx]
-    tile_rgba = Image.new('RGBA', (8, 8), (0, 0, 0, 0))
+    tile_rgba = Image.new("RGBA", (8, 8), (0, 0, 0, 0))
 
     for y in range(8):
         for x in range(8):
@@ -474,7 +509,12 @@ def render_tile(tile_ref: TileReference, tiles_png: Image.Image, palettes: List[
     return tile_rgba
 
 
-def render_tile_from_either(tile_ref: TileReference, primary_ts: Tileset, secondary_ts: Tileset, debug: bool = False) -> Image.Image:
+def render_tile_from_either(
+    tile_ref: TileReference,
+    primary_ts: Tileset,
+    secondary_ts: Tileset,
+    debug: bool = False,
+) -> Image.Image:
     """Render a tile from either primary or secondary tileset based on tile index"""
     # Primary tileset: 512 tiles (indices 0-511)
     # Secondary tileset: variable, indices start from 512
@@ -490,8 +530,10 @@ def render_tile_from_either(tile_ref: TileReference, primary_ts: Tileset, second
 
         if adjusted_idx < 0:
             if debug:
-                print(f"  DEBUG: Invalid tile idx={tile_idx} < 512, treating as invalid")
-            return Image.new('RGBA', (8, 8), (0, 0, 0, 0))
+                print(
+                    f"  DEBUG: Invalid tile idx={tile_idx} < 512, treating as invalid"
+                )
+            return Image.new("RGBA", (8, 8), (0, 0, 0, 0))
 
         # Check if within secondary tile range
         img_width, img_height = secondary_ts.tiles_png.size
@@ -501,14 +543,18 @@ def render_tile_from_either(tile_ref: TileReference, primary_ts: Tileset, second
 
         if adjusted_idx >= max_tiles:
             if debug:
-                print(f"  DEBUG: Secondary tile idx={tile_idx} (adjusted={adjusted_idx}) out of range, max={max_tiles}")
-            return Image.new('RGBA', (8, 8), (0, 0, 0, 0))
+                print(
+                    f"  DEBUG: Secondary tile idx={tile_idx} (adjusted={adjusted_idx}) out of range, max={max_tiles}"
+                )
+            return Image.new("RGBA", (8, 8), (0, 0, 0, 0))
 
         tile_row = adjusted_idx // tiles_across
         tile_col = adjusted_idx % tiles_across
 
         if debug and tile_idx < 600:
-            print(f"  DEBUG: Secondary tile idx={tile_idx} -> adjusted={adjusted_idx}, pos=({tile_col},{tile_row}) in {tiles_across}x{tiles_down}")
+            print(
+                f"  DEBUG: Secondary tile idx={tile_idx} -> adjusted={adjusted_idx}, pos=({tile_col},{tile_row}) in {tiles_across}x{tiles_down}"
+            )
 
         tile_x = tile_col * 8
         tile_y = tile_row * 8
@@ -517,7 +563,7 @@ def render_tile_from_either(tile_ref: TileReference, primary_ts: Tileset, second
         tile = secondary_ts.tiles_png.crop((tile_x, tile_y, tile_x + 8, tile_y + 8))
         palette = secondary_ts.palettes[tile_ref.palette]
 
-        tile_rgba = Image.new('RGBA', (8, 8), (0, 0, 0, 0))
+        tile_rgba = Image.new("RGBA", (8, 8), (0, 0, 0, 0))
         for y in range(8):
             for x in range(8):
                 pixel_idx = tile.getpixel((x, y))
@@ -537,28 +583,37 @@ def render_tile_from_either(tile_ref: TileReference, primary_ts: Tileset, second
         return tile_rgba
 
 
-def render_metatile(metatile: Metatile, primary_ts: Tileset, secondary_ts: Tileset, debug: bool = False) -> Image.Image:
+def render_metatile(
+    metatile: Metatile, primary_ts: Tileset, secondary_ts: Tileset, debug: bool = False
+) -> Image.Image:
     """Render a 16x16 metatile from tileset tiles.
 
     Each metatile = 2 layers of 2x2 8x8 tiles = 16x16 pixels.
     Tile order within each layer: TL(0,0), TR(8,0), BL(0,8), BR(8,8).
     Bottom layer is drawn first; top layer composited on top.
     """
-    result = Image.new('RGBA', (16, 16), (0, 0, 0, 0))
+    result = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
 
     # TL, TR, BL, BR positions for 8x8 tiles in a 16x16 metatile
     tile_positions = [(0, 0), (8, 0), (0, 8), (8, 8)]
 
-    for layer_name, layer in [("bot", metatile.bottom_layer), ("top", metatile.top_layer)]:
+    for layer_name, layer in [
+        ("bot", metatile.bottom_layer),
+        ("top", metatile.top_layer),
+    ]:
         for i, tile_ref in enumerate(layer):
             pos_x, pos_y = tile_positions[i]
 
             if debug:
-                pos_label = ["TL","TR","BL","BR"][i]
-                print(f"    DEBUG: [{layer_name} {pos_label}] idx={tile_ref.tile_index}, pal={tile_ref.palette}, hflip={tile_ref.hflip}, vflip={tile_ref.vflip}")
+                pos_label = ["TL", "TR", "BL", "BR"][i]
+                print(
+                    f"    DEBUG: [{layer_name} {pos_label}] idx={tile_ref.tile_index}, pal={tile_ref.palette}, hflip={tile_ref.hflip}, vflip={tile_ref.vflip}"
+                )
 
             try:
-                tile_img = render_tile_from_either(tile_ref, primary_ts, secondary_ts, debug)
+                tile_img = render_tile_from_either(
+                    tile_ref, primary_ts, secondary_ts, debug
+                )
                 result.paste(tile_img, (pos_x, pos_y), mask=tile_img)
             except Exception:
                 pass
@@ -566,16 +621,23 @@ def render_metatile(metatile: Metatile, primary_ts: Tileset, secondary_ts: Tiles
     return result
 
 
-def render_map(map_grid: np.ndarray, primary_ts: Tileset, secondary_ts: Tileset, debug: bool = False) -> Image.Image:
+def render_map(
+    map_grid: np.ndarray,
+    primary_ts: Tileset,
+    secondary_ts: Tileset,
+    debug: bool = False,
+) -> Image.Image:
     """Render full map from metatile grid"""
     height, width = map_grid.shape
     map_width_px = width * 16
     map_height_px = height * 16
 
-    result = Image.new('RGBA', (map_width_px, map_height_px), (0, 0, 0, 0))
+    result = Image.new("RGBA", (map_width_px, map_height_px), (0, 0, 0, 0))
 
     if debug:
-        print(f"  DEBUG: Rendering {width}x{height} metatiles = {map_width_px}x{map_height_px} pixels")
+        print(
+            f"  DEBUG: Rendering {width}x{height} metatiles = {map_width_px}x{map_height_px} pixels"
+        )
 
     non_empty_count = 0
     primary_count = 0
@@ -603,7 +665,9 @@ def render_map(map_grid: np.ndarray, primary_ts: Tileset, secondary_ts: Tileset,
 
             # Render metatile
             try:
-                metatile_img = render_metatile(metatile, primary_ts, secondary_ts, debug and (x < 2 and y < 2))
+                metatile_img = render_metatile(
+                    metatile, primary_ts, secondary_ts, debug and (x < 2 and y < 2)
+                )
                 result.paste(metatile_img, (x * 16, y * 16))
             except Exception as e:
                 print(e)
@@ -611,7 +675,9 @@ def render_map(map_grid: np.ndarray, primary_ts: Tileset, secondary_ts: Tileset,
                 pass
 
     if debug:
-        print(f"  DEBUG: Rendered {non_empty_count} non-empty metatiles ({primary_count} primary, {secondary_count} secondary)")
+        print(
+            f"  DEBUG: Rendered {non_empty_count} non-empty metatiles ({primary_count} primary, {secondary_count} secondary)"
+        )
 
     return result
 
@@ -639,7 +705,9 @@ def main():
         if map_obj.layout_id in layouts:
             map_obj.layout = layouts[map_obj.layout_id]
         else:
-            print(f"Warning: Layout {map_obj.layout_id} not found for map {map_obj.name}")
+            print(
+                f"Warning: Layout {map_obj.layout_id} not found for map {map_obj.name}"
+            )
 
     print(f"Loaded {len(layouts)} layouts and {len(maps)} maps")
     print(f"Output directory: {output_dir}")
@@ -649,11 +717,12 @@ def main():
 
     # Process all maps
     for i, map_obj in enumerate(maps):
-        if i % 50 == 0:
-            print(f"\nProgress: {i}/{len(maps)} maps processed...")
+        print(f"\nProgress: {i}/{len(maps)} maps processed...")
 
         # Enable debug for LittlerootTown
-        is_debug = DEBUG_MAP and ("LittlerootTown" in map_obj.name or "BrendansHouse" in map_obj.name)
+        is_debug = DEBUG_MAP and (
+            "LittlerootTown" in map_obj.name or "BrendansHouse" in map_obj.name
+        )
 
         if map_obj.layout is None:
             print(f"  Skipping {map_obj.name} - no layout found")
@@ -669,8 +738,12 @@ def main():
                 print(f"  DEBUG: Primary tileset: {layout.primary_tileset}")
                 print(f"  DEBUG: Secondary tileset: {layout.secondary_tileset}")
 
-            primary_ts = load_tileset(layout.primary_tileset, "primary", base_dir, path_map, is_debug)
-            secondary_ts = load_tileset(layout.secondary_tileset, "secondary", base_dir, path_map, is_debug)
+            primary_ts = load_tileset(
+                layout.primary_tileset, "primary", base_dir, path_map, is_debug
+            )
+            secondary_ts = load_tileset(
+                layout.secondary_tileset, "secondary", base_dir, path_map, is_debug
+            )
 
             # Read map grid
             blockdata_path = base_dir / layout.blockdata_path
@@ -695,6 +768,7 @@ def main():
             print(f"  Error processing {map_obj.name}: {e}")
             if is_debug:
                 import traceback
+
                 traceback.print_exc()
 
     print(f"\nDone! Extracted maps to: {output_dir}")

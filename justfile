@@ -11,7 +11,7 @@ extract-names:
     python3 mapextract/extract_map_names.py
 
 extract-maps:
-    cd mapextract && .venv/bin/python extract_maps.py
+    cd mapextract && python3 extract_maps.py
     mkdir -p browser-source/public/maps
     python3 -c 'import glob,re,shutil; [shutil.copy(f,"browser-source/public/maps/"+re.search(r"map_([0-9A-Fa-f]+)_",f).group(1)+".png") for f in glob.glob("mapextract/output/maps/map_*.png")]'
 
