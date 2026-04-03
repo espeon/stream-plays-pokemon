@@ -29,86 +29,86 @@ export interface MapsecEntry {
 // IDs match the order in region_map_sections.constants.json.txt (0-indexed).
 // Only entries with Hoenn world map coordinates are included.
 export const MAPSEC: Record<number, MapsecEntry> = {
-  0: { name: "Littleroot Town", tx: 4, ty: 11, tw: 1, th: 1 },
-  1: { name: "Oldale Town", tx: 4, ty: 9, tw: 1, th: 1 },
-  2: { name: "Dewford Town", tx: 2, ty: 14, tw: 1, th: 1 },
-  3: { name: "Lavaridge Town", tx: 5, ty: 3, tw: 1, th: 1 },
-  4: { name: "Fallarbor Town", tx: 3, ty: 0, tw: 1, th: 1 },
-  5: { name: "Verdanturf Town", tx: 4, ty: 6, tw: 1, th: 1 },
-  6: { name: "Pacifidlog Town", tx: 17, ty: 10, tw: 1, th: 1 },
-  7: { name: "Petalburg City", tx: 1, ty: 9, tw: 1, th: 1 },
-  8: { name: "Slateport City", tx: 8, ty: 10, tw: 1, th: 2 },
-  9: { name: "Mauville City", tx: 8, ty: 6, tw: 2, th: 1 },
-  10: { name: "Rustboro City", tx: 0, ty: 5, tw: 1, th: 2 },
-  11: { name: "Fortree City", tx: 12, ty: 0, tw: 1, th: 1 },
-  12: { name: "Lilycove City", tx: 18, ty: 3, tw: 2, th: 1 },
-  13: { name: "Mossdeep City", tx: 24, ty: 5, tw: 2, th: 1 },
-  14: { name: "Sootopolis City", tx: 21, ty: 7, tw: 1, th: 1 },
-  15: { name: "Ever Grande City", tx: 27, ty: 8, tw: 1, th: 2 },
-  16: { name: "Route 101", tx: 4, ty: 10, tw: 1, th: 1 },
-  17: { name: "Route 102", tx: 2, ty: 9, tw: 2, th: 1 },
-  18: { name: "Route 103", tx: 4, ty: 8, tw: 4, th: 1 },
-  19: { name: "Route 104", tx: 0, ty: 7, tw: 1, th: 3 },
-  20: { name: "Route 105", tx: 0, ty: 10, tw: 1, th: 3 },
-  21: { name: "Route 106", tx: 0, ty: 13, tw: 2, th: 1 },
-  22: { name: "Route 107", tx: 3, ty: 14, tw: 3, th: 1 },
-  23: { name: "Route 108", tx: 6, ty: 14, tw: 2, th: 1 },
-  24: { name: "Route 109", tx: 8, ty: 12, tw: 1, th: 3 },
-  25: { name: "Route 110", tx: 8, ty: 7, tw: 1, th: 3 },
-  26: { name: "Route 111", tx: 8, ty: 0, tw: 1, th: 6 },
-  27: { name: "Route 112", tx: 6, ty: 3, tw: 2, th: 1 },
-  28: { name: "Route 113", tx: 4, ty: 0, tw: 4, th: 1 },
-  29: { name: "Route 114", tx: 1, ty: 0, tw: 2, th: 3 },
-  30: { name: "Route 115", tx: 0, ty: 2, tw: 1, th: 3 },
-  31: { name: "Route 116", tx: 1, ty: 5, tw: 4, th: 1 },
-  32: { name: "Route 117", tx: 5, ty: 6, tw: 3, th: 1 },
-  33: { name: "Route 118", tx: 10, ty: 6, tw: 2, th: 1 },
-  34: { name: "Route 119", tx: 11, ty: 0, tw: 1, th: 6 },
-  35: { name: "Route 120", tx: 13, ty: 0, tw: 1, th: 4 },
-  36: { name: "Route 121", tx: 14, ty: 3, tw: 4, th: 1 },
-  37: { name: "Route 122", tx: 16, ty: 4, tw: 1, th: 2 },
-  38: { name: "Route 123", tx: 12, ty: 6, tw: 5, th: 1 },
-  39: { name: "Route 124", tx: 20, ty: 3, tw: 4, th: 3 },
-  40: { name: "Route 125", tx: 24, ty: 3, tw: 2, th: 2 },
-  41: { name: "Route 126", tx: 20, ty: 6, tw: 3, th: 3 },
-  42: { name: "Route 127", tx: 23, ty: 6, tw: 3, th: 3 },
-  43: { name: "Route 128", tx: 23, ty: 9, tw: 4, th: 1 },
-  44: { name: "Route 129", tx: 24, ty: 10, tw: 2, th: 1 },
-  45: { name: "Route 130", tx: 21, ty: 10, tw: 3, th: 1 },
-  46: { name: "Route 131", tx: 18, ty: 10, tw: 3, th: 1 },
-  47: { name: "Route 132", tx: 15, ty: 10, tw: 2, th: 1 },
-  48: { name: "Route 133", tx: 12, ty: 10, tw: 3, th: 1 },
-  49: { name: "Route 134", tx: 9, ty: 10, tw: 3, th: 1 },
-  50: { name: "Underwater (Rt 124)", tx: 20, ty: 3, tw: 4, th: 3 },
-  51: { name: "Underwater (Rt 126)", tx: 20, ty: 6, tw: 3, th: 3 },
-  52: { name: "Underwater (Rt 127)", tx: 23, ty: 6, tw: 3, th: 3 },
-  53: { name: "Underwater (Rt 128)", tx: 23, ty: 9, tw: 4, th: 1 },
-  54: { name: "Underwater (Sootopolis)", tx: 21, ty: 7, tw: 1, th: 1 },
-  55: { name: "Granite Cave", tx: 1, ty: 13, tw: 1, th: 1 },
-  56: { name: "Mt. Chimney", tx: 6, ty: 2, tw: 1, th: 1 },
-  57: { name: "Safari Zone", tx: 16, ty: 2, tw: 1, th: 1 },
+  0:  { name: "Littleroot Town", tx: 4,  ty: 11, tw: 1, th: 1 },
+  1:  { name: "Oldale Town",     tx: 4,  ty: 9,  tw: 1, th: 1 },
+  2:  { name: "Dewford Town",    tx: 2,  ty: 14, tw: 1, th: 1 },
+  3:  { name: "Lavaridge Town",  tx: 5,  ty: 3,  tw: 1, th: 1 },
+  4:  { name: "Fallarbor Town",  tx: 3,  ty: 0,  tw: 1, th: 1 },
+  5:  { name: "Verdanturf Town", tx: 4,  ty: 6,  tw: 1, th: 1 },
+  6:  { name: "Pacifidlog Town", tx: 17, ty: 10, tw: 1, th: 1 },
+  7:  { name: "Petalburg City",  tx: 1,  ty: 9,  tw: 1, th: 1 },
+  8:  { name: "Slateport City",  tx: 8,  ty: 10, tw: 1, th: 2 },
+  9:  { name: "Mauville City",   tx: 8,  ty: 6,  tw: 2, th: 1 },
+  10: { name: "Rustboro City",   tx: 0,  ty: 5,  tw: 1, th: 2 },
+  11: { name: "Fortree City",    tx: 12, ty: 0,  tw: 1, th: 1 },
+  12: { name: "Lilycove City",   tx: 18, ty: 3,  tw: 2, th: 1 },
+  13: { name: "Mossdeep City",   tx: 24, ty: 5,  tw: 2, th: 1 },
+  14: { name: "Sootopolis City", tx: 21, ty: 7,  tw: 1, th: 1 },
+  15: { name: "Ever Grande City",tx: 27, ty: 8,  tw: 1, th: 2 },
+  16: { name: "Route 101",       tx: 4,  ty: 10, tw: 1, th: 1 },
+  17: { name: "Route 102",       tx: 2,  ty: 9,  tw: 2, th: 1 },
+  18: { name: "Route 103",       tx: 4,  ty: 8,  tw: 4, th: 1 },
+  19: { name: "Route 104",       tx: 0,  ty: 7,  tw: 1, th: 3 },
+  20: { name: "Route 105",       tx: 0,  ty: 10, tw: 1, th: 3 },
+  21: { name: "Route 106",       tx: 0,  ty: 13, tw: 2, th: 1 },
+  22: { name: "Route 107",       tx: 3,  ty: 14, tw: 3, th: 1 },
+  23: { name: "Route 108",       tx: 6,  ty: 14, tw: 2, th: 1 },
+  24: { name: "Route 109",       tx: 8,  ty: 12, tw: 1, th: 3 },
+  25: { name: "Route 110",       tx: 8,  ty: 7,  tw: 1, th: 3 },
+  26: { name: "Route 111",       tx: 8,  ty: 0,  tw: 1, th: 6 },
+  27: { name: "Route 112",       tx: 6,  ty: 3,  tw: 2, th: 1 },
+  28: { name: "Route 113",       tx: 4,  ty: 0,  tw: 4, th: 1 },
+  29: { name: "Route 114",       tx: 1,  ty: 0,  tw: 2, th: 3 },
+  30: { name: "Route 115",       tx: 0,  ty: 2,  tw: 1, th: 3 },
+  31: { name: "Route 116",       tx: 1,  ty: 5,  tw: 4, th: 1 },
+  32: { name: "Route 117",       tx: 5,  ty: 6,  tw: 3, th: 1 },
+  33: { name: "Route 118",       tx: 10, ty: 6,  tw: 2, th: 1 },
+  34: { name: "Route 119",       tx: 11, ty: 0,  tw: 1, th: 6 },
+  35: { name: "Route 120",       tx: 13, ty: 0,  tw: 1, th: 4 },
+  36: { name: "Route 121",       tx: 14, ty: 3,  tw: 4, th: 1 },
+  37: { name: "Route 122",       tx: 16, ty: 4,  tw: 1, th: 2 },
+  38: { name: "Route 123",       tx: 12, ty: 6,  tw: 5, th: 1 },
+  39: { name: "Route 124",       tx: 20, ty: 3,  tw: 4, th: 3 },
+  40: { name: "Route 125",       tx: 24, ty: 3,  tw: 2, th: 2 },
+  41: { name: "Route 126",       tx: 20, ty: 6,  tw: 3, th: 3 },
+  42: { name: "Route 127",       tx: 23, ty: 6,  tw: 3, th: 3 },
+  43: { name: "Route 128",       tx: 23, ty: 9,  tw: 4, th: 1 },
+  44: { name: "Route 129",       tx: 24, ty: 10, tw: 2, th: 1 },
+  45: { name: "Route 130",       tx: 21, ty: 10, tw: 3, th: 1 },
+  46: { name: "Route 131",       tx: 18, ty: 10, tw: 3, th: 1 },
+  47: { name: "Route 132",       tx: 15, ty: 10, tw: 2, th: 1 },
+  48: { name: "Route 133",       tx: 12, ty: 10, tw: 3, th: 1 },
+  49: { name: "Route 134",       tx: 9,  ty: 10, tw: 3, th: 1 },
+  50: { name: "Underwater (Rt 124)",      tx: 20, ty: 3,  tw: 4, th: 3 },
+  51: { name: "Underwater (Rt 126)",      tx: 20, ty: 6,  tw: 3, th: 3 },
+  52: { name: "Underwater (Rt 127)",      tx: 23, ty: 6,  tw: 3, th: 3 },
+  53: { name: "Underwater (Rt 128)",      tx: 23, ty: 9,  tw: 4, th: 1 },
+  54: { name: "Underwater (Sootopolis)", tx: 21, ty: 7,  tw: 1, th: 1 },
+  55: { name: "Granite Cave",    tx: 1,  ty: 13, tw: 1, th: 1 },
+  56: { name: "Mt. Chimney",     tx: 6,  ty: 2,  tw: 1, th: 1 },
+  57: { name: "Safari Zone",     tx: 16, ty: 2,  tw: 1, th: 1 },
   58: { name: "Battle Frontier", tx: 22, ty: 12, tw: 1, th: 1 },
-  59: { name: "Petalburg Woods", tx: 0, ty: 8, tw: 1, th: 1 },
-  60: { name: "Rusturf Tunnel", tx: 2, ty: 5, tw: 1, th: 1 },
-  61: { name: "Abandoned Ship", tx: 6, ty: 14, tw: 1, th: 1 },
-  62: { name: "New Mauville", tx: 8, ty: 7, tw: 1, th: 1 },
-  63: { name: "Meteor Falls", tx: 0, ty: 3, tw: 1, th: 1 },
-  65: { name: "Mt. Pyre", tx: 16, ty: 4, tw: 1, th: 1 },
-  67: { name: "Shoal Cave", tx: 24, ty: 4, tw: 1, th: 1 },
-  68: { name: "Seafloor Cavern", tx: 24, ty: 9, tw: 1, th: 1 },
-  70: { name: "Victory Road", tx: 27, ty: 9, tw: 1, th: 1 },
-  72: { name: "Cave of Origin", tx: 21, ty: 7, tw: 1, th: 1 },
+  59: { name: "Petalburg Woods", tx: 0,  ty: 8,  tw: 1, th: 1 },
+  60: { name: "Rusturf Tunnel",  tx: 2,  ty: 5,  tw: 1, th: 1 },
+  61: { name: "Abandoned Ship",  tx: 6,  ty: 14, tw: 1, th: 1 },
+  62: { name: "New Mauville",    tx: 8,  ty: 7,  tw: 1, th: 1 },
+  63: { name: "Meteor Falls",    tx: 0,  ty: 3,  tw: 1, th: 1 },
+  65: { name: "Mt. Pyre",        tx: 16, ty: 4,  tw: 1, th: 1 },
+  67: { name: "Shoal Cave",      tx: 24, ty: 4,  tw: 1, th: 1 },
+  68: { name: "Seafloor Cavern", tx: 24, ty: 9,  tw: 1, th: 1 },
+  70: { name: "Victory Road",    tx: 27, ty: 9,  tw: 1, th: 1 },
+  72: { name: "Cave of Origin",  tx: 21, ty: 7,  tw: 1, th: 1 },
   73: { name: "Southern Island", tx: 12, ty: 14, tw: 1, th: 1 },
-  78: { name: "Sealed Chamber", tx: 11, ty: 10, tw: 1, th: 1 },
-  80: { name: "Scorched Slab", tx: 13, ty: 0, tw: 1, th: 1 },
-  82: { name: "Desert Ruins", tx: 8, ty: 3, tw: 1, th: 1 },
-  85: { name: "Sky Pillar", tx: 19, ty: 10, tw: 1, th: 1 },
+  78: { name: "Sealed Chamber",  tx: 11, ty: 10, tw: 1, th: 1 },
+  80: { name: "Scorched Slab",   tx: 13, ty: 0,  tw: 1, th: 1 },
+  82: { name: "Desert Ruins",    tx: 8,  ty: 3,  tw: 1, th: 1 },
+  85: { name: "Sky Pillar",      tx: 19, ty: 10, tw: 1, th: 1 },
   197: { name: "Team Aqua Hideout", tx: 19, ty: 3, tw: 1, th: 1 },
   198: { name: "Team Magma Hideout", tx: 6, ty: 3, tw: 1, th: 1 },
-  199: { name: "Mirage Tower", tx: 8, ty: 2, tw: 1, th: 1 },
-  202: { name: "Artisan Cave", tx: 22, ty: 12, tw: 1, th: 1 },
+  199: { name: "Mirage Tower",   tx: 8,  ty: 2,  tw: 1, th: 1 },
+  202: { name: "Artisan Cave",   tx: 22, ty: 12, tw: 1, th: 1 },
   209: { name: "Desert Underpass", tx: 2, ty: 0, tw: 1, th: 1 },
-  212: { name: "Trainer Hill", tx: 8, ty: 4, tw: 1, th: 1 },
+  212: { name: "Trainer Hill",   tx: 8,  ty: 4,  tw: 1, th: 1 },
 };
 
 // (map_bank * 1000 + map_num) → MAPSEC ID for all Emerald maps.
@@ -116,590 +116,590 @@ export const MAPSEC: Record<number, MapsecEntry> = {
 // Maps with MAPSEC_DYNAMIC or MAPSEC_SECRET_BASE are omitted (lookupLocation returns null).
 export const EMERALD_MAP_TO_MAPSEC: Record<number, number> = {
   // Bank 0: TownsAndRoutes
-  0: 7, // PetalburgCity
-  1: 8, // SlateportCity
-  2: 9, // MauvilleCity
-  3: 10, // RustboroCity
-  4: 11, // FortreeCity
-  5: 12, // LilycoveCity
-  6: 13, // MossdeepCity
-  7: 14, // SootopolisCity
-  8: 15, // EverGrandeCity
-  9: 0, // LittlerootTown
-  10: 1, // OldaleTown
-  11: 2, // DewfordTown
-  12: 3, // LavaridgeTown
-  13: 4, // FallarborTown
-  14: 5, // VerdanturfTown
-  15: 6, // PacifidlogTown
-  16: 16, // Route101
-  17: 17, // Route102
-  18: 18, // Route103
-  19: 19, // Route104
-  20: 20, // Route105
-  21: 21, // Route106
-  22: 22, // Route107
-  23: 23, // Route108
-  24: 24, // Route109
-  25: 25, // Route110
-  26: 26, // Route111
-  27: 27, // Route112
-  28: 28, // Route113
-  29: 29, // Route114
-  30: 30, // Route115
-  31: 31, // Route116
-  32: 32, // Route117
-  33: 33, // Route118
-  34: 34, // Route119
-  35: 35, // Route120
-  36: 36, // Route121
-  37: 37, // Route122
-  38: 38, // Route123
-  39: 39, // Route124
-  40: 40, // Route125
-  41: 41, // Route126
-  42: 42, // Route127
-  43: 43, // Route128
-  44: 44, // Route129
-  45: 45, // Route130
-  46: 46, // Route131
-  47: 47, // Route132
-  48: 48, // Route133
-  49: 49, // Route134
-  50: 50, // Underwater_Route124
-  51: 51, // Underwater_Route126
-  52: 52, // Underwater_Route127
-  53: 53, // Underwater_Route128
-  54: 208, // Underwater_Route129
-  55: 206, // Underwater_Route105
-  56: 207, // Underwater_Route125
+  0: 7,  // PetalburgCity
+  1: 8,  // SlateportCity
+  2: 9,  // MauvilleCity
+  3: 10,  // RustboroCity
+  4: 11,  // FortreeCity
+  5: 12,  // LilycoveCity
+  6: 13,  // MossdeepCity
+  7: 14,  // SootopolisCity
+  8: 15,  // EverGrandeCity
+  9: 0,  // LittlerootTown
+  10: 1,  // OldaleTown
+  11: 2,  // DewfordTown
+  12: 3,  // LavaridgeTown
+  13: 4,  // FallarborTown
+  14: 5,  // VerdanturfTown
+  15: 6,  // PacifidlogTown
+  16: 16,  // Route101
+  17: 17,  // Route102
+  18: 18,  // Route103
+  19: 19,  // Route104
+  20: 20,  // Route105
+  21: 21,  // Route106
+  22: 22,  // Route107
+  23: 23,  // Route108
+  24: 24,  // Route109
+  25: 25,  // Route110
+  26: 26,  // Route111
+  27: 27,  // Route112
+  28: 28,  // Route113
+  29: 29,  // Route114
+  30: 30,  // Route115
+  31: 31,  // Route116
+  32: 32,  // Route117
+  33: 33,  // Route118
+  34: 34,  // Route119
+  35: 35,  // Route120
+  36: 36,  // Route121
+  37: 37,  // Route122
+  38: 38,  // Route123
+  39: 39,  // Route124
+  40: 40,  // Route125
+  41: 41,  // Route126
+  42: 42,  // Route127
+  43: 43,  // Route128
+  44: 44,  // Route129
+  45: 45,  // Route130
+  46: 46,  // Route131
+  47: 47,  // Route132
+  48: 48,  // Route133
+  49: 49,  // Route134
+  50: 50,  // Underwater_Route124
+  51: 51,  // Underwater_Route126
+  52: 52,  // Underwater_Route127
+  53: 53,  // Underwater_Route128
+  54: 208,  // Underwater_Route129
+  55: 206,  // Underwater_Route105
+  56: 207,  // Underwater_Route125
 
   // Bank 1: IndoorLittleroot
-  1000: 0, // LittlerootTown_BrendansHouse_1F
-  1001: 0, // LittlerootTown_BrendansHouse_2F
-  1002: 0, // LittlerootTown_MaysHouse_1F
-  1003: 0, // LittlerootTown_MaysHouse_2F
-  1004: 0, // LittlerootTown_ProfessorBirchsLab
+  1000: 0,  // LittlerootTown_BrendansHouse_1F
+  1001: 0,  // LittlerootTown_BrendansHouse_2F
+  1002: 0,  // LittlerootTown_MaysHouse_1F
+  1003: 0,  // LittlerootTown_MaysHouse_2F
+  1004: 0,  // LittlerootTown_ProfessorBirchsLab
 
   // Bank 2: IndoorOldale
-  2000: 1, // OldaleTown_House1
-  2001: 1, // OldaleTown_House2
-  2002: 1, // OldaleTown_PokemonCenter_1F
-  2003: 1, // OldaleTown_PokemonCenter_2F
-  2004: 1, // OldaleTown_Mart
+  2000: 1,  // OldaleTown_House1
+  2001: 1,  // OldaleTown_House2
+  2002: 1,  // OldaleTown_PokemonCenter_1F
+  2003: 1,  // OldaleTown_PokemonCenter_2F
+  2004: 1,  // OldaleTown_Mart
 
   // Bank 3: IndoorDewford
-  3000: 2, // DewfordTown_House1
-  3001: 2, // DewfordTown_PokemonCenter_1F
-  3002: 2, // DewfordTown_PokemonCenter_2F
-  3003: 2, // DewfordTown_Gym
-  3004: 2, // DewfordTown_Hall
-  3005: 2, // DewfordTown_House2
+  3000: 2,  // DewfordTown_House1
+  3001: 2,  // DewfordTown_PokemonCenter_1F
+  3002: 2,  // DewfordTown_PokemonCenter_2F
+  3003: 2,  // DewfordTown_Gym
+  3004: 2,  // DewfordTown_Hall
+  3005: 2,  // DewfordTown_House2
 
   // Bank 4: IndoorLavaridge
-  4000: 3, // LavaridgeTown_HerbShop
-  4001: 3, // LavaridgeTown_Gym_1F
-  4002: 3, // LavaridgeTown_Gym_B1F
-  4003: 3, // LavaridgeTown_House
-  4004: 3, // LavaridgeTown_Mart
-  4005: 3, // LavaridgeTown_PokemonCenter_1F
-  4006: 3, // LavaridgeTown_PokemonCenter_2F
+  4000: 3,  // LavaridgeTown_HerbShop
+  4001: 3,  // LavaridgeTown_Gym_1F
+  4002: 3,  // LavaridgeTown_Gym_B1F
+  4003: 3,  // LavaridgeTown_House
+  4004: 3,  // LavaridgeTown_Mart
+  4005: 3,  // LavaridgeTown_PokemonCenter_1F
+  4006: 3,  // LavaridgeTown_PokemonCenter_2F
 
   // Bank 5: IndoorFallarbor
-  5000: 4, // FallarborTown_Mart
-  5001: 4, // FallarborTown_BattleTentLobby
-  5002: 4, // FallarborTown_BattleTentCorridor
-  5003: 4, // FallarborTown_BattleTentBattleRoom
-  5004: 4, // FallarborTown_PokemonCenter_1F
-  5005: 4, // FallarborTown_PokemonCenter_2F
-  5006: 4, // FallarborTown_CozmosHouse
-  5007: 4, // FallarborTown_MoveRelearnersHouse
+  5000: 4,  // FallarborTown_Mart
+  5001: 4,  // FallarborTown_BattleTentLobby
+  5002: 4,  // FallarborTown_BattleTentCorridor
+  5003: 4,  // FallarborTown_BattleTentBattleRoom
+  5004: 4,  // FallarborTown_PokemonCenter_1F
+  5005: 4,  // FallarborTown_PokemonCenter_2F
+  5006: 4,  // FallarborTown_CozmosHouse
+  5007: 4,  // FallarborTown_MoveRelearnersHouse
 
   // Bank 6: IndoorVerdanturf
-  6000: 5, // VerdanturfTown_BattleTentLobby
-  6001: 5, // VerdanturfTown_BattleTentCorridor
-  6002: 5, // VerdanturfTown_BattleTentBattleRoom
-  6003: 5, // VerdanturfTown_Mart
-  6004: 5, // VerdanturfTown_PokemonCenter_1F
-  6005: 5, // VerdanturfTown_PokemonCenter_2F
-  6006: 5, // VerdanturfTown_WandasHouse
-  6007: 5, // VerdanturfTown_FriendshipRatersHouse
-  6008: 5, // VerdanturfTown_House
+  6000: 5,  // VerdanturfTown_BattleTentLobby
+  6001: 5,  // VerdanturfTown_BattleTentCorridor
+  6002: 5,  // VerdanturfTown_BattleTentBattleRoom
+  6003: 5,  // VerdanturfTown_Mart
+  6004: 5,  // VerdanturfTown_PokemonCenter_1F
+  6005: 5,  // VerdanturfTown_PokemonCenter_2F
+  6006: 5,  // VerdanturfTown_WandasHouse
+  6007: 5,  // VerdanturfTown_FriendshipRatersHouse
+  6008: 5,  // VerdanturfTown_House
 
   // Bank 7: IndoorPacifidlog
-  7000: 6, // PacifidlogTown_PokemonCenter_1F
-  7001: 6, // PacifidlogTown_PokemonCenter_2F
-  7002: 6, // PacifidlogTown_House1
-  7003: 6, // PacifidlogTown_House2
-  7004: 6, // PacifidlogTown_House3
-  7005: 6, // PacifidlogTown_House4
-  7006: 6, // PacifidlogTown_House5
+  7000: 6,  // PacifidlogTown_PokemonCenter_1F
+  7001: 6,  // PacifidlogTown_PokemonCenter_2F
+  7002: 6,  // PacifidlogTown_House1
+  7003: 6,  // PacifidlogTown_House2
+  7004: 6,  // PacifidlogTown_House3
+  7005: 6,  // PacifidlogTown_House4
+  7006: 6,  // PacifidlogTown_House5
 
   // Bank 8: IndoorPetalburg
-  8000: 7, // PetalburgCity_WallysHouse
-  8001: 7, // PetalburgCity_Gym
-  8002: 7, // PetalburgCity_House1
-  8003: 7, // PetalburgCity_House2
-  8004: 7, // PetalburgCity_PokemonCenter_1F
-  8005: 7, // PetalburgCity_PokemonCenter_2F
-  8006: 7, // PetalburgCity_Mart
+  8000: 7,  // PetalburgCity_WallysHouse
+  8001: 7,  // PetalburgCity_Gym
+  8002: 7,  // PetalburgCity_House1
+  8003: 7,  // PetalburgCity_House2
+  8004: 7,  // PetalburgCity_PokemonCenter_1F
+  8005: 7,  // PetalburgCity_PokemonCenter_2F
+  8006: 7,  // PetalburgCity_Mart
 
   // Bank 9: IndoorSlateport
-  9000: 8, // SlateportCity_SternsShipyard_1F
-  9001: 8, // SlateportCity_SternsShipyard_2F
-  9002: 8, // SlateportCity_BattleTentLobby
-  9003: 8, // SlateportCity_BattleTentCorridor
-  9004: 8, // SlateportCity_BattleTentBattleRoom
-  9005: 8, // SlateportCity_NameRatersHouse
-  9006: 8, // SlateportCity_PokemonFanClub
-  9007: 8, // SlateportCity_OceanicMuseum_1F
-  9008: 8, // SlateportCity_OceanicMuseum_2F
-  9009: 8, // SlateportCity_Harbor
-  9010: 8, // SlateportCity_House
-  9011: 8, // SlateportCity_PokemonCenter_1F
-  9012: 8, // SlateportCity_PokemonCenter_2F
-  9013: 8, // SlateportCity_Mart
+  9000: 8,  // SlateportCity_SternsShipyard_1F
+  9001: 8,  // SlateportCity_SternsShipyard_2F
+  9002: 8,  // SlateportCity_BattleTentLobby
+  9003: 8,  // SlateportCity_BattleTentCorridor
+  9004: 8,  // SlateportCity_BattleTentBattleRoom
+  9005: 8,  // SlateportCity_NameRatersHouse
+  9006: 8,  // SlateportCity_PokemonFanClub
+  9007: 8,  // SlateportCity_OceanicMuseum_1F
+  9008: 8,  // SlateportCity_OceanicMuseum_2F
+  9009: 8,  // SlateportCity_Harbor
+  9010: 8,  // SlateportCity_House
+  9011: 8,  // SlateportCity_PokemonCenter_1F
+  9012: 8,  // SlateportCity_PokemonCenter_2F
+  9013: 8,  // SlateportCity_Mart
 
   // Bank 10: IndoorMauville
-  10000: 9, // MauvilleCity_Gym
-  10001: 9, // MauvilleCity_BikeShop
-  10002: 9, // MauvilleCity_House1
-  10003: 9, // MauvilleCity_GameCorner
-  10004: 9, // MauvilleCity_House2
-  10005: 9, // MauvilleCity_PokemonCenter_1F
-  10006: 9, // MauvilleCity_PokemonCenter_2F
-  10007: 9, // MauvilleCity_Mart
+  10000: 9,  // MauvilleCity_Gym
+  10001: 9,  // MauvilleCity_BikeShop
+  10002: 9,  // MauvilleCity_House1
+  10003: 9,  // MauvilleCity_GameCorner
+  10004: 9,  // MauvilleCity_House2
+  10005: 9,  // MauvilleCity_PokemonCenter_1F
+  10006: 9,  // MauvilleCity_PokemonCenter_2F
+  10007: 9,  // MauvilleCity_Mart
 
   // Bank 11: IndoorRustboro
-  11000: 10, // RustboroCity_DevonCorp_1F
-  11001: 10, // RustboroCity_DevonCorp_2F
-  11002: 10, // RustboroCity_DevonCorp_3F
-  11003: 10, // RustboroCity_Gym
-  11004: 10, // RustboroCity_PokemonSchool
-  11005: 10, // RustboroCity_PokemonCenter_1F
-  11006: 10, // RustboroCity_PokemonCenter_2F
-  11007: 10, // RustboroCity_Mart
-  11008: 10, // RustboroCity_Flat1_1F
-  11009: 10, // RustboroCity_Flat1_2F
-  11010: 10, // RustboroCity_House1
-  11011: 10, // RustboroCity_CuttersHouse
-  11012: 10, // RustboroCity_House2
-  11013: 10, // RustboroCity_Flat2_1F
-  11014: 10, // RustboroCity_Flat2_2F
-  11015: 10, // RustboroCity_Flat2_3F
-  11016: 10, // RustboroCity_House3
+  11000: 10,  // RustboroCity_DevonCorp_1F
+  11001: 10,  // RustboroCity_DevonCorp_2F
+  11002: 10,  // RustboroCity_DevonCorp_3F
+  11003: 10,  // RustboroCity_Gym
+  11004: 10,  // RustboroCity_PokemonSchool
+  11005: 10,  // RustboroCity_PokemonCenter_1F
+  11006: 10,  // RustboroCity_PokemonCenter_2F
+  11007: 10,  // RustboroCity_Mart
+  11008: 10,  // RustboroCity_Flat1_1F
+  11009: 10,  // RustboroCity_Flat1_2F
+  11010: 10,  // RustboroCity_House1
+  11011: 10,  // RustboroCity_CuttersHouse
+  11012: 10,  // RustboroCity_House2
+  11013: 10,  // RustboroCity_Flat2_1F
+  11014: 10,  // RustboroCity_Flat2_2F
+  11015: 10,  // RustboroCity_Flat2_3F
+  11016: 10,  // RustboroCity_House3
 
   // Bank 12: IndoorFortree
-  12000: 11, // FortreeCity_House1
-  12001: 11, // FortreeCity_Gym
-  12002: 11, // FortreeCity_PokemonCenter_1F
-  12003: 11, // FortreeCity_PokemonCenter_2F
-  12004: 11, // FortreeCity_Mart
-  12005: 11, // FortreeCity_House2
-  12006: 11, // FortreeCity_House3
-  12007: 11, // FortreeCity_House4
-  12008: 11, // FortreeCity_House5
-  12009: 11, // FortreeCity_DecorationShop
+  12000: 11,  // FortreeCity_House1
+  12001: 11,  // FortreeCity_Gym
+  12002: 11,  // FortreeCity_PokemonCenter_1F
+  12003: 11,  // FortreeCity_PokemonCenter_2F
+  12004: 11,  // FortreeCity_Mart
+  12005: 11,  // FortreeCity_House2
+  12006: 11,  // FortreeCity_House3
+  12007: 11,  // FortreeCity_House4
+  12008: 11,  // FortreeCity_House5
+  12009: 11,  // FortreeCity_DecorationShop
 
   // Bank 13: IndoorLilycove
-  13000: 12, // LilycoveCity_CoveLilyMotel_1F
-  13001: 12, // LilycoveCity_CoveLilyMotel_2F
-  13002: 12, // LilycoveCity_LilycoveMuseum_1F
-  13003: 12, // LilycoveCity_LilycoveMuseum_2F
-  13004: 12, // LilycoveCity_ContestLobby
-  13005: 12, // LilycoveCity_ContestHall
-  13006: 12, // LilycoveCity_PokemonCenter_1F
-  13007: 12, // LilycoveCity_PokemonCenter_2F
-  13008: 12, // LilycoveCity_UnusedMart
-  13009: 12, // LilycoveCity_PokemonTrainerFanClub
-  13010: 12, // LilycoveCity_Harbor
-  13011: 12, // LilycoveCity_MoveDeletersHouse
-  13012: 12, // LilycoveCity_House1
-  13013: 12, // LilycoveCity_House2
-  13014: 12, // LilycoveCity_House3
-  13015: 12, // LilycoveCity_House4
-  13016: 12, // LilycoveCity_DepartmentStore_1F
-  13017: 12, // LilycoveCity_DepartmentStore_2F
-  13018: 12, // LilycoveCity_DepartmentStore_3F
-  13019: 12, // LilycoveCity_DepartmentStore_4F
-  13020: 12, // LilycoveCity_DepartmentStore_5F
-  13021: 12, // LilycoveCity_DepartmentStoreRooftop
-  13022: 12, // LilycoveCity_DepartmentStoreElevator
+  13000: 12,  // LilycoveCity_CoveLilyMotel_1F
+  13001: 12,  // LilycoveCity_CoveLilyMotel_2F
+  13002: 12,  // LilycoveCity_LilycoveMuseum_1F
+  13003: 12,  // LilycoveCity_LilycoveMuseum_2F
+  13004: 12,  // LilycoveCity_ContestLobby
+  13005: 12,  // LilycoveCity_ContestHall
+  13006: 12,  // LilycoveCity_PokemonCenter_1F
+  13007: 12,  // LilycoveCity_PokemonCenter_2F
+  13008: 12,  // LilycoveCity_UnusedMart
+  13009: 12,  // LilycoveCity_PokemonTrainerFanClub
+  13010: 12,  // LilycoveCity_Harbor
+  13011: 12,  // LilycoveCity_MoveDeletersHouse
+  13012: 12,  // LilycoveCity_House1
+  13013: 12,  // LilycoveCity_House2
+  13014: 12,  // LilycoveCity_House3
+  13015: 12,  // LilycoveCity_House4
+  13016: 12,  // LilycoveCity_DepartmentStore_1F
+  13017: 12,  // LilycoveCity_DepartmentStore_2F
+  13018: 12,  // LilycoveCity_DepartmentStore_3F
+  13019: 12,  // LilycoveCity_DepartmentStore_4F
+  13020: 12,  // LilycoveCity_DepartmentStore_5F
+  13021: 12,  // LilycoveCity_DepartmentStoreRooftop
+  13022: 12,  // LilycoveCity_DepartmentStoreElevator
 
   // Bank 14: IndoorMossdeep
-  14000: 13, // MossdeepCity_Gym
-  14001: 13, // MossdeepCity_House1
-  14002: 13, // MossdeepCity_House2
-  14003: 13, // MossdeepCity_PokemonCenter_1F
-  14004: 13, // MossdeepCity_PokemonCenter_2F
-  14005: 13, // MossdeepCity_Mart
-  14006: 13, // MossdeepCity_House3
-  14007: 13, // MossdeepCity_StevensHouse
-  14008: 13, // MossdeepCity_House4
-  14009: 13, // MossdeepCity_SpaceCenter_1F
-  14010: 13, // MossdeepCity_SpaceCenter_2F
-  14011: 13, // MossdeepCity_GameCorner_1F
-  14012: 13, // MossdeepCity_GameCorner_B1F
+  14000: 13,  // MossdeepCity_Gym
+  14001: 13,  // MossdeepCity_House1
+  14002: 13,  // MossdeepCity_House2
+  14003: 13,  // MossdeepCity_PokemonCenter_1F
+  14004: 13,  // MossdeepCity_PokemonCenter_2F
+  14005: 13,  // MossdeepCity_Mart
+  14006: 13,  // MossdeepCity_House3
+  14007: 13,  // MossdeepCity_StevensHouse
+  14008: 13,  // MossdeepCity_House4
+  14009: 13,  // MossdeepCity_SpaceCenter_1F
+  14010: 13,  // MossdeepCity_SpaceCenter_2F
+  14011: 13,  // MossdeepCity_GameCorner_1F
+  14012: 13,  // MossdeepCity_GameCorner_B1F
 
   // Bank 15: IndoorSootopolis
-  15000: 14, // SootopolisCity_Gym_1F
-  15001: 14, // SootopolisCity_Gym_B1F
-  15002: 14, // SootopolisCity_PokemonCenter_1F
-  15003: 14, // SootopolisCity_PokemonCenter_2F
-  15004: 14, // SootopolisCity_Mart
-  15005: 14, // SootopolisCity_House1
-  15006: 14, // SootopolisCity_House2
-  15007: 14, // SootopolisCity_House3
-  15008: 14, // SootopolisCity_House4
-  15009: 14, // SootopolisCity_House5
-  15010: 14, // SootopolisCity_House6
-  15011: 14, // SootopolisCity_House7
-  15012: 14, // SootopolisCity_LotadAndSeedotHouse
-  15013: 14, // SootopolisCity_MysteryEventsHouse_1F
-  15014: 14, // SootopolisCity_MysteryEventsHouse_B1F
+  15000: 14,  // SootopolisCity_Gym_1F
+  15001: 14,  // SootopolisCity_Gym_B1F
+  15002: 14,  // SootopolisCity_PokemonCenter_1F
+  15003: 14,  // SootopolisCity_PokemonCenter_2F
+  15004: 14,  // SootopolisCity_Mart
+  15005: 14,  // SootopolisCity_House1
+  15006: 14,  // SootopolisCity_House2
+  15007: 14,  // SootopolisCity_House3
+  15008: 14,  // SootopolisCity_House4
+  15009: 14,  // SootopolisCity_House5
+  15010: 14,  // SootopolisCity_House6
+  15011: 14,  // SootopolisCity_House7
+  15012: 14,  // SootopolisCity_LotadAndSeedotHouse
+  15013: 14,  // SootopolisCity_MysteryEventsHouse_1F
+  15014: 14,  // SootopolisCity_MysteryEventsHouse_B1F
 
   // Bank 16: IndoorEverGrande
-  16000: 15, // EverGrandeCity_SidneysRoom
-  16001: 15, // EverGrandeCity_PhoebesRoom
-  16002: 15, // EverGrandeCity_GlaciasRoom
-  16003: 15, // EverGrandeCity_DrakesRoom
-  16004: 15, // EverGrandeCity_ChampionsRoom
-  16005: 15, // EverGrandeCity_Hall1
-  16006: 15, // EverGrandeCity_Hall2
-  16007: 15, // EverGrandeCity_Hall3
-  16008: 15, // EverGrandeCity_Hall4
-  16009: 15, // EverGrandeCity_Hall5
-  16010: 15, // EverGrandeCity_PokemonLeague_1F
-  16011: 15, // EverGrandeCity_HallOfFame
-  16012: 15, // EverGrandeCity_PokemonCenter_1F
-  16013: 15, // EverGrandeCity_PokemonCenter_2F
-  16014: 15, // EverGrandeCity_PokemonLeague_2F
+  16000: 15,  // EverGrandeCity_SidneysRoom
+  16001: 15,  // EverGrandeCity_PhoebesRoom
+  16002: 15,  // EverGrandeCity_GlaciasRoom
+  16003: 15,  // EverGrandeCity_DrakesRoom
+  16004: 15,  // EverGrandeCity_ChampionsRoom
+  16005: 15,  // EverGrandeCity_Hall1
+  16006: 15,  // EverGrandeCity_Hall2
+  16007: 15,  // EverGrandeCity_Hall3
+  16008: 15,  // EverGrandeCity_Hall4
+  16009: 15,  // EverGrandeCity_Hall5
+  16010: 15,  // EverGrandeCity_PokemonLeague_1F
+  16011: 15,  // EverGrandeCity_HallOfFame
+  16012: 15,  // EverGrandeCity_PokemonCenter_1F
+  16013: 15,  // EverGrandeCity_PokemonCenter_2F
+  16014: 15,  // EverGrandeCity_PokemonLeague_2F
 
   // Bank 17: IndoorRoute104
-  17000: 19, // Route104_MrBrineysHouse
-  17001: 19, // Route104_PrettyPetalFlowerShop
+  17000: 19,  // Route104_MrBrineysHouse
+  17001: 19,  // Route104_PrettyPetalFlowerShop
 
   // Bank 18: IndoorRoute111
-  18000: 26, // Route111_WinstrateFamilysHouse
-  18001: 26, // Route111_OldLadysRestStop
+  18000: 26,  // Route111_WinstrateFamilysHouse
+  18001: 26,  // Route111_OldLadysRestStop
 
   // Bank 19: IndoorRoute112
-  19000: 27, // Route112_CableCarStation
-  19001: 56, // MtChimney_CableCarStation
+  19000: 27,  // Route112_CableCarStation
+  19001: 56,  // MtChimney_CableCarStation
 
   // Bank 20: IndoorRoute114
-  20000: 29, // Route114_FossilManiacsHouse
-  20001: 29, // Route114_FossilManiacsTunnel
-  20002: 29, // Route114_LanettesHouse
+  20000: 29,  // Route114_FossilManiacsHouse
+  20001: 29,  // Route114_FossilManiacsTunnel
+  20002: 29,  // Route114_LanettesHouse
 
   // Bank 21: IndoorRoute116
-  21000: 31, // Route116_TunnelersRestHouse
+  21000: 31,  // Route116_TunnelersRestHouse
 
   // Bank 22: IndoorRoute117
-  22000: 32, // Route117_PokemonDayCare
+  22000: 32,  // Route117_PokemonDayCare
 
   // Bank 23: IndoorRoute121
-  23000: 36, // Route121_SafariZoneEntrance
+  23000: 36,  // Route121_SafariZoneEntrance
 
   // Bank 24: Dungeons
-  24000: 63, // MeteorFalls_1F_1R
-  24001: 63, // MeteorFalls_1F_2R
-  24002: 63, // MeteorFalls_B1F_1R
-  24003: 63, // MeteorFalls_B1F_2R
-  24004: 60, // RusturfTunnel
-  24005: 54, // Underwater_SootopolisCity
-  24006: 82, // DesertRuins
-  24007: 55, // GraniteCave_1F
-  24008: 55, // GraniteCave_B1F
-  24009: 55, // GraniteCave_B2F
-  24010: 55, // GraniteCave_StevensRoom
-  24011: 59, // PetalburgWoods
-  24012: 56, // MtChimney
-  24013: 76, // JaggedPass
-  24014: 74, // FieryPath
-  24015: 65, // MtPyre_1F
-  24016: 65, // MtPyre_2F
-  24017: 65, // MtPyre_3F
-  24018: 65, // MtPyre_4F
-  24019: 65, // MtPyre_5F
-  24020: 65, // MtPyre_6F
-  24021: 65, // MtPyre_Exterior
-  24022: 65, // MtPyre_Summit
-  24023: 197, // AquaHideout_1F
-  24024: 197, // AquaHideout_B1F
-  24025: 197, // AquaHideout_B2F
-  24026: 69, // Underwater_SeafloorCavern
-  24027: 68, // SeafloorCavern_Entrance
-  24028: 68, // SeafloorCavern_Room1
-  24029: 68, // SeafloorCavern_Room2
-  24030: 68, // SeafloorCavern_Room3
-  24031: 68, // SeafloorCavern_Room4
-  24032: 68, // SeafloorCavern_Room5
-  24033: 68, // SeafloorCavern_Room6
-  24034: 68, // SeafloorCavern_Room7
-  24035: 68, // SeafloorCavern_Room8
-  24036: 68, // SeafloorCavern_Room9
-  24037: 72, // CaveOfOrigin_Entrance
-  24038: 72, // CaveOfOrigin_1F
-  24039: 72, // CaveOfOrigin_UnusedRubySapphireMap1
-  24040: 72, // CaveOfOrigin_UnusedRubySapphireMap2
-  24041: 72, // CaveOfOrigin_UnusedRubySapphireMap3
-  24042: 72, // CaveOfOrigin_B1F
-  24043: 70, // VictoryRoad_1F
-  24044: 70, // VictoryRoad_B1F
-  24045: 70, // VictoryRoad_B2F
-  24046: 67, // ShoalCave_LowTideEntranceRoom
-  24047: 67, // ShoalCave_LowTideInnerRoom
-  24048: 67, // ShoalCave_LowTideStairsRoom
-  24049: 67, // ShoalCave_LowTideLowerRoom
-  24050: 67, // ShoalCave_HighTideEntranceRoom
-  24051: 67, // ShoalCave_HighTideInnerRoom
-  24052: 62, // NewMauville_Entrance
-  24053: 62, // NewMauville_Inside
-  24054: 61, // AbandonedShip_Deck
-  24055: 61, // AbandonedShip_Corridors_1F
-  24056: 61, // AbandonedShip_Rooms_1F
-  24057: 61, // AbandonedShip_Corridors_B1F
-  24058: 61, // AbandonedShip_Rooms_B1F
-  24059: 61, // AbandonedShip_Rooms2_B1F
-  24060: 61, // AbandonedShip_Underwater1
-  24061: 61, // AbandonedShip_Room_B1F
-  24062: 61, // AbandonedShip_Rooms2_1F
-  24063: 61, // AbandonedShip_CaptainsOffice
-  24064: 61, // AbandonedShip_Underwater2
-  24065: 61, // AbandonedShip_HiddenFloorCorridors
-  24066: 61, // AbandonedShip_HiddenFloorRooms
-  24067: 81, // IslandCave
-  24068: 83, // AncientTomb
-  24069: 79, // Underwater_Route134
-  24070: 79, // Underwater_SealedChamber
-  24071: 78, // SealedChamber_OuterRoom
-  24072: 78, // SealedChamber_InnerRoom
-  24073: 80, // ScorchedSlab
-  24074: 197, // AquaHideout_UnusedRubyMap1
-  24075: 197, // AquaHideout_UnusedRubyMap2
-  24076: 197, // AquaHideout_UnusedRubyMap3
-  24077: 85, // SkyPillar_Entrance
-  24078: 85, // SkyPillar_Outside
-  24079: 85, // SkyPillar_1F
-  24080: 85, // SkyPillar_2F
-  24081: 85, // SkyPillar_3F
-  24082: 85, // SkyPillar_4F
-  24083: 67, // ShoalCave_LowTideIceRoom
-  24084: 85, // SkyPillar_5F
-  24085: 85, // SkyPillar_Top
-  24086: 198, // MagmaHideout_1F
-  24087: 198, // MagmaHideout_2F_1R
-  24088: 198, // MagmaHideout_2F_2R
-  24089: 198, // MagmaHideout_3F_1R
-  24090: 198, // MagmaHideout_3F_2R
-  24091: 198, // MagmaHideout_4F
-  24092: 198, // MagmaHideout_3F_3R
-  24093: 198, // MagmaHideout_2F_3R
-  24094: 199, // MirageTower_1F
-  24095: 199, // MirageTower_2F
-  24096: 199, // MirageTower_3F
-  24097: 199, // MirageTower_4F
-  24098: 209, // DesertUnderpass
-  24099: 202, // ArtisanCave_B1F
-  24100: 202, // ArtisanCave_1F
-  24101: 204, // Underwater_MarineCave
-  24102: 203, // MarineCave_Entrance
-  24103: 203, // MarineCave_End
-  24104: 205, // TerraCave_Entrance
-  24105: 205, // TerraCave_End
-  24106: 210, // AlteringCave
-  24107: 63, // MeteorFalls_StevensCave
+  24000: 63,  // MeteorFalls_1F_1R
+  24001: 63,  // MeteorFalls_1F_2R
+  24002: 63,  // MeteorFalls_B1F_1R
+  24003: 63,  // MeteorFalls_B1F_2R
+  24004: 60,  // RusturfTunnel
+  24005: 54,  // Underwater_SootopolisCity
+  24006: 82,  // DesertRuins
+  24007: 55,  // GraniteCave_1F
+  24008: 55,  // GraniteCave_B1F
+  24009: 55,  // GraniteCave_B2F
+  24010: 55,  // GraniteCave_StevensRoom
+  24011: 59,  // PetalburgWoods
+  24012: 56,  // MtChimney
+  24013: 76,  // JaggedPass
+  24014: 74,  // FieryPath
+  24015: 65,  // MtPyre_1F
+  24016: 65,  // MtPyre_2F
+  24017: 65,  // MtPyre_3F
+  24018: 65,  // MtPyre_4F
+  24019: 65,  // MtPyre_5F
+  24020: 65,  // MtPyre_6F
+  24021: 65,  // MtPyre_Exterior
+  24022: 65,  // MtPyre_Summit
+  24023: 197,  // AquaHideout_1F
+  24024: 197,  // AquaHideout_B1F
+  24025: 197,  // AquaHideout_B2F
+  24026: 69,  // Underwater_SeafloorCavern
+  24027: 68,  // SeafloorCavern_Entrance
+  24028: 68,  // SeafloorCavern_Room1
+  24029: 68,  // SeafloorCavern_Room2
+  24030: 68,  // SeafloorCavern_Room3
+  24031: 68,  // SeafloorCavern_Room4
+  24032: 68,  // SeafloorCavern_Room5
+  24033: 68,  // SeafloorCavern_Room6
+  24034: 68,  // SeafloorCavern_Room7
+  24035: 68,  // SeafloorCavern_Room8
+  24036: 68,  // SeafloorCavern_Room9
+  24037: 72,  // CaveOfOrigin_Entrance
+  24038: 72,  // CaveOfOrigin_1F
+  24039: 72,  // CaveOfOrigin_UnusedRubySapphireMap1
+  24040: 72,  // CaveOfOrigin_UnusedRubySapphireMap2
+  24041: 72,  // CaveOfOrigin_UnusedRubySapphireMap3
+  24042: 72,  // CaveOfOrigin_B1F
+  24043: 70,  // VictoryRoad_1F
+  24044: 70,  // VictoryRoad_B1F
+  24045: 70,  // VictoryRoad_B2F
+  24046: 67,  // ShoalCave_LowTideEntranceRoom
+  24047: 67,  // ShoalCave_LowTideInnerRoom
+  24048: 67,  // ShoalCave_LowTideStairsRoom
+  24049: 67,  // ShoalCave_LowTideLowerRoom
+  24050: 67,  // ShoalCave_HighTideEntranceRoom
+  24051: 67,  // ShoalCave_HighTideInnerRoom
+  24052: 62,  // NewMauville_Entrance
+  24053: 62,  // NewMauville_Inside
+  24054: 61,  // AbandonedShip_Deck
+  24055: 61,  // AbandonedShip_Corridors_1F
+  24056: 61,  // AbandonedShip_Rooms_1F
+  24057: 61,  // AbandonedShip_Corridors_B1F
+  24058: 61,  // AbandonedShip_Rooms_B1F
+  24059: 61,  // AbandonedShip_Rooms2_B1F
+  24060: 61,  // AbandonedShip_Underwater1
+  24061: 61,  // AbandonedShip_Room_B1F
+  24062: 61,  // AbandonedShip_Rooms2_1F
+  24063: 61,  // AbandonedShip_CaptainsOffice
+  24064: 61,  // AbandonedShip_Underwater2
+  24065: 61,  // AbandonedShip_HiddenFloorCorridors
+  24066: 61,  // AbandonedShip_HiddenFloorRooms
+  24067: 81,  // IslandCave
+  24068: 83,  // AncientTomb
+  24069: 79,  // Underwater_Route134
+  24070: 79,  // Underwater_SealedChamber
+  24071: 78,  // SealedChamber_OuterRoom
+  24072: 78,  // SealedChamber_InnerRoom
+  24073: 80,  // ScorchedSlab
+  24074: 197,  // AquaHideout_UnusedRubyMap1
+  24075: 197,  // AquaHideout_UnusedRubyMap2
+  24076: 197,  // AquaHideout_UnusedRubyMap3
+  24077: 85,  // SkyPillar_Entrance
+  24078: 85,  // SkyPillar_Outside
+  24079: 85,  // SkyPillar_1F
+  24080: 85,  // SkyPillar_2F
+  24081: 85,  // SkyPillar_3F
+  24082: 85,  // SkyPillar_4F
+  24083: 67,  // ShoalCave_LowTideIceRoom
+  24084: 85,  // SkyPillar_5F
+  24085: 85,  // SkyPillar_Top
+  24086: 198,  // MagmaHideout_1F
+  24087: 198,  // MagmaHideout_2F_1R
+  24088: 198,  // MagmaHideout_2F_2R
+  24089: 198,  // MagmaHideout_3F_1R
+  24090: 198,  // MagmaHideout_3F_2R
+  24091: 198,  // MagmaHideout_4F
+  24092: 198,  // MagmaHideout_3F_3R
+  24093: 198,  // MagmaHideout_2F_3R
+  24094: 199,  // MirageTower_1F
+  24095: 199,  // MirageTower_2F
+  24096: 199,  // MirageTower_3F
+  24097: 199,  // MirageTower_4F
+  24098: 209,  // DesertUnderpass
+  24099: 202,  // ArtisanCave_B1F
+  24100: 202,  // ArtisanCave_1F
+  24101: 204,  // Underwater_MarineCave
+  24102: 203,  // MarineCave_Entrance
+  24103: 203,  // MarineCave_End
+  24104: 205,  // TerraCave_Entrance
+  24105: 205,  // TerraCave_End
+  24106: 210,  // AlteringCave
+  24107: 63,  // MeteorFalls_StevensCave
 
   // Bank 25: IndoorDynamic
-  25000: 86, // SecretBase_RedCave1
-  25001: 86, // SecretBase_BrownCave1
-  25002: 86, // SecretBase_BlueCave1
-  25003: 86, // SecretBase_YellowCave1
-  25004: 86, // SecretBase_Tree1
-  25005: 86, // SecretBase_Shrub1
-  25006: 86, // SecretBase_RedCave2
-  25007: 86, // SecretBase_BrownCave2
-  25008: 86, // SecretBase_BlueCave2
-  25009: 86, // SecretBase_YellowCave2
-  25010: 86, // SecretBase_Tree2
-  25011: 86, // SecretBase_Shrub2
-  25012: 86, // SecretBase_RedCave3
-  25013: 86, // SecretBase_BrownCave3
-  25014: 86, // SecretBase_BlueCave3
-  25015: 86, // SecretBase_YellowCave3
-  25016: 86, // SecretBase_Tree3
-  25017: 86, // SecretBase_Shrub3
-  25018: 86, // SecretBase_RedCave4
-  25019: 86, // SecretBase_BrownCave4
-  25020: 86, // SecretBase_BlueCave4
-  25021: 86, // SecretBase_YellowCave4
-  25022: 86, // SecretBase_Tree4
-  25023: 86, // SecretBase_Shrub4
-  25024: 87, // BattleColosseum_2P
-  25025: 87, // TradeCenter
-  25026: 87, // RecordCorner
-  25027: 87, // BattleColosseum_4P
-  25028: 87, // ContestHall
-  25029: 87, // UnusedContestHall1
-  25030: 87, // UnusedContestHall2
-  25031: 87, // UnusedContestHall3
-  25032: 87, // UnusedContestHall4
-  25033: 87, // UnusedContestHall5
-  25034: 87, // UnusedContestHall6
-  25035: 87, // ContestHallBeauty
-  25036: 87, // ContestHallTough
-  25037: 87, // ContestHallCool
-  25038: 87, // ContestHallSmart
-  25039: 87, // ContestHallCute
-  25040: 84, // InsideOfTruck
-  25041: 87, // SSTidalCorridor
-  25042: 87, // SSTidalLowerDeck
-  25043: 87, // SSTidalRooms
-  25044: 87, // BattlePyramidSquare01
-  25045: 87, // BattlePyramidSquare02
-  25046: 87, // BattlePyramidSquare03
-  25047: 87, // BattlePyramidSquare04
-  25048: 87, // BattlePyramidSquare05
-  25049: 87, // BattlePyramidSquare06
-  25050: 87, // BattlePyramidSquare07
-  25051: 87, // BattlePyramidSquare08
-  25052: 87, // BattlePyramidSquare09
-  25053: 87, // BattlePyramidSquare10
-  25054: 87, // BattlePyramidSquare11
-  25055: 87, // BattlePyramidSquare12
-  25056: 87, // BattlePyramidSquare13
-  25057: 87, // BattlePyramidSquare14
-  25058: 87, // BattlePyramidSquare15
-  25059: 87, // BattlePyramidSquare16
-  25060: 87, // UnionRoom
+  25000: 86,  // SecretBase_RedCave1
+  25001: 86,  // SecretBase_BrownCave1
+  25002: 86,  // SecretBase_BlueCave1
+  25003: 86,  // SecretBase_YellowCave1
+  25004: 86,  // SecretBase_Tree1
+  25005: 86,  // SecretBase_Shrub1
+  25006: 86,  // SecretBase_RedCave2
+  25007: 86,  // SecretBase_BrownCave2
+  25008: 86,  // SecretBase_BlueCave2
+  25009: 86,  // SecretBase_YellowCave2
+  25010: 86,  // SecretBase_Tree2
+  25011: 86,  // SecretBase_Shrub2
+  25012: 86,  // SecretBase_RedCave3
+  25013: 86,  // SecretBase_BrownCave3
+  25014: 86,  // SecretBase_BlueCave3
+  25015: 86,  // SecretBase_YellowCave3
+  25016: 86,  // SecretBase_Tree3
+  25017: 86,  // SecretBase_Shrub3
+  25018: 86,  // SecretBase_RedCave4
+  25019: 86,  // SecretBase_BrownCave4
+  25020: 86,  // SecretBase_BlueCave4
+  25021: 86,  // SecretBase_YellowCave4
+  25022: 86,  // SecretBase_Tree4
+  25023: 86,  // SecretBase_Shrub4
+  25024: 87,  // BattleColosseum_2P
+  25025: 87,  // TradeCenter
+  25026: 87,  // RecordCorner
+  25027: 87,  // BattleColosseum_4P
+  25028: 87,  // ContestHall
+  25029: 87,  // UnusedContestHall1
+  25030: 87,  // UnusedContestHall2
+  25031: 87,  // UnusedContestHall3
+  25032: 87,  // UnusedContestHall4
+  25033: 87,  // UnusedContestHall5
+  25034: 87,  // UnusedContestHall6
+  25035: 87,  // ContestHallBeauty
+  25036: 87,  // ContestHallTough
+  25037: 87,  // ContestHallCool
+  25038: 87,  // ContestHallSmart
+  25039: 87,  // ContestHallCute
+  25040: 84,  // InsideOfTruck
+  25041: 87,  // SSTidalCorridor
+  25042: 87,  // SSTidalLowerDeck
+  25043: 87,  // SSTidalRooms
+  25044: 87,  // BattlePyramidSquare01
+  25045: 87,  // BattlePyramidSquare02
+  25046: 87,  // BattlePyramidSquare03
+  25047: 87,  // BattlePyramidSquare04
+  25048: 87,  // BattlePyramidSquare05
+  25049: 87,  // BattlePyramidSquare06
+  25050: 87,  // BattlePyramidSquare07
+  25051: 87,  // BattlePyramidSquare08
+  25052: 87,  // BattlePyramidSquare09
+  25053: 87,  // BattlePyramidSquare10
+  25054: 87,  // BattlePyramidSquare11
+  25055: 87,  // BattlePyramidSquare12
+  25056: 87,  // BattlePyramidSquare13
+  25057: 87,  // BattlePyramidSquare14
+  25058: 87,  // BattlePyramidSquare15
+  25059: 87,  // BattlePyramidSquare16
+  25060: 87,  // UnionRoom
 
   // Bank 26: SpecialArea
-  26000: 57, // SafariZone_Northwest
-  26001: 57, // SafariZone_North
-  26002: 57, // SafariZone_Southwest
-  26003: 57, // SafariZone_South
-  26004: 58, // BattleFrontier_OutsideWest
-  26005: 58, // BattleFrontier_BattleTowerLobby
-  26006: 58, // BattleFrontier_BattleTowerElevator
-  26007: 58, // BattleFrontier_BattleTowerCorridor
-  26008: 58, // BattleFrontier_BattleTowerBattleRoom
-  26009: 73, // SouthernIsland_Exterior
-  26010: 73, // SouthernIsland_Interior
-  26011: 57, // SafariZone_RestHouse
-  26012: 57, // SafariZone_Northeast
-  26013: 57, // SafariZone_Southeast
-  26014: 58, // BattleFrontier_OutsideEast
-  26015: 58, // BattleFrontier_BattleTowerMultiPartnerRoom
-  26016: 58, // BattleFrontier_BattleTowerMultiCorridor
-  26017: 58, // BattleFrontier_BattleTowerMultiBattleRoom
-  26018: 58, // BattleFrontier_BattleDomeLobby
-  26019: 58, // BattleFrontier_BattleDomeCorridor
-  26020: 58, // BattleFrontier_BattleDomePreBattleRoom
-  26021: 58, // BattleFrontier_BattleDomeBattleRoom
-  26022: 58, // BattleFrontier_BattlePalaceLobby
-  26023: 58, // BattleFrontier_BattlePalaceCorridor
-  26024: 58, // BattleFrontier_BattlePalaceBattleRoom
-  26025: 58, // BattleFrontier_BattlePyramidLobby
-  26026: 58, // BattleFrontier_BattlePyramidFloor
-  26027: 58, // BattleFrontier_BattlePyramidTop
-  26028: 58, // BattleFrontier_BattleArenaLobby
-  26029: 58, // BattleFrontier_BattleArenaCorridor
-  26030: 58, // BattleFrontier_BattleArenaBattleRoom
-  26031: 58, // BattleFrontier_BattleFactoryLobby
-  26032: 58, // BattleFrontier_BattleFactoryPreBattleRoom
-  26033: 58, // BattleFrontier_BattleFactoryBattleRoom
-  26034: 58, // BattleFrontier_BattlePikeLobby
-  26035: 58, // BattleFrontier_BattlePikeCorridor
-  26036: 58, // BattleFrontier_BattlePikeThreePathRoom
-  26037: 58, // BattleFrontier_BattlePikeRoomNormal
-  26038: 58, // BattleFrontier_BattlePikeRoomFinal
-  26039: 58, // BattleFrontier_BattlePikeRoomWildMons
-  26040: 58, // BattleFrontier_RankingHall
-  26041: 58, // BattleFrontier_Lounge1
-  26042: 58, // BattleFrontier_ExchangeServiceCorner
-  26043: 58, // BattleFrontier_Lounge2
-  26044: 58, // BattleFrontier_Lounge3
-  26045: 58, // BattleFrontier_Lounge4
-  26046: 58, // BattleFrontier_ScottsHouse
-  26047: 58, // BattleFrontier_Lounge5
-  26048: 58, // BattleFrontier_Lounge6
-  26049: 58, // BattleFrontier_Lounge7
-  26050: 58, // BattleFrontier_ReceptionGate
-  26051: 58, // BattleFrontier_Lounge8
-  26052: 58, // BattleFrontier_Lounge9
-  26053: 58, // BattleFrontier_PokemonCenter_1F
-  26054: 58, // BattleFrontier_PokemonCenter_2F
-  26055: 58, // BattleFrontier_Mart
-  26056: 201, // FarawayIsland_Entrance
-  26057: 201, // FarawayIsland_Interior
-  26058: 200, // BirthIsland_Exterior
-  26059: 200, // BirthIsland_Harbor
-  26060: 212, // TrainerHill_Entrance
-  26061: 212, // TrainerHill_1F
-  26062: 212, // TrainerHill_2F
-  26063: 212, // TrainerHill_3F
-  26064: 212, // TrainerHill_4F
-  26065: 212, // TrainerHill_Roof
-  26066: 211, // NavelRock_Exterior
-  26067: 211, // NavelRock_Harbor
-  26068: 211, // NavelRock_Entrance
-  26069: 211, // NavelRock_B1F
-  26070: 211, // NavelRock_Fork
-  26071: 211, // NavelRock_Up1
-  26072: 211, // NavelRock_Up2
-  26073: 211, // NavelRock_Up3
-  26074: 211, // NavelRock_Up4
-  26075: 211, // NavelRock_Top
-  26076: 211, // NavelRock_Down01
-  26077: 211, // NavelRock_Down02
-  26078: 211, // NavelRock_Down03
-  26079: 211, // NavelRock_Down04
-  26080: 211, // NavelRock_Down05
-  26081: 211, // NavelRock_Down06
-  26082: 211, // NavelRock_Down07
-  26083: 211, // NavelRock_Down08
-  26084: 211, // NavelRock_Down09
-  26085: 211, // NavelRock_Down10
-  26086: 211, // NavelRock_Down11
-  26087: 211, // NavelRock_Bottom
-  26088: 212, // TrainerHill_Elevator
+  26000: 57,  // SafariZone_Northwest
+  26001: 57,  // SafariZone_North
+  26002: 57,  // SafariZone_Southwest
+  26003: 57,  // SafariZone_South
+  26004: 58,  // BattleFrontier_OutsideWest
+  26005: 58,  // BattleFrontier_BattleTowerLobby
+  26006: 58,  // BattleFrontier_BattleTowerElevator
+  26007: 58,  // BattleFrontier_BattleTowerCorridor
+  26008: 58,  // BattleFrontier_BattleTowerBattleRoom
+  26009: 73,  // SouthernIsland_Exterior
+  26010: 73,  // SouthernIsland_Interior
+  26011: 57,  // SafariZone_RestHouse
+  26012: 57,  // SafariZone_Northeast
+  26013: 57,  // SafariZone_Southeast
+  26014: 58,  // BattleFrontier_OutsideEast
+  26015: 58,  // BattleFrontier_BattleTowerMultiPartnerRoom
+  26016: 58,  // BattleFrontier_BattleTowerMultiCorridor
+  26017: 58,  // BattleFrontier_BattleTowerMultiBattleRoom
+  26018: 58,  // BattleFrontier_BattleDomeLobby
+  26019: 58,  // BattleFrontier_BattleDomeCorridor
+  26020: 58,  // BattleFrontier_BattleDomePreBattleRoom
+  26021: 58,  // BattleFrontier_BattleDomeBattleRoom
+  26022: 58,  // BattleFrontier_BattlePalaceLobby
+  26023: 58,  // BattleFrontier_BattlePalaceCorridor
+  26024: 58,  // BattleFrontier_BattlePalaceBattleRoom
+  26025: 58,  // BattleFrontier_BattlePyramidLobby
+  26026: 58,  // BattleFrontier_BattlePyramidFloor
+  26027: 58,  // BattleFrontier_BattlePyramidTop
+  26028: 58,  // BattleFrontier_BattleArenaLobby
+  26029: 58,  // BattleFrontier_BattleArenaCorridor
+  26030: 58,  // BattleFrontier_BattleArenaBattleRoom
+  26031: 58,  // BattleFrontier_BattleFactoryLobby
+  26032: 58,  // BattleFrontier_BattleFactoryPreBattleRoom
+  26033: 58,  // BattleFrontier_BattleFactoryBattleRoom
+  26034: 58,  // BattleFrontier_BattlePikeLobby
+  26035: 58,  // BattleFrontier_BattlePikeCorridor
+  26036: 58,  // BattleFrontier_BattlePikeThreePathRoom
+  26037: 58,  // BattleFrontier_BattlePikeRoomNormal
+  26038: 58,  // BattleFrontier_BattlePikeRoomFinal
+  26039: 58,  // BattleFrontier_BattlePikeRoomWildMons
+  26040: 58,  // BattleFrontier_RankingHall
+  26041: 58,  // BattleFrontier_Lounge1
+  26042: 58,  // BattleFrontier_ExchangeServiceCorner
+  26043: 58,  // BattleFrontier_Lounge2
+  26044: 58,  // BattleFrontier_Lounge3
+  26045: 58,  // BattleFrontier_Lounge4
+  26046: 58,  // BattleFrontier_ScottsHouse
+  26047: 58,  // BattleFrontier_Lounge5
+  26048: 58,  // BattleFrontier_Lounge6
+  26049: 58,  // BattleFrontier_Lounge7
+  26050: 58,  // BattleFrontier_ReceptionGate
+  26051: 58,  // BattleFrontier_Lounge8
+  26052: 58,  // BattleFrontier_Lounge9
+  26053: 58,  // BattleFrontier_PokemonCenter_1F
+  26054: 58,  // BattleFrontier_PokemonCenter_2F
+  26055: 58,  // BattleFrontier_Mart
+  26056: 201,  // FarawayIsland_Entrance
+  26057: 201,  // FarawayIsland_Interior
+  26058: 200,  // BirthIsland_Exterior
+  26059: 200,  // BirthIsland_Harbor
+  26060: 212,  // TrainerHill_Entrance
+  26061: 212,  // TrainerHill_1F
+  26062: 212,  // TrainerHill_2F
+  26063: 212,  // TrainerHill_3F
+  26064: 212,  // TrainerHill_4F
+  26065: 212,  // TrainerHill_Roof
+  26066: 211,  // NavelRock_Exterior
+  26067: 211,  // NavelRock_Harbor
+  26068: 211,  // NavelRock_Entrance
+  26069: 211,  // NavelRock_B1F
+  26070: 211,  // NavelRock_Fork
+  26071: 211,  // NavelRock_Up1
+  26072: 211,  // NavelRock_Up2
+  26073: 211,  // NavelRock_Up3
+  26074: 211,  // NavelRock_Up4
+  26075: 211,  // NavelRock_Top
+  26076: 211,  // NavelRock_Down01
+  26077: 211,  // NavelRock_Down02
+  26078: 211,  // NavelRock_Down03
+  26079: 211,  // NavelRock_Down04
+  26080: 211,  // NavelRock_Down05
+  26081: 211,  // NavelRock_Down06
+  26082: 211,  // NavelRock_Down07
+  26083: 211,  // NavelRock_Down08
+  26084: 211,  // NavelRock_Down09
+  26085: 211,  // NavelRock_Down10
+  26086: 211,  // NavelRock_Down11
+  26087: 211,  // NavelRock_Bottom
+  26088: 212,  // TrainerHill_Elevator
 
   // Bank 27: IndoorRoute104Prototype
-  27000: 19, // Route104_Prototype
-  27001: 19, // Route104_PrototypePrettyPetalFlowerShop
+  27000: 19,  // Route104_Prototype
+  27001: 19,  // Route104_PrototypePrettyPetalFlowerShop
 
   // Bank 28: IndoorRoute109
-  28000: 24, // Route109_SeashoreHouse
+  28000: 24,  // Route109_SeashoreHouse
 
   // Bank 29: IndoorRoute110
-  29000: 25, // Route110_TrickHouseEntrance
-  29001: 25, // Route110_TrickHouseEnd
-  29002: 25, // Route110_TrickHouseCorridor
-  29003: 25, // Route110_TrickHousePuzzle1
-  29004: 25, // Route110_TrickHousePuzzle2
-  29005: 25, // Route110_TrickHousePuzzle3
-  29006: 25, // Route110_TrickHousePuzzle4
-  29007: 25, // Route110_TrickHousePuzzle5
-  29008: 25, // Route110_TrickHousePuzzle6
-  29009: 25, // Route110_TrickHousePuzzle7
-  29010: 25, // Route110_TrickHousePuzzle8
-  29011: 25, // Route110_SeasideCyclingRoadSouthEntrance
-  29012: 25, // Route110_SeasideCyclingRoadNorthEntrance
+  29000: 25,  // Route110_TrickHouseEntrance
+  29001: 25,  // Route110_TrickHouseEnd
+  29002: 25,  // Route110_TrickHouseCorridor
+  29003: 25,  // Route110_TrickHousePuzzle1
+  29004: 25,  // Route110_TrickHousePuzzle2
+  29005: 25,  // Route110_TrickHousePuzzle3
+  29006: 25,  // Route110_TrickHousePuzzle4
+  29007: 25,  // Route110_TrickHousePuzzle5
+  29008: 25,  // Route110_TrickHousePuzzle6
+  29009: 25,  // Route110_TrickHousePuzzle7
+  29010: 25,  // Route110_TrickHousePuzzle8
+  29011: 25,  // Route110_SeasideCyclingRoadSouthEntrance
+  29012: 25,  // Route110_SeasideCyclingRoadNorthEntrance
 
   // Bank 30: IndoorRoute113
-  30000: 28, // Route113_GlassWorkshop
+  30000: 28,  // Route113_GlassWorkshop
 
   // Bank 31: IndoorRoute123
-  31000: 38, // Route123_BerryMastersHouse
+  31000: 38,  // Route123_BerryMastersHouse
 
   // Bank 32: IndoorRoute119
-  32000: 34, // Route119_WeatherInstitute_1F
-  32001: 34, // Route119_WeatherInstitute_2F
-  32002: 34, // Route119_House
+  32000: 34,  // Route119_WeatherInstitute_1F
+  32001: 34,  // Route119_WeatherInstitute_2F
+  32002: 34,  // Route119_House
 
   // Bank 33: IndoorRoute124
-  33000: 39, // Route124_DivingTreasureHuntersHouse
+  33000: 39,  // Route124_DivingTreasureHuntersHouse
 };
 
 /** Look up the MAPSEC entry for a given (map_bank, map_num) pair. */
@@ -711,12 +711,7 @@ export function lookupLocation(bank: number, num: number): MapsecEntry | null {
 }
 
 /** Convert tile coordinates to pixel center within the world map image. */
-export function tileCenterPx(
-  tx: number,
-  ty: number,
-  tw: number,
-  th: number,
-): { x: number; y: number } {
+export function tileCenterPx(tx: number, ty: number, tw: number, th: number): { x: number; y: number } {
   return {
     x: (tx + tw / 2) * 8,
     y: (ty + th / 2) * 8,
@@ -1314,600 +1309,596 @@ export const EMERALD_MAP_TO_MAP_NAME: Record<number, string> = {
 
 // (map_bank * 1000 + map_num) → map dimensions in metatiles (16px each).
 // Resolved from each map's layout in layouts.json.
-export const EMERALD_MAP_DIMENSIONS: Record<number, { w: number; h: number }> =
-  {
-    // Bank 0: TownsAndRoutes
-    0: { w: 30, h: 30 },
-    1: { w: 40, h: 60 },
-    2: { w: 40, h: 20 },
-    3: { w: 40, h: 60 },
-    4: { w: 40, h: 20 },
-    5: { w: 80, h: 40 },
-    6: { w: 80, h: 40 },
-    7: { w: 60, h: 60 },
-    8: { w: 40, h: 80 },
-    9: { w: 20, h: 20 },
-    10: { w: 20, h: 20 },
-    11: { w: 20, h: 20 },
-    12: { w: 20, h: 20 },
-    13: { w: 20, h: 20 },
-    14: { w: 20, h: 20 },
-    15: { w: 20, h: 40 },
-    16: { w: 20, h: 20 },
-    17: { w: 50, h: 20 },
-    18: { w: 80, h: 22 },
-    19: { w: 40, h: 80 },
-    20: { w: 40, h: 80 },
-    21: { w: 80, h: 20 },
-    22: { w: 60, h: 20 },
-    23: { w: 60, h: 20 },
-    24: { w: 40, h: 63 },
-    25: { w: 40, h: 100 },
-    26: { w: 40, h: 140 },
-    27: { w: 40, h: 60 },
-    28: { w: 100, h: 20 },
-    29: { w: 40, h: 80 },
-    30: { w: 40, h: 80 },
-    31: { w: 100, h: 20 },
-    32: { w: 60, h: 20 },
-    33: { w: 80, h: 20 },
-    34: { w: 40, h: 140 },
-    35: { w: 40, h: 100 },
-    36: { w: 80, h: 20 },
-    37: { w: 40, h: 40 },
-    38: { w: 140, h: 20 },
-    39: { w: 80, h: 80 },
-    40: { w: 80, h: 40 },
-    41: { w: 80, h: 80 },
-    42: { w: 80, h: 80 },
-    43: { w: 120, h: 40 },
-    44: { w: 80, h: 40 },
-    45: { w: 80, h: 40 },
-    46: { w: 60, h: 40 },
-    47: { w: 80, h: 40 },
-    48: { w: 80, h: 40 },
-    49: { w: 80, h: 40 },
-    50: { w: 80, h: 80 },
-    51: { w: 80, h: 80 },
-    52: { w: 80, h: 80 },
-    53: { w: 120, h: 40 },
-    54: { w: 80, h: 40 },
-    55: { w: 40, h: 80 },
-    56: { w: 80, h: 40 },
+export const EMERALD_MAP_DIMENSIONS: Record<number, { w: number; h: number }> = {
+  // Bank 0: TownsAndRoutes
+  0: { w: 30, h: 30 },
+  1: { w: 40, h: 60 },
+  2: { w: 40, h: 20 },
+  3: { w: 40, h: 60 },
+  4: { w: 40, h: 20 },
+  5: { w: 80, h: 40 },
+  6: { w: 80, h: 40 },
+  7: { w: 60, h: 60 },
+  8: { w: 40, h: 80 },
+  9: { w: 20, h: 20 },
+  10: { w: 20, h: 20 },
+  11: { w: 20, h: 20 },
+  12: { w: 20, h: 20 },
+  13: { w: 20, h: 20 },
+  14: { w: 20, h: 20 },
+  15: { w: 20, h: 40 },
+  16: { w: 20, h: 20 },
+  17: { w: 50, h: 20 },
+  18: { w: 80, h: 22 },
+  19: { w: 40, h: 80 },
+  20: { w: 40, h: 80 },
+  21: { w: 80, h: 20 },
+  22: { w: 60, h: 20 },
+  23: { w: 60, h: 20 },
+  24: { w: 40, h: 63 },
+  25: { w: 40, h: 100 },
+  26: { w: 40, h: 140 },
+  27: { w: 40, h: 60 },
+  28: { w: 100, h: 20 },
+  29: { w: 40, h: 80 },
+  30: { w: 40, h: 80 },
+  31: { w: 100, h: 20 },
+  32: { w: 60, h: 20 },
+  33: { w: 80, h: 20 },
+  34: { w: 40, h: 140 },
+  35: { w: 40, h: 100 },
+  36: { w: 80, h: 20 },
+  37: { w: 40, h: 40 },
+  38: { w: 140, h: 20 },
+  39: { w: 80, h: 80 },
+  40: { w: 80, h: 40 },
+  41: { w: 80, h: 80 },
+  42: { w: 80, h: 80 },
+  43: { w: 120, h: 40 },
+  44: { w: 80, h: 40 },
+  45: { w: 80, h: 40 },
+  46: { w: 60, h: 40 },
+  47: { w: 80, h: 40 },
+  48: { w: 80, h: 40 },
+  49: { w: 80, h: 40 },
+  50: { w: 80, h: 80 },
+  51: { w: 80, h: 80 },
+  52: { w: 80, h: 80 },
+  53: { w: 120, h: 40 },
+  54: { w: 80, h: 40 },
+  55: { w: 40, h: 80 },
+  56: { w: 80, h: 40 },
 
-    // Bank 1: IndoorLittleroot
-    1000: { w: 11, h: 9 },
-    1001: { w: 9, h: 8 },
-    1002: { w: 11, h: 9 },
-    1003: { w: 9, h: 8 },
-    1004: { w: 13, h: 13 },
+  // Bank 1: IndoorLittleroot
+  1000: { w: 11, h: 9 },
+  1001: { w: 9, h: 8 },
+  1002: { w: 11, h: 9 },
+  1003: { w: 9, h: 8 },
+  1004: { w: 13, h: 13 },
 
-    // Bank 2: IndoorOldale
-    2000: { w: 10, h: 9 },
-    2001: { w: 11, h: 8 },
-    2002: { w: 14, h: 9 },
-    2003: { w: 14, h: 10 },
-    2004: { w: 11, h: 8 },
+  // Bank 2: IndoorOldale
+  2000: { w: 10, h: 9 },
+  2001: { w: 11, h: 8 },
+  2002: { w: 14, h: 9 },
+  2003: { w: 14, h: 10 },
+  2004: { w: 11, h: 8 },
 
-    // Bank 3: IndoorDewford
-    3000: { w: 10, h: 8 },
-    3001: { w: 14, h: 9 },
-    3002: { w: 14, h: 10 },
-    3003: { w: 18, h: 28 },
-    3004: { w: 17, h: 9 },
-    3005: { w: 10, h: 9 },
+  // Bank 3: IndoorDewford
+  3000: { w: 10, h: 8 },
+  3001: { w: 14, h: 9 },
+  3002: { w: 14, h: 10 },
+  3003: { w: 18, h: 28 },
+  3004: { w: 17, h: 9 },
+  3005: { w: 10, h: 9 },
 
-    // Bank 4: IndoorLavaridge
-    4000: { w: 11, h: 8 },
-    4001: { w: 17, h: 19 },
-    4002: { w: 17, h: 19 },
-    4003: { w: 10, h: 8 },
-    4004: { w: 11, h: 8 },
-    4005: { w: 14, h: 9 },
-    4006: { w: 14, h: 10 },
+  // Bank 4: IndoorLavaridge
+  4000: { w: 11, h: 8 },
+  4001: { w: 17, h: 19 },
+  4002: { w: 17, h: 19 },
+  4003: { w: 10, h: 8 },
+  4004: { w: 11, h: 8 },
+  4005: { w: 14, h: 9 },
+  4006: { w: 14, h: 10 },
 
-    // Bank 5: IndoorFallarbor
-    5000: { w: 11, h: 8 },
-    5001: { w: 13, h: 10 },
-    5002: { w: 5, h: 8 },
-    5003: { w: 10, h: 9 },
-    5004: { w: 14, h: 9 },
-    5005: { w: 14, h: 10 },
-    5006: { w: 10, h: 9 },
-    5007: { w: 11, h: 8 },
+  // Bank 5: IndoorFallarbor
+  5000: { w: 11, h: 8 },
+  5001: { w: 13, h: 10 },
+  5002: { w: 5, h: 8 },
+  5003: { w: 10, h: 9 },
+  5004: { w: 14, h: 9 },
+  5005: { w: 14, h: 10 },
+  5006: { w: 10, h: 9 },
+  5007: { w: 11, h: 8 },
 
-    // Bank 6: IndoorVerdanturf
-    6000: { w: 13, h: 10 },
-    6001: { w: 5, h: 8 },
-    6002: { w: 13, h: 9 },
-    6003: { w: 11, h: 8 },
-    6004: { w: 14, h: 9 },
-    6005: { w: 14, h: 10 },
-    6006: { w: 17, h: 8 },
-    6007: { w: 11, h: 8 },
-    6008: { w: 10, h: 9 },
+  // Bank 6: IndoorVerdanturf
+  6000: { w: 13, h: 10 },
+  6001: { w: 5, h: 8 },
+  6002: { w: 13, h: 9 },
+  6003: { w: 11, h: 8 },
+  6004: { w: 14, h: 9 },
+  6005: { w: 14, h: 10 },
+  6006: { w: 17, h: 8 },
+  6007: { w: 11, h: 8 },
+  6008: { w: 10, h: 9 },
 
-    // Bank 7: IndoorPacifidlog
-    7000: { w: 14, h: 9 },
-    7001: { w: 14, h: 10 },
-    7002: { w: 10, h: 9 },
-    7003: { w: 10, h: 9 },
-    7004: { w: 10, h: 9 },
-    7005: { w: 10, h: 9 },
-    7006: { w: 10, h: 9 },
+  // Bank 7: IndoorPacifidlog
+  7000: { w: 14, h: 9 },
+  7001: { w: 14, h: 10 },
+  7002: { w: 10, h: 9 },
+  7003: { w: 10, h: 9 },
+  7004: { w: 10, h: 9 },
+  7005: { w: 10, h: 9 },
+  7006: { w: 10, h: 9 },
 
-    // Bank 8: IndoorPetalburg
-    8000: { w: 11, h: 8 },
-    8001: { w: 9, h: 112 },
-    8002: { w: 10, h: 9 },
-    8003: { w: 10, h: 8 },
-    8004: { w: 14, h: 9 },
-    8005: { w: 14, h: 10 },
-    8006: { w: 11, h: 8 },
+  // Bank 8: IndoorPetalburg
+  8000: { w: 11, h: 8 },
+  8001: { w: 9, h: 112 },
+  8002: { w: 10, h: 9 },
+  8003: { w: 10, h: 8 },
+  8004: { w: 14, h: 9 },
+  8005: { w: 14, h: 10 },
+  8006: { w: 11, h: 8 },
 
-    // Bank 9: IndoorSlateport
-    9000: { w: 21, h: 15 },
-    9001: { w: 17, h: 15 },
-    9002: { w: 13, h: 10 },
-    9003: { w: 5, h: 8 },
-    9004: { w: 10, h: 9 },
-    9005: { w: 10, h: 8 },
-    9006: { w: 14, h: 11 },
-    9007: { w: 20, h: 9 },
-    9008: { w: 20, h: 9 },
-    9009: { w: 24, h: 15 },
-    9010: { w: 11, h: 8 },
-    9011: { w: 14, h: 9 },
-    9012: { w: 14, h: 10 },
-    9013: { w: 11, h: 8 },
+  // Bank 9: IndoorSlateport
+  9000: { w: 21, h: 15 },
+  9001: { w: 17, h: 15 },
+  9002: { w: 13, h: 10 },
+  9003: { w: 5, h: 8 },
+  9004: { w: 10, h: 9 },
+  9005: { w: 10, h: 8 },
+  9006: { w: 14, h: 11 },
+  9007: { w: 20, h: 9 },
+  9008: { w: 20, h: 9 },
+  9009: { w: 24, h: 15 },
+  9010: { w: 11, h: 8 },
+  9011: { w: 14, h: 9 },
+  9012: { w: 14, h: 10 },
+  9013: { w: 11, h: 8 },
 
-    // Bank 10: IndoorMauville
-    10000: { w: 10, h: 21 },
-    10001: { w: 12, h: 9 },
-    10002: { w: 11, h: 8 },
-    10003: { w: 22, h: 11 },
-    10004: { w: 10, h: 9 },
-    10005: { w: 14, h: 9 },
-    10006: { w: 14, h: 10 },
-    10007: { w: 11, h: 8 },
+  // Bank 10: IndoorMauville
+  10000: { w: 10, h: 21 },
+  10001: { w: 12, h: 9 },
+  10002: { w: 11, h: 8 },
+  10003: { w: 22, h: 11 },
+  10004: { w: 10, h: 9 },
+  10005: { w: 14, h: 9 },
+  10006: { w: 14, h: 10 },
+  10007: { w: 11, h: 8 },
 
-    // Bank 11: IndoorRustboro
-    11000: { w: 19, h: 9 },
-    11001: { w: 19, h: 9 },
-    11002: { w: 19, h: 9 },
-    11003: { w: 11, h: 20 },
-    11004: { w: 12, h: 11 },
-    11005: { w: 14, h: 9 },
-    11006: { w: 14, h: 10 },
-    11007: { w: 11, h: 8 },
-    11008: { w: 14, h: 8 },
-    11009: { w: 14, h: 8 },
-    11010: { w: 13, h: 8 },
-    11011: { w: 11, h: 9 },
-    11012: { w: 12, h: 9 },
-    11013: { w: 14, h: 9 },
-    11014: { w: 14, h: 9 },
-    11015: { w: 14, h: 9 },
-    11016: { w: 12, h: 9 },
+  // Bank 11: IndoorRustboro
+  11000: { w: 19, h: 9 },
+  11001: { w: 19, h: 9 },
+  11002: { w: 19, h: 9 },
+  11003: { w: 11, h: 20 },
+  11004: { w: 12, h: 11 },
+  11005: { w: 14, h: 9 },
+  11006: { w: 14, h: 10 },
+  11007: { w: 11, h: 8 },
+  11008: { w: 14, h: 8 },
+  11009: { w: 14, h: 8 },
+  11010: { w: 13, h: 8 },
+  11011: { w: 11, h: 9 },
+  11012: { w: 12, h: 9 },
+  11013: { w: 14, h: 9 },
+  11014: { w: 14, h: 9 },
+  11015: { w: 14, h: 9 },
+  11016: { w: 12, h: 9 },
 
-    // Bank 12: IndoorFortree
-    12000: { w: 8, h: 6 },
-    12001: { w: 20, h: 25 },
-    12002: { w: 14, h: 9 },
-    12003: { w: 14, h: 10 },
-    12004: { w: 11, h: 8 },
-    12005: { w: 8, h: 6 },
-    12006: { w: 8, h: 6 },
-    12007: { w: 8, h: 6 },
-    12008: { w: 8, h: 6 },
-    12009: { w: 8, h: 6 },
+  // Bank 12: IndoorFortree
+  12000: { w: 8, h: 6 },
+  12001: { w: 20, h: 25 },
+  12002: { w: 14, h: 9 },
+  12003: { w: 14, h: 10 },
+  12004: { w: 11, h: 8 },
+  12005: { w: 8, h: 6 },
+  12006: { w: 8, h: 6 },
+  12007: { w: 8, h: 6 },
+  12008: { w: 8, h: 6 },
+  12009: { w: 8, h: 6 },
 
-    // Bank 13: IndoorLilycove
-    13000: { w: 12, h: 9 },
-    13001: { w: 12, h: 9 },
-    13002: { w: 21, h: 14 },
-    13003: { w: 22, h: 13 },
-    13004: { w: 31, h: 12 },
-    13005: { w: 51, h: 33 },
-    13006: { w: 14, h: 9 },
-    13007: { w: 14, h: 10 },
-    13008: { w: 11, h: 8 },
-    13009: { w: 12, h: 14 },
-    13010: { w: 24, h: 15 },
-    13011: { w: 11, h: 8 },
-    13012: { w: 10, h: 9 },
-    13013: { w: 8, h: 8 },
-    13014: { w: 11, h: 8 },
-    13015: { w: 10, h: 9 },
-    13016: { w: 18, h: 8 },
-    13017: { w: 18, h: 8 },
-    13018: { w: 18, h: 8 },
-    13019: { w: 18, h: 8 },
-    13020: { w: 18, h: 8 },
-    13021: { w: 18, h: 12 },
-    13022: { w: 5, h: 6 },
+  // Bank 13: IndoorLilycove
+  13000: { w: 12, h: 9 },
+  13001: { w: 12, h: 9 },
+  13002: { w: 21, h: 14 },
+  13003: { w: 22, h: 13 },
+  13004: { w: 31, h: 12 },
+  13005: { w: 51, h: 33 },
+  13006: { w: 14, h: 9 },
+  13007: { w: 14, h: 10 },
+  13008: { w: 11, h: 8 },
+  13009: { w: 12, h: 14 },
+  13010: { w: 24, h: 15 },
+  13011: { w: 11, h: 8 },
+  13012: { w: 10, h: 9 },
+  13013: { w: 8, h: 8 },
+  13014: { w: 11, h: 8 },
+  13015: { w: 10, h: 9 },
+  13016: { w: 18, h: 8 },
+  13017: { w: 18, h: 8 },
+  13018: { w: 18, h: 8 },
+  13019: { w: 18, h: 8 },
+  13020: { w: 18, h: 8 },
+  13021: { w: 18, h: 12 },
+  13022: { w: 5, h: 6 },
 
-    // Bank 14: IndoorMossdeep
-    14000: { w: 26, h: 36 },
-    14001: { w: 11, h: 8 },
-    14002: { w: 10, h: 9 },
-    14003: { w: 14, h: 9 },
-    14004: { w: 14, h: 10 },
-    14005: { w: 11, h: 8 },
-    14006: { w: 11, h: 8 },
-    14007: { w: 11, h: 8 },
-    14008: { w: 10, h: 8 },
-    14009: { w: 16, h: 10 },
-    14010: { w: 16, h: 10 },
-    14011: { w: 12, h: 10 },
-    14012: { w: 12, h: 9 },
+  // Bank 14: IndoorMossdeep
+  14000: { w: 26, h: 36 },
+  14001: { w: 11, h: 8 },
+  14002: { w: 10, h: 9 },
+  14003: { w: 14, h: 9 },
+  14004: { w: 14, h: 10 },
+  14005: { w: 11, h: 8 },
+  14006: { w: 11, h: 8 },
+  14007: { w: 11, h: 8 },
+  14008: { w: 10, h: 8 },
+  14009: { w: 16, h: 10 },
+  14010: { w: 16, h: 10 },
+  14011: { w: 12, h: 10 },
+  14012: { w: 12, h: 9 },
 
-    // Bank 15: IndoorSootopolis
-    15000: { w: 17, h: 26 },
-    15001: { w: 17, h: 26 },
-    15002: { w: 14, h: 9 },
-    15003: { w: 14, h: 10 },
-    15004: { w: 11, h: 8 },
-    15005: { w: 8, h: 7 },
-    15006: { w: 8, h: 7 },
-    15007: { w: 8, h: 7 },
-    15008: { w: 8, h: 7 },
-    15009: { w: 8, h: 7 },
-    15010: { w: 8, h: 7 },
-    15011: { w: 8, h: 7 },
-    15012: { w: 8, h: 7 },
-    15013: { w: 11, h: 8 },
-    15014: { w: 12, h: 9 },
+  // Bank 15: IndoorSootopolis
+  15000: { w: 17, h: 26 },
+  15001: { w: 17, h: 26 },
+  15002: { w: 14, h: 9 },
+  15003: { w: 14, h: 10 },
+  15004: { w: 11, h: 8 },
+  15005: { w: 8, h: 7 },
+  15006: { w: 8, h: 7 },
+  15007: { w: 8, h: 7 },
+  15008: { w: 8, h: 7 },
+  15009: { w: 8, h: 7 },
+  15010: { w: 8, h: 7 },
+  15011: { w: 8, h: 7 },
+  15012: { w: 8, h: 7 },
+  15013: { w: 11, h: 8 },
+  15014: { w: 12, h: 9 },
 
-    // Bank 16: IndoorEverGrande
-    16000: { w: 13, h: 14 },
-    16001: { w: 13, h: 14 },
-    16002: { w: 13, h: 14 },
-    16003: { w: 13, h: 14 },
-    16004: { w: 13, h: 13 },
-    16005: { w: 11, h: 13 },
-    16006: { w: 11, h: 13 },
-    16007: { w: 11, h: 13 },
-    16008: { w: 11, h: 34 },
-    16009: { w: 11, h: 13 },
-    16010: { w: 19, h: 12 },
-    16011: { w: 15, h: 17 },
-    16012: { w: 14, h: 9 },
-    16013: { w: 14, h: 10 },
-    16014: { w: 14, h: 10 },
+  // Bank 16: IndoorEverGrande
+  16000: { w: 13, h: 14 },
+  16001: { w: 13, h: 14 },
+  16002: { w: 13, h: 14 },
+  16003: { w: 13, h: 14 },
+  16004: { w: 13, h: 13 },
+  16005: { w: 11, h: 13 },
+  16006: { w: 11, h: 13 },
+  16007: { w: 11, h: 13 },
+  16008: { w: 11, h: 34 },
+  16009: { w: 11, h: 13 },
+  16010: { w: 19, h: 12 },
+  16011: { w: 15, h: 17 },
+  16012: { w: 14, h: 9 },
+  16013: { w: 14, h: 10 },
+  16014: { w: 14, h: 10 },
 
-    // Bank 17: IndoorRoute104
-    17000: { w: 12, h: 9 },
-    17001: { w: 15, h: 9 },
+  // Bank 17: IndoorRoute104
+  17000: { w: 12, h: 9 },
+  17001: { w: 15, h: 9 },
 
-    // Bank 18: IndoorRoute111
-    18000: { w: 11, h: 8 },
-    18001: { w: 10, h: 8 },
+  // Bank 18: IndoorRoute111
+  18000: { w: 11, h: 8 },
+  18001: { w: 10, h: 8 },
 
-    // Bank 19: IndoorRoute112
-    19000: { w: 13, h: 12 },
-    19001: { w: 13, h: 12 },
+  // Bank 19: IndoorRoute112
+  19000: { w: 13, h: 12 },
+  19001: { w: 13, h: 12 },
 
-    // Bank 20: IndoorRoute114
-    20000: { w: 10, h: 8 },
-    20001: { w: 13, h: 26 },
-    20002: { w: 11, h: 8 },
+  // Bank 20: IndoorRoute114
+  20000: { w: 10, h: 8 },
+  20001: { w: 13, h: 26 },
+  20002: { w: 11, h: 8 },
 
-    // Bank 21: IndoorRoute116
-    21000: { w: 10, h: 9 },
+  // Bank 21: IndoorRoute116
+  21000: { w: 10, h: 9 },
 
-    // Bank 22: IndoorRoute117
-    22000: { w: 12, h: 9 },
+  // Bank 22: IndoorRoute117
+  22000: { w: 12, h: 9 },
 
-    // Bank 23: IndoorRoute121
-    23000: { w: 18, h: 14 },
+  // Bank 23: IndoorRoute121
+  23000: { w: 18, h: 14 },
 
-    // Bank 24: Dungeons
-    24000: { w: 30, h: 42 },
-    24001: { w: 30, h: 32 },
-    24002: { w: 29, h: 38 },
-    24003: { w: 11, h: 18 },
-    24004: { w: 36, h: 24 },
-    24005: { w: 20, h: 10 },
-    24006: { w: 17, h: 33 },
-    24007: { w: 42, h: 15 },
-    24008: { w: 32, h: 26 },
-    24009: { w: 32, h: 26 },
-    24010: { w: 15, h: 14 },
-    24011: { w: 48, h: 44 },
-    24012: { w: 40, h: 47 },
-    24013: { w: 30, h: 46 },
-    24014: { w: 35, h: 38 },
-    24015: { w: 22, h: 19 },
-    24016: { w: 13, h: 13 },
-    24017: { w: 13, h: 13 },
-    24018: { w: 13, h: 13 },
-    24019: { w: 13, h: 13 },
-    24020: { w: 13, h: 13 },
-    24021: { w: 38, h: 51 },
-    24022: { w: 50, h: 37 },
-    24023: { w: 28, h: 30 },
-    24024: { w: 51, h: 24 },
-    24025: { w: 34, h: 24 },
-    24026: { w: 14, h: 9 },
-    24027: { w: 20, h: 20 },
-    24028: { w: 20, h: 21 },
-    24029: { w: 18, h: 12 },
-    24030: { w: 16, h: 17 },
-    24031: { w: 18, h: 19 },
-    24032: { w: 20, h: 20 },
-    24033: { w: 24, h: 23 },
-    24034: { w: 23, h: 25 },
-    24035: { w: 11, h: 14 },
-    24036: { w: 27, h: 46 },
-    24037: { w: 19, h: 26 },
-    24038: { w: 23, h: 23 },
-    24039: { w: 23, h: 23 },
-    24040: { w: 21, h: 21 },
-    24041: { w: 19, h: 21 },
-    24042: { w: 19, h: 19 },
-    24043: { w: 46, h: 45 },
-    24044: { w: 46, h: 31 },
-    24045: { w: 46, h: 31 },
-    24046: { w: 35, h: 35 },
-    24047: { w: 46, h: 38 },
-    24048: { w: 21, h: 15 },
-    24049: { w: 31, h: 14 },
-    24050: { w: 35, h: 35 },
-    24051: { w: 46, h: 38 },
-    24052: { w: 9, h: 9 },
-    24053: { w: 41, h: 41 },
-    24054: { w: 23, h: 21 },
-    24055: { w: 18, h: 12 },
-    24056: { w: 18, h: 17 },
-    24057: { w: 13, h: 10 },
-    24058: { w: 27, h: 8 },
-    24059: { w: 18, h: 8 },
-    24060: { w: 8, h: 8 },
-    24061: { w: 9, h: 8 },
-    24062: { w: 9, h: 17 },
-    24063: { w: 9, h: 7 },
-    24064: { w: 21, h: 7 },
-    24065: { w: 13, h: 11 },
-    24066: { w: 44, h: 15 },
-    24067: { w: 17, h: 33 },
-    24068: { w: 17, h: 33 },
-    24069: { w: 18, h: 10 },
-    24070: { w: 22, h: 48 },
-    24071: { w: 21, h: 23 },
-    24072: { w: 21, h: 23 },
-    24073: { w: 15, h: 20 },
-    24074: { w: 28, h: 30 },
-    24075: { w: 62, h: 24 },
-    24076: { w: 34, h: 24 },
-    24077: { w: 18, h: 18 },
-    24078: { w: 28, h: 23 },
-    24079: { w: 14, h: 14 },
-    24080: { w: 14, h: 14 },
-    24081: { w: 14, h: 14 },
-    24082: { w: 14, h: 14 },
-    24083: { w: 20, h: 30 },
-    24084: { w: 14, h: 14 },
-    24085: { w: 27, h: 24 },
-    24086: { w: 37, h: 38 },
-    24087: { w: 33, h: 39 },
-    24088: { w: 49, h: 28 },
-    24089: { w: 28, h: 24 },
-    24090: { w: 24, h: 17 },
-    24091: { w: 59, h: 28 },
-    24092: { w: 33, h: 24 },
-    24093: { w: 60, h: 19 },
-    24094: { w: 21, h: 17 },
-    24095: { w: 21, h: 17 },
-    24096: { w: 21, h: 17 },
-    24097: { w: 13, h: 10 },
-    24098: { w: 139, h: 23 },
-    24099: { w: 46, h: 54 },
-    24100: { w: 21, h: 22 },
-    24101: { w: 20, h: 10 },
-    24102: { w: 20, h: 20 },
-    24103: { w: 27, h: 30 },
-    24104: { w: 20, h: 20 },
-    24105: { w: 27, h: 30 },
-    24106: { w: 32, h: 24 },
-    24107: { w: 30, h: 32 },
+  // Bank 24: Dungeons
+  24000: { w: 30, h: 42 },
+  24001: { w: 30, h: 32 },
+  24002: { w: 29, h: 38 },
+  24003: { w: 11, h: 18 },
+  24004: { w: 36, h: 24 },
+  24005: { w: 20, h: 10 },
+  24006: { w: 17, h: 33 },
+  24007: { w: 42, h: 15 },
+  24008: { w: 32, h: 26 },
+  24009: { w: 32, h: 26 },
+  24010: { w: 15, h: 14 },
+  24011: { w: 48, h: 44 },
+  24012: { w: 40, h: 47 },
+  24013: { w: 30, h: 46 },
+  24014: { w: 35, h: 38 },
+  24015: { w: 22, h: 19 },
+  24016: { w: 13, h: 13 },
+  24017: { w: 13, h: 13 },
+  24018: { w: 13, h: 13 },
+  24019: { w: 13, h: 13 },
+  24020: { w: 13, h: 13 },
+  24021: { w: 38, h: 51 },
+  24022: { w: 50, h: 37 },
+  24023: { w: 28, h: 30 },
+  24024: { w: 51, h: 24 },
+  24025: { w: 34, h: 24 },
+  24026: { w: 14, h: 9 },
+  24027: { w: 20, h: 20 },
+  24028: { w: 20, h: 21 },
+  24029: { w: 18, h: 12 },
+  24030: { w: 16, h: 17 },
+  24031: { w: 18, h: 19 },
+  24032: { w: 20, h: 20 },
+  24033: { w: 24, h: 23 },
+  24034: { w: 23, h: 25 },
+  24035: { w: 11, h: 14 },
+  24036: { w: 27, h: 46 },
+  24037: { w: 19, h: 26 },
+  24038: { w: 23, h: 23 },
+  24039: { w: 23, h: 23 },
+  24040: { w: 21, h: 21 },
+  24041: { w: 19, h: 21 },
+  24042: { w: 19, h: 19 },
+  24043: { w: 46, h: 45 },
+  24044: { w: 46, h: 31 },
+  24045: { w: 46, h: 31 },
+  24046: { w: 35, h: 35 },
+  24047: { w: 46, h: 38 },
+  24048: { w: 21, h: 15 },
+  24049: { w: 31, h: 14 },
+  24050: { w: 35, h: 35 },
+  24051: { w: 46, h: 38 },
+  24052: { w: 9, h: 9 },
+  24053: { w: 41, h: 41 },
+  24054: { w: 23, h: 21 },
+  24055: { w: 18, h: 12 },
+  24056: { w: 18, h: 17 },
+  24057: { w: 13, h: 10 },
+  24058: { w: 27, h: 8 },
+  24059: { w: 18, h: 8 },
+  24060: { w: 8, h: 8 },
+  24061: { w: 9, h: 8 },
+  24062: { w: 9, h: 17 },
+  24063: { w: 9, h: 7 },
+  24064: { w: 21, h: 7 },
+  24065: { w: 13, h: 11 },
+  24066: { w: 44, h: 15 },
+  24067: { w: 17, h: 33 },
+  24068: { w: 17, h: 33 },
+  24069: { w: 18, h: 10 },
+  24070: { w: 22, h: 48 },
+  24071: { w: 21, h: 23 },
+  24072: { w: 21, h: 23 },
+  24073: { w: 15, h: 20 },
+  24074: { w: 28, h: 30 },
+  24075: { w: 62, h: 24 },
+  24076: { w: 34, h: 24 },
+  24077: { w: 18, h: 18 },
+  24078: { w: 28, h: 23 },
+  24079: { w: 14, h: 14 },
+  24080: { w: 14, h: 14 },
+  24081: { w: 14, h: 14 },
+  24082: { w: 14, h: 14 },
+  24083: { w: 20, h: 30 },
+  24084: { w: 14, h: 14 },
+  24085: { w: 27, h: 24 },
+  24086: { w: 37, h: 38 },
+  24087: { w: 33, h: 39 },
+  24088: { w: 49, h: 28 },
+  24089: { w: 28, h: 24 },
+  24090: { w: 24, h: 17 },
+  24091: { w: 59, h: 28 },
+  24092: { w: 33, h: 24 },
+  24093: { w: 60, h: 19 },
+  24094: { w: 21, h: 17 },
+  24095: { w: 21, h: 17 },
+  24096: { w: 21, h: 17 },
+  24097: { w: 13, h: 10 },
+  24098: { w: 139, h: 23 },
+  24099: { w: 46, h: 54 },
+  24100: { w: 21, h: 22 },
+  24101: { w: 20, h: 10 },
+  24102: { w: 20, h: 20 },
+  24103: { w: 27, h: 30 },
+  24104: { w: 20, h: 20 },
+  24105: { w: 27, h: 30 },
+  24106: { w: 32, h: 24 },
+  24107: { w: 30, h: 32 },
 
-    // Bank 25: IndoorDynamic
-    25000: { w: 11, h: 9 },
-    25001: { w: 11, h: 9 },
-    25002: { w: 11, h: 9 },
-    25003: { w: 11, h: 9 },
-    25004: { w: 11, h: 9 },
-    25005: { w: 11, h: 9 },
-    25006: { w: 7, h: 16 },
-    25007: { w: 14, h: 9 },
-    25008: { w: 15, h: 7 },
-    25009: { w: 14, h: 9 },
-    25010: { w: 7, h: 16 },
-    25011: { w: 15, h: 7 },
-    25012: { w: 15, h: 8 },
-    25013: { w: 15, h: 11 },
-    25014: { w: 10, h: 17 },
-    25015: { w: 12, h: 11 },
-    25016: { w: 17, h: 8 },
-    25017: { w: 13, h: 11 },
-    25018: { w: 9, h: 15 },
-    25019: { w: 14, h: 12 },
-    25020: { w: 9, h: 17 },
-    25021: { w: 13, h: 14 },
-    25022: { w: 14, h: 14 },
-    25023: { w: 14, h: 11 },
-    25024: { w: 14, h: 9 },
-    25025: { w: 12, h: 9 },
-    25026: { w: 20, h: 10 },
-    25027: { w: 14, h: 9 },
-    25028: { w: 15, h: 11 },
-    25029: { w: 1, h: 1 },
-    25030: { w: 1, h: 1 },
-    25031: { w: 1, h: 1 },
-    25032: { w: 1, h: 1 },
-    25033: { w: 1, h: 1 },
-    25034: { w: 1, h: 1 },
-    25035: { w: 15, h: 11 },
-    25036: { w: 15, h: 11 },
-    25037: { w: 15, h: 11 },
-    25038: { w: 15, h: 11 },
-    25039: { w: 15, h: 11 },
-    25040: { w: 5, h: 5 },
-    25041: { w: 18, h: 13 },
-    25042: { w: 17, h: 13 },
-    25043: { w: 36, h: 18 },
-    25044: { w: 8, h: 8 },
-    25045: { w: 8, h: 8 },
-    25046: { w: 8, h: 8 },
-    25047: { w: 8, h: 8 },
-    25048: { w: 8, h: 8 },
-    25049: { w: 8, h: 8 },
-    25050: { w: 8, h: 8 },
-    25051: { w: 8, h: 8 },
-    25052: { w: 8, h: 8 },
-    25053: { w: 8, h: 8 },
-    25054: { w: 8, h: 8 },
-    25055: { w: 8, h: 8 },
-    25056: { w: 8, h: 8 },
-    25057: { w: 8, h: 8 },
-    25058: { w: 8, h: 8 },
-    25059: { w: 8, h: 8 },
-    25060: { w: 15, h: 12 },
+  // Bank 25: IndoorDynamic
+  25000: { w: 11, h: 9 },
+  25001: { w: 11, h: 9 },
+  25002: { w: 11, h: 9 },
+  25003: { w: 11, h: 9 },
+  25004: { w: 11, h: 9 },
+  25005: { w: 11, h: 9 },
+  25006: { w: 7, h: 16 },
+  25007: { w: 14, h: 9 },
+  25008: { w: 15, h: 7 },
+  25009: { w: 14, h: 9 },
+  25010: { w: 7, h: 16 },
+  25011: { w: 15, h: 7 },
+  25012: { w: 15, h: 8 },
+  25013: { w: 15, h: 11 },
+  25014: { w: 10, h: 17 },
+  25015: { w: 12, h: 11 },
+  25016: { w: 17, h: 8 },
+  25017: { w: 13, h: 11 },
+  25018: { w: 9, h: 15 },
+  25019: { w: 14, h: 12 },
+  25020: { w: 9, h: 17 },
+  25021: { w: 13, h: 14 },
+  25022: { w: 14, h: 14 },
+  25023: { w: 14, h: 11 },
+  25024: { w: 14, h: 9 },
+  25025: { w: 12, h: 9 },
+  25026: { w: 20, h: 10 },
+  25027: { w: 14, h: 9 },
+  25028: { w: 15, h: 11 },
+  25029: { w: 1, h: 1 },
+  25030: { w: 1, h: 1 },
+  25031: { w: 1, h: 1 },
+  25032: { w: 1, h: 1 },
+  25033: { w: 1, h: 1 },
+  25034: { w: 1, h: 1 },
+  25035: { w: 15, h: 11 },
+  25036: { w: 15, h: 11 },
+  25037: { w: 15, h: 11 },
+  25038: { w: 15, h: 11 },
+  25039: { w: 15, h: 11 },
+  25040: { w: 5, h: 5 },
+  25041: { w: 18, h: 13 },
+  25042: { w: 17, h: 13 },
+  25043: { w: 36, h: 18 },
+  25044: { w: 8, h: 8 },
+  25045: { w: 8, h: 8 },
+  25046: { w: 8, h: 8 },
+  25047: { w: 8, h: 8 },
+  25048: { w: 8, h: 8 },
+  25049: { w: 8, h: 8 },
+  25050: { w: 8, h: 8 },
+  25051: { w: 8, h: 8 },
+  25052: { w: 8, h: 8 },
+  25053: { w: 8, h: 8 },
+  25054: { w: 8, h: 8 },
+  25055: { w: 8, h: 8 },
+  25056: { w: 8, h: 8 },
+  25057: { w: 8, h: 8 },
+  25058: { w: 8, h: 8 },
+  25059: { w: 8, h: 8 },
+  25060: { w: 15, h: 12 },
 
-    // Bank 26: SpecialArea
-    26000: { w: 40, h: 40 },
-    26001: { w: 40, h: 40 },
-    26002: { w: 40, h: 40 },
-    26003: { w: 40, h: 40 },
-    26004: { w: 56, h: 72 },
-    26005: { w: 25, h: 10 },
-    26006: { w: 5, h: 7 },
-    26007: { w: 17, h: 5 },
-    26008: { w: 10, h: 9 },
-    26009: { w: 33, h: 30 },
-    26010: { w: 27, h: 24 },
-    26011: { w: 10, h: 9 },
-    26012: { w: 40, h: 40 },
-    26013: { w: 40, h: 40 },
-    26014: { w: 72, h: 72 },
-    26015: { w: 21, h: 15 },
-    26016: { w: 17, h: 5 },
-    26017: { w: 10, h: 9 },
-    26018: { w: 23, h: 17 },
-    26019: { w: 48, h: 7 },
-    26020: { w: 9, h: 8 },
-    26021: { w: 20, h: 10 },
-    26022: { w: 25, h: 12 },
-    26023: { w: 17, h: 14 },
-    26024: { w: 15, h: 10 },
-    26025: { w: 15, h: 18 },
-    26026: { w: 8, h: 8 },
-    26027: { w: 34, h: 23 },
-    26028: { w: 16, h: 13 },
-    26029: { w: 18, h: 14 },
-    26030: { w: 16, h: 11 },
-    26031: { w: 19, h: 12 },
-    26032: { w: 17, h: 14 },
-    26033: { w: 13, h: 12 },
-    26034: { w: 11, h: 13 },
-    26035: { w: 14, h: 8 },
-    26036: { w: 13, h: 11 },
-    26037: { w: 9, h: 8 },
-    26038: { w: 5, h: 8 },
-    26039: { w: 9, h: 20 },
-    26040: { w: 53, h: 15 },
-    26041: { w: 9, h: 10 },
-    26042: { w: 15, h: 11 },
-    26043: { w: 13, h: 8 },
-    26044: { w: 9, h: 10 },
-    26045: { w: 9, h: 10 },
-    26046: { w: 6, h: 8 },
-    26047: { w: 13, h: 8 },
-    26048: { w: 9, h: 10 },
-    26049: { w: 9, h: 10 },
-    26050: { w: 9, h: 14 },
-    26051: { w: 9, h: 10 },
-    26052: { w: 9, h: 10 },
-    26053: { w: 14, h: 9 },
-    26054: { w: 14, h: 10 },
-    26055: { w: 11, h: 8 },
-    26056: { w: 34, h: 46 },
-    26057: { w: 29, h: 26 },
-    26058: { w: 30, h: 30 },
-    26059: { w: 17, h: 13 },
-    26060: { w: 19, h: 17 },
-    26061: { w: 16, h: 21 },
-    26062: { w: 16, h: 21 },
-    26063: { w: 16, h: 21 },
-    26064: { w: 16, h: 21 },
-    26065: { w: 25, h: 16 },
-    26066: { w: 21, h: 24 },
-    26067: { w: 17, h: 13 },
-    26068: { w: 21, h: 32 },
-    26069: { w: 23, h: 11 },
-    26070: { w: 27, h: 86 },
-    26071: { w: 9, h: 8 },
-    26072: { w: 9, h: 8 },
-    26073: { w: 9, h: 8 },
-    26074: { w: 9, h: 8 },
-    26075: { w: 25, h: 28 },
-    26076: { w: 9, h: 8 },
-    26077: { w: 9, h: 8 },
-    26078: { w: 9, h: 8 },
-    26079: { w: 9, h: 8 },
-    26080: { w: 9, h: 8 },
-    26081: { w: 9, h: 8 },
-    26082: { w: 9, h: 8 },
-    26083: { w: 9, h: 8 },
-    26084: { w: 9, h: 8 },
-    26085: { w: 9, h: 8 },
-    26086: { w: 9, h: 8 },
-    26087: { w: 22, h: 22 },
-    26088: { w: 5, h: 7 },
+  // Bank 26: SpecialArea
+  26000: { w: 40, h: 40 },
+  26001: { w: 40, h: 40 },
+  26002: { w: 40, h: 40 },
+  26003: { w: 40, h: 40 },
+  26004: { w: 56, h: 72 },
+  26005: { w: 25, h: 10 },
+  26006: { w: 5, h: 7 },
+  26007: { w: 17, h: 5 },
+  26008: { w: 10, h: 9 },
+  26009: { w: 33, h: 30 },
+  26010: { w: 27, h: 24 },
+  26011: { w: 10, h: 9 },
+  26012: { w: 40, h: 40 },
+  26013: { w: 40, h: 40 },
+  26014: { w: 72, h: 72 },
+  26015: { w: 21, h: 15 },
+  26016: { w: 17, h: 5 },
+  26017: { w: 10, h: 9 },
+  26018: { w: 23, h: 17 },
+  26019: { w: 48, h: 7 },
+  26020: { w: 9, h: 8 },
+  26021: { w: 20, h: 10 },
+  26022: { w: 25, h: 12 },
+  26023: { w: 17, h: 14 },
+  26024: { w: 15, h: 10 },
+  26025: { w: 15, h: 18 },
+  26026: { w: 8, h: 8 },
+  26027: { w: 34, h: 23 },
+  26028: { w: 16, h: 13 },
+  26029: { w: 18, h: 14 },
+  26030: { w: 16, h: 11 },
+  26031: { w: 19, h: 12 },
+  26032: { w: 17, h: 14 },
+  26033: { w: 13, h: 12 },
+  26034: { w: 11, h: 13 },
+  26035: { w: 14, h: 8 },
+  26036: { w: 13, h: 11 },
+  26037: { w: 9, h: 8 },
+  26038: { w: 5, h: 8 },
+  26039: { w: 9, h: 20 },
+  26040: { w: 53, h: 15 },
+  26041: { w: 9, h: 10 },
+  26042: { w: 15, h: 11 },
+  26043: { w: 13, h: 8 },
+  26044: { w: 9, h: 10 },
+  26045: { w: 9, h: 10 },
+  26046: { w: 6, h: 8 },
+  26047: { w: 13, h: 8 },
+  26048: { w: 9, h: 10 },
+  26049: { w: 9, h: 10 },
+  26050: { w: 9, h: 14 },
+  26051: { w: 9, h: 10 },
+  26052: { w: 9, h: 10 },
+  26053: { w: 14, h: 9 },
+  26054: { w: 14, h: 10 },
+  26055: { w: 11, h: 8 },
+  26056: { w: 34, h: 46 },
+  26057: { w: 29, h: 26 },
+  26058: { w: 30, h: 30 },
+  26059: { w: 17, h: 13 },
+  26060: { w: 19, h: 17 },
+  26061: { w: 16, h: 21 },
+  26062: { w: 16, h: 21 },
+  26063: { w: 16, h: 21 },
+  26064: { w: 16, h: 21 },
+  26065: { w: 25, h: 16 },
+  26066: { w: 21, h: 24 },
+  26067: { w: 17, h: 13 },
+  26068: { w: 21, h: 32 },
+  26069: { w: 23, h: 11 },
+  26070: { w: 27, h: 86 },
+  26071: { w: 9, h: 8 },
+  26072: { w: 9, h: 8 },
+  26073: { w: 9, h: 8 },
+  26074: { w: 9, h: 8 },
+  26075: { w: 25, h: 28 },
+  26076: { w: 9, h: 8 },
+  26077: { w: 9, h: 8 },
+  26078: { w: 9, h: 8 },
+  26079: { w: 9, h: 8 },
+  26080: { w: 9, h: 8 },
+  26081: { w: 9, h: 8 },
+  26082: { w: 9, h: 8 },
+  26083: { w: 9, h: 8 },
+  26084: { w: 9, h: 8 },
+  26085: { w: 9, h: 8 },
+  26086: { w: 9, h: 8 },
+  26087: { w: 22, h: 22 },
+  26088: { w: 5, h: 7 },
 
-    // Bank 27: IndoorRoute104Prototype
-    27000: { w: 1, h: 1 },
-    27001: { w: 15, h: 9 },
+  // Bank 27: IndoorRoute104Prototype
+  27000: { w: 1, h: 1 },
+  27001: { w: 15, h: 9 },
 
-    // Bank 28: IndoorRoute109
-    28000: { w: 15, h: 10 },
+  // Bank 28: IndoorRoute109
+  28000: { w: 15, h: 10 },
 
-    // Bank 29: IndoorRoute110
-    29000: { w: 12, h: 8 },
-    29001: { w: 12, h: 8 },
-    29002: { w: 15, h: 24 },
-    29003: { w: 15, h: 22 },
-    29004: { w: 15, h: 22 },
-    29005: { w: 15, h: 22 },
-    29006: { w: 15, h: 22 },
-    29007: { w: 15, h: 22 },
-    29008: { w: 15, h: 22 },
-    29009: { w: 15, h: 22 },
-    29010: { w: 15, h: 22 },
-    29011: { w: 15, h: 6 },
-    29012: { w: 15, h: 6 },
+  // Bank 29: IndoorRoute110
+  29000: { w: 12, h: 8 },
+  29001: { w: 12, h: 8 },
+  29002: { w: 15, h: 24 },
+  29003: { w: 15, h: 22 },
+  29004: { w: 15, h: 22 },
+  29005: { w: 15, h: 22 },
+  29006: { w: 15, h: 22 },
+  29007: { w: 15, h: 22 },
+  29008: { w: 15, h: 22 },
+  29009: { w: 15, h: 22 },
+  29010: { w: 15, h: 22 },
+  29011: { w: 15, h: 6 },
+  29012: { w: 15, h: 6 },
 
-    // Bank 30: IndoorRoute113
-    30000: { w: 10, h: 9 },
+  // Bank 30: IndoorRoute113
+  30000: { w: 10, h: 9 },
 
-    // Bank 31: IndoorRoute123
-    31000: { w: 11, h: 8 },
+  // Bank 31: IndoorRoute123
+  31000: { w: 11, h: 8 },
 
-    // Bank 32: IndoorRoute119
-    32000: { w: 20, h: 13 },
-    32001: { w: 20, h: 11 },
-    32002: { w: 10, h: 9 },
+  // Bank 32: IndoorRoute119
+  32000: { w: 20, h: 13 },
+  32001: { w: 20, h: 11 },
+  32002: { w: 10, h: 9 },
 
-    // Bank 33: IndoorRoute124
-    33000: { w: 10, h: 9 },
-  };
+  // Bank 33: IndoorRoute124
+  33000: { w: 10, h: 9 },
+};
 
 /** Look up map dimensions (in metatiles) for a given (map_bank, map_num) pair. */
-export function lookupMapDimensions(
-  bank: number,
-  num: number,
-): { w: number; h: number } | null {
+export function lookupMapDimensions(bank: number, num: number): { w: number; h: number } | null {
   return EMERALD_MAP_DIMENSIONS[bank * 1000 + num] ?? null;
 }
 
