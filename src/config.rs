@@ -9,6 +9,10 @@ pub struct Config {
     pub chat: ChatConfig,
 }
 
+fn default_true() -> bool {
+    true
+}
+
 #[derive(Debug, Deserialize)]
 pub struct EmulatorConfig {
     pub bios_path: String,
@@ -17,6 +21,9 @@ pub struct EmulatorConfig {
     pub target_fps: u32,
     #[serde(default)]
     pub auto_restore: bool,
+    /// Pause emulation when no viewers are connected. Defaults to true.
+    #[serde(default = "default_true")]
+    pub pause_on_no_viewers: bool,
 }
 
 #[derive(Debug, Deserialize)]

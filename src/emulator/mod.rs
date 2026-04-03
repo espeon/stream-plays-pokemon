@@ -66,6 +66,7 @@ struct LoopArgs {
     save_dir: String,
     target_fps: u32,
     jpeg_quality: u8,
+    pause_on_no_viewers: bool,
     audio_interface: SendAudioInterface,
     audio_consumer: AudioConsumer,
     vote_engine: Arc<Mutex<VoteEngine>>,
@@ -94,6 +95,7 @@ pub fn spawn_emulator(
         save_dir: config.save_dir.clone(),
         target_fps: config.target_fps,
         jpeg_quality,
+        pause_on_no_viewers: config.pause_on_no_viewers,
         audio_interface,
         audio_consumer,
         vote_engine,
@@ -156,6 +158,7 @@ fn run_emulator_loop(
         save_dir,
         target_fps,
         jpeg_quality,
+        pause_on_no_viewers,
         audio_interface,
         mut audio_consumer,
         vote_engine,
@@ -219,8 +222,8 @@ fn run_emulator_loop(
             }
         }
 
-        // if no viewers, we should probably pause
-        if paused || count_tracker.lock().count == 0 {
+        // if no viewers, pause when configured to do so
+        if paused || (pause_on_no_viewers && count_tracker.lock().count == 0) {
             thread::sleep(Duration::from_millis(16));
             continue;
         }
